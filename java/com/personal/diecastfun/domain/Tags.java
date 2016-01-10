@@ -1,0 +1,30 @@
+package com.personal.diecastfun.domain;
+
+public enum Tags {
+  Military,
+  MuscleCar,
+  Offroad,
+  Cabriolet,
+  Exotic,
+  Sports,
+  GranTurismo,
+  Coupe,
+  Police,
+  SUV,
+  Wagon,
+  FiveDoorsHatchback,
+  ThreeDoorsHatchback,
+  Van,
+  LargeSedan,
+  Racing,
+  PickUp,
+  MediumSedan,
+  Minivan,
+  Luxury,
+  SmallSedan,
+  Fire,
+  Boat,
+  Ambulance,
+  Bus,
+  Others
+}
