@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Strings;
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
@@ -82,11 +83,17 @@ public class CarFacade {
 		List<String> foundIds = new ArrayList<String>();
 
 		for (Car car : carRepository.findAll()) {
-			if (car.containsWord(keywords) && !foundIds.contains(car.getCompleteId())) {
+			if (!Strings.isNullOrEmpty(keywords)) {
+				if (car.containsWord(keywords) && !foundIds.contains(car.getCompleteId())) {
+					addCarModel(models, car);
+					foundIds.add(car.getCompleteId());
+				}
+			} else {
 				addCarModel(models, car);
 				foundIds.add(car.getCompleteId());
 			}
 		}
+
 		return new SortedList<CarModel>(models);
 	}
 

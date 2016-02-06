@@ -9,6 +9,16 @@ $(document).ready(function() {
 	animateBackground();
 
 	$("[rel=tooltip]").tooltip();
+	
+	$("#searchbutton").click(function() {
+		redirectToSearch();
+	});
+	
+	$("#searchinput").keypress(function(e) {
+	    if(e.which == 13) {
+	    	redirectToSearch();
+	    }
+	});
 
 	$(".flagbutton").click(function(e) {
 		var country = $(this).attr('data-original-title').replace(" ", "");
@@ -47,6 +57,10 @@ function previousButton() {
 		event.preventDefault();
 		pagination(url, page, paginationViewName);
 	});
+}
+
+function redirectToSearch() {
+	window.location.href = window.location.origin + '/search?q=' + $('#searchinput').val();
 }
 
 function upvote() {

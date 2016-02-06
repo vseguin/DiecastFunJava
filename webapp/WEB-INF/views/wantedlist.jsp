@@ -113,6 +113,14 @@
       </thead>
       <tbody>
         <tr>
+          <td>Acura</td>
+          <td>Integra GSR</td>
+        </tr>
+        <tr>
+          <td>Aston-Martin</td>
+          <td>DB10</td>
+        </tr>
+        <tr>
           <td>Chevrolet</td>
           <td>Blazer (Hot Ones)</td>
         </tr>
@@ -123,6 +131,10 @@
         <tr>
           <td>Ford</td>
           <td>Escort 1600RS '70, F-150 Raptor 2015, Transit Supervan</td>
+        </tr>
+        <tr>
+          <td>Honda</td>
+          <td>Odyssey '14</td>
         </tr>
         <tr>
           <td>Lamborghini</td>
@@ -300,8 +312,16 @@
           <td>F-Type</td>
         </tr>
         <tr>
+          <td>Mazda</td>
+          <td>Miata 2016</td>
+        </tr>
+        <tr>
           <td>Nissan</td>
           <td>Skyline 2000GTX 1971</td>
+        </tr>
+        <tr>
+          <td>Volvo</td>
+          <td>V60</td>
         </tr>
       </tbody>
     </table>
@@ -524,7 +544,7 @@
       <tbody>
         <tr>
           <td>Audi</td>
-          <td>A2</td>
+          <td>A2, TT Coupe</td>
         </tr>
         <tr>
           <td>BMW</td>
@@ -543,8 +563,20 @@
           <td>300S 1955, A200, C63 AMG</td>
         </tr>
         <tr>
+          <td>Porsche</td>
+          <td>Macan</td>
+        </tr>
+        <tr>
+          <td>Subaru</td>
+          <td>WRX STi 2015</td>
+        </tr>
+        <tr>
           <td>Toyota</td>
-          <td>Corolla</td>
+          <td>Corolla, Innova</td>
+        </tr>
+        <tr>
+          <td>Volvo</td>
+          <td>XC90</td>
         </tr>
       </tbody>
     </table>

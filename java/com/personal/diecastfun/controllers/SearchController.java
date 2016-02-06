@@ -28,11 +28,11 @@ public class SearchController extends BasicController {
 	@Inject
 	private Paginator paginator;
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView search(@RequestParam(required = true, value = "keywords") String keywords) {
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView search(@RequestParam(required = false, value = "q") String query) {
 		ModelAndView mv = new ModelAndView("carlist");
 
-		SortedList<CarModel> cars = carFacade.findAllCarsCorrespondingToKeywords(keywords);
+		SortedList<CarModel> cars = carFacade.findAllCarsCorrespondingToKeywords(query);
 		PaginationResults results = paginator.paginate(cars);
 		mv.addObject("title", "Search Results");
 		mv.addObject("searchresults", cars.size());
