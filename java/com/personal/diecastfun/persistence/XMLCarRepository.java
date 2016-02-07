@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.CarRepository;
 import com.personal.diecastfun.domain.Era;
@@ -181,16 +182,32 @@ public class XMLCarRepository implements CarRepository {
 		return foundCars;
 	}
 
+	@Override
+	public boolean exists(String carId) {
+		return cars.containsKey(carId);
+	}
+
+	@Override
+	public void save(Car car) {
+		cars.put(car.getCompleteId(), car);
+
+		try {
+			serializer.serialize(new CarXMLWrapper().withCars(Lists.newArrayList(cars.values())), getResourceName());
+		} catch (Exception e) {
+			// TODO vseguin : this will disappear
+			System.out.println("Unable to save car :" + e.getMessage());
+		}
+	}
+
 	private void parseXML() throws Exception {
-		List<Car> deserializedCars = serializer.deserialize(ConfigManager.getConfigManager().getCarsFilePath())
-				.getCars();
+		List<Car> deserializedCars = serializer.deserialize(getResourceName()).getCars();
 		for (Car car : deserializedCars) {
 			cars.put(car.getCompleteId(), car);
 		}
 	}
 
-	@Override
-	public boolean exists(String carId) {
-		return cars.containsKey(carId);
+	private String getResourceName() {
+		return ConfigManager.getConfigManager().getCarsFilePath();
 	}
+
 }

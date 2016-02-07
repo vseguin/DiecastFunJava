@@ -19,4 +19,8 @@ public class Maker {
 		this.name = name;
 	}
 
+	public Maker withName(String name) {
+		setName(name);
+		return this;
+	}
 }

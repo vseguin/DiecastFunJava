@@ -8,7 +8,8 @@ import java.util.List;
 
 public class Car {
 
-	private static final String INSERTION_DATE_FORMAT = "dd/MM/yyyy";
+	public static final String INSERTION_DATE_FORMAT = "dd/MM/yyyy";
+
 	private int id = 0;
 	private String model;
 	private String brand;
@@ -119,6 +120,61 @@ public class Car {
 
 	public void setTags(List<Tags> tags) {
 		this.tags = tags;
+	}
+
+	public Car withBrand(String brand) {
+		setBrand(brand);
+		return this;
+	}
+
+	public Car withColor(String color) {
+		setColor(color);
+		return this;
+	}
+
+	public Car withCustomized(int customized) {
+		setCustomized(customized);
+		return this;
+	}
+
+	public Car withEra(Era era) {
+		setEra(era);
+		return this;
+	}
+
+	public Car withId(int id) {
+		setId(id);
+		return this;
+	}
+
+	public Car withInsertionDate(String insertionDate) {
+		setInsertionDate(insertionDate);
+		return this;
+	}
+
+	public Car withMaker(String maker) {
+		setMaker(maker);
+		return this;
+	}
+
+	public Car withModel(String model) {
+		setModel(model);
+		return this;
+	}
+
+	public Car withRestaured(int restaured) {
+		setRestaured(restaured);
+		return this;
+	}
+
+	public Car withScale(String scale) {
+		setScale(scale);
+		return this;
+	}
+
+	public Car withTags(List<Tags> tags) {
+		setTags(tags);
+		return this;
 	}
 
 	public boolean isNew() {

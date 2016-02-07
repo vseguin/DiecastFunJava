@@ -9,6 +9,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.personal.diecastfun.conditions.ConditionResolver;
 import com.personal.diecastfun.controllers.service.BasicFacade;
@@ -30,9 +34,10 @@ import com.personal.diecastfun.utils.Paginator;
 @ComponentScan
 @EntityScan(basePackages = { "com.personal.diecastfun.domain" })
 @EnableTransactionManagement
+@EnableWebMvc
 @EnableJpaRepositories(basePackages = { "com.personal.diecastfun.domain.repositories" })
 @PropertySources(value = { @PropertySource("classpath:application.properties") })
-public class AppConfig {
+public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ObjectMapper objectMapper() {
@@ -102,5 +107,13 @@ public class AppConfig {
 	@Bean
 	public ConditionResolverFacade conditionResolver() throws Exception {
 		return new ConditionResolverFacade(new ConditionResolver(carRepository().findAll()));
+	}
+
+	@Bean(name = "jspViewResolver")
+	public ViewResolver getJspViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		return resolver;
 	}
 }

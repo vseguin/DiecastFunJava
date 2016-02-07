@@ -1,6 +1,9 @@
 package com.personal.diecastfun.controllers.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,25 @@ public class CarFacade {
 	private CarRepository carRepository;
 	@Autowired
 	private VotesRepository votesRepository;
+
+	public void addCar(CarModel carModel) {
+		DateFormat dateFormat = new SimpleDateFormat(Car.INSERTION_DATE_FORMAT);
+
+		int id = 0;
+
+		Car car = new Car().withBrand(carModel.getBrand()).withModel(carModel.getModel()).withMaker(carModel.getMaker())
+				.withEra(carModel.getEra()).withScale(carModel.getScale()).withColor(carModel.getColorName())
+				.withRestaured(carModel.getIsRestaured() ? 1 : 0).withCustomized(carModel.getIsCustomized() ? 1 : 0)
+				.withInsertionDate(dateFormat.format(Calendar.getInstance().getTime())).withTags(carModel.getTags())
+				.withId(0);
+
+		while (carRepository.exists(car.getCompleteId())) {
+			id++;
+			car.setId(id);
+		}
+
+		carRepository.save(car);
+	}
 
 	public int countByEra(Era era) {
 		return carRepository.countByEra(era);

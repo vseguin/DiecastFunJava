@@ -19,46 +19,46 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/cars")
 public class CarsController extends BasicController {
 
-  @Inject
-  private BasicFacade basicFacade;
-  @Inject
-  private CarFacade carFacade;
-  @Inject
-  private ViewsFacade viewsFacade;
-  @Inject
-  private VotesFacade votesFacade;
-  @Inject
-  private Paginator paginator;
+	@Inject
+	private BasicFacade basicFacade;
+	@Inject
+	private CarFacade carFacade;
+	@Inject
+	private ViewsFacade viewsFacade;
+	@Inject
+	private VotesFacade votesFacade;
+	@Inject
+	private Paginator paginator;
 
-  @RequestMapping(value = "/allcars", method = RequestMethod.GET)
-  public ModelAndView getAllCars() {
-    ModelAndView mv = new ModelAndView("carlist");
+	@RequestMapping(value = "/allcars", method = RequestMethod.GET)
+	public ModelAndView getAllCars() {
+		ModelAndView mv = new ModelAndView("carlist");
 
-    PaginationResults results = paginator.paginate(carFacade.findAllCars());
-    mv.addObject("title", "All Cars");
-    addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
-    addPaginationInformation(mv, results);
+		PaginationResults results = paginator.paginate(carFacade.findAllCars());
+		mv.addObject("title", "All Cars");
+		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addPaginationInformation(mv, results);
 
-    return mv;
-  }
+		return mv;
+	}
 
-  @RequestMapping(value = "/{carId}", method = RequestMethod.GET)
-  public ModelAndView getSpecificCar(@PathVariable String carId) {
-    viewsFacade.addView(carId);
-    ModelAndView mv = new ModelAndView("cardetails");
+	@RequestMapping(value = "/{carId}", method = RequestMethod.GET)
+	public ModelAndView getSpecificCar(@PathVariable String carId) {
+		viewsFacade.addView(carId);
+		ModelAndView mv = new ModelAndView("cardetails");
 
-    mv.addObject("id", carId);
-    mv.addObject("car", carFacade.findCarById(carId));
-    mv.addObject("seealso", carFacade.findSeeAlso(carId));
-    mv.addObject("votes", votesFacade.getVotesById(carId));
-    mv.addObject("views", viewsFacade.getViews(carId));
-    addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		mv.addObject("id", carId);
+		mv.addObject("car", carFacade.findCarById(carId));
+		mv.addObject("seealso", carFacade.findSeeAlso(carId));
+		mv.addObject("votes", votesFacade.getVotesById(carId));
+		mv.addObject("views", viewsFacade.getViews(carId));
+		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
 
-    return mv;
-  }
+		return mv;
+	}
 
-  @RequestMapping(value = "/random", method = RequestMethod.GET)
-  public ModelAndView getRandomCar() {
-    return getSpecificCar(carFacade.findRandomCarId());
-  }
+	@RequestMapping(value = "/random", method = RequestMethod.GET)
+	public ModelAndView getRandomCar() {
+		return getSpecificCar(carFacade.findRandomCarId());
+	}
 }

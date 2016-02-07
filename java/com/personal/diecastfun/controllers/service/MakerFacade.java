@@ -22,6 +22,10 @@ public class MakerFacade {
 	@Inject
 	private CarRepository carRepository;
 
+	public void addMaker(String maker) {
+		makerRepository.save(new Maker().withName(maker));
+	}
+
 	public List<MakerModel> findAllMakers() {
 		return getModels(Lists.newArrayList(makerRepository.findAll()));
 	}

@@ -19,4 +19,9 @@ public class CarXMLWrapper {
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
 	}
+
+	public CarXMLWrapper withCars(List<Car> cars) {
+		setCars(cars);
+		return this;
+	}
 }
