@@ -20,50 +20,50 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/carbrands")
 public class CarBrandsController extends BasicController {
 
-  @Inject
-  private BrandFacade brandFacade;
-  @Inject
-  private BasicFacade basicFacade;
-  @Inject
-  private CarFacade carFacade;
-  @Inject
-  private Paginator paginator;
+	@Inject
+	private BrandFacade brandFacade;
+	@Inject
+	private BasicFacade basicFacade;
+	@Inject
+	private CarFacade carFacade;
+	@Inject
+	private Paginator paginator;
 
-  @RequestMapping(method = RequestMethod.GET)
-  public ModelAndView index() {
-    ModelAndView mv = new ModelAndView("carbrands");
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView index() {
+		ModelAndView mv = new ModelAndView("carbrands");
 
-    SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findAllBrands());
-    mv.addObject("sortedbrands", model);
-    mv.addObject("countries", brandFacade.findCountries());
-    addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findAllBrands());
+		mv.addObject("sortedbrands", model);
+		mv.addObject("countries", brandFacade.findCountries());
+		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
 
-    return mv;
-  }
+		return mv;
+	}
 
-  @RequestMapping(value = "/{brand}", method = RequestMethod.GET)
-  public ModelAndView getSpecificBrand(@PathVariable String brand) {
-    ModelAndView mv = new ModelAndView("carlist");
+	@RequestMapping(value = "/{brand}", method = RequestMethod.GET)
+	public ModelAndView getSpecificBrand(@PathVariable String brand) {
+		ModelAndView mv = new ModelAndView("carlist");
 
-    PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToBrand(brand));
-    mv.addObject("title", brand);
-    mv.addObject("previousview", "carbrands");
-    mv.addObject("previousviewtitle", "Car Brands");
-    addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
-    addPaginationInformation(mv, results);
+		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToBrand(brand));
+		mv.addObject("title", brand);
+		mv.addObject("previousview", "carbrands");
+		mv.addObject("previousviewtitle", "Car Brands");
+		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addPaginationInformation(mv, results);
 
-    return mv;
-  }
+		return mv;
+	}
 
-  @RequestMapping(value = "/{country}", method = RequestMethod.POST)
-  public ModelAndView getBrandsByCountry(@PathVariable String country) {
-    ModelAndView mv = new ModelAndView("carbrandstemplate");
+	@RequestMapping(value = "/{country}", method = RequestMethod.POST)
+	public ModelAndView getBrandsByCountry(@PathVariable String country) {
+		ModelAndView mv = new ModelAndView("carbrandstemplate");
 
-    SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findBrandsByCountry(country));
-    mv.addObject("sortedbrands", model);
-    mv.addObject("countries", brandFacade.findCountries());
+		SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findBrandsByCountry(country));
+		mv.addObject("sortedbrands", model);
+		mv.addObject("countries", brandFacade.findCountries());
 
-    return mv;
-  }
+		return mv;
+	}
 
 }

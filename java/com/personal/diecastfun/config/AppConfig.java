@@ -31,7 +31,7 @@ import com.personal.diecastfun.persistence.XMLCarRepository;
 import com.personal.diecastfun.utils.Paginator;
 
 @Configuration
-@ComponentScan
+@ComponentScan(basePackages = { "com.personal.diecastfun" })
 @EntityScan(basePackages = { "com.personal.diecastfun.domain" })
 @EnableTransactionManagement
 @EnableWebMvc
@@ -112,7 +112,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean(name = "jspViewResolver")
 	public ViewResolver getJspViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("WEB-INF/views/");
+		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
