@@ -31,8 +31,7 @@ public class CountryController extends BasicController {
 	private Paginator paginator;
 
 	@RequestMapping(value = "/{country}", method = RequestMethod.POST)
-	public ModelAndView getCarsByCountry(
-			@PathVariable String country,
+	public ModelAndView getCarsByCountry(@PathVariable String country,
 			@RequestParam(value = "cars", required = false) ArrayList<String> cars) {
 		ModelAndView mv = new ModelAndView("carlisttemplate");
 
@@ -40,16 +39,15 @@ public class CountryController extends BasicController {
 
 		for (String carId : cars) {
 			CarModel carModel = carFacade.findCarById(carId);
-			if (brandFacade.findBrand(carModel.getBrand()).getCountry()
-					.equals(country)) {
+			if (brandFacade.findBrand(carModel.getBrand()).getCountry().equals(country)) {
 				filteredCars.add(carModel);
 			}
 		}
 
-		PaginationResults results = paginator
-				.paginate(new SortedList<CarModel>(filteredCars));
+		PaginationResults results = paginator.paginate(new SortedList<CarModel>(filteredCars));
 		addPaginationInformation(mv, results);
 		mv.addObject("completeresults", cars);
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}

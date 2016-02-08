@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.SortedList;
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.utils.PaginationResults;
 import com.personal.diecastfun.utils.Paginator;
@@ -21,8 +20,6 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/search")
 public class SearchController extends BasicController {
 
-	@Inject
-	private BasicFacade basicFacade;
 	@Inject
 	private CarFacade carFacade;
 	@Inject
@@ -36,7 +33,7 @@ public class SearchController extends BasicController {
 		PaginationResults results = paginator.paginate(cars);
 		mv.addObject("title", "Search Results");
 		mv.addObject("searchresults", cars.size());
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;
@@ -50,6 +47,7 @@ public class SearchController extends BasicController {
 
 		PaginationResults results = paginator.paginateWithCount(++carCount);
 		addPaginationInformation(mv, results);
+		addBasicInformationToModel(mv);
 		mv.addObject("completeresults", cars);
 
 		return mv;

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.ConfigFacade;
 import com.personal.diecastfun.domain.Country;
 import com.personal.diecastfun.utils.PaginationResults;
@@ -13,10 +14,12 @@ import com.personal.diecastfun.utils.PaginationResults;
 public abstract class BasicController {
 
 	@Inject
+	private BasicFacade basicFacade;
+	@Inject
 	private ConfigFacade configFacade;
 
-	protected void addBasicInformationToModel(ModelAndView mv, int carCount) {
-		mv.addObject("carcount", carCount);
+	protected void addBasicInformationToModel(ModelAndView mv) {
+		mv.addObject("carcount", basicFacade.getTotalCarCount());
 		mv.addObject("picturesUrl", configFacade.getPicturesUrl());
 	}
 

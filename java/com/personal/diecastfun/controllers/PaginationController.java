@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.utils.PaginationResults;
 import com.personal.diecastfun.utils.Paginator;
 
@@ -19,8 +18,6 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/paginate")
 public class PaginationController extends BasicController {
 
-	@Inject
-	private BasicFacade basicFacade;
 	@Inject
 	private Paginator paginator;
 
@@ -50,7 +47,7 @@ public class PaginationController extends BasicController {
 
 	private void getModelAndView(String title, ModelAndView mv, PaginationResults results) {
 		mv.addObject("title", title);
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 	}
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
@@ -19,8 +18,6 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/cars")
 public class CarsController extends BasicController {
 
-	@Inject
-	private BasicFacade basicFacade;
 	@Inject
 	private CarFacade carFacade;
 	@Inject
@@ -36,7 +33,7 @@ public class CarsController extends BasicController {
 
 		PaginationResults results = paginator.paginate(carFacade.findAllCars());
 		mv.addObject("title", "All Cars");
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;
@@ -52,7 +49,7 @@ public class CarsController extends BasicController {
 		mv.addObject("seealso", carFacade.findSeeAlso(carId));
 		mv.addObject("votes", votesFacade.getVotesById(carId));
 		mv.addObject("views", viewsFacade.getViews(carId));
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}

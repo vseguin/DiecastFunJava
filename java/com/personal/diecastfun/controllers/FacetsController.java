@@ -23,7 +23,6 @@ import com.personal.diecastfun.controllers.models.EraModel;
 import com.personal.diecastfun.controllers.models.MakerModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.controllers.models.TagModel;
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.BrandFacade;
 import com.personal.diecastfun.controllers.service.ColorFacade;
 import com.personal.diecastfun.controllers.service.ConditionResolverFacade;
@@ -38,193 +37,191 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/facets")
 public class FacetsController extends BasicController {
 
-  @Inject
-  private BasicFacade basicFacade;
-  @Inject
-  private BrandFacade brandFacade;
-  @Inject
-  private ColorFacade colorFacade;
-  @Inject
-  private ConditionResolverFacade conditionResolverFacade;
-  @Inject
-  private EraFacade eraFacade;
-  @Inject
-  private MakerFacade makerFacade;
-  @Inject
-  private Paginator paginator;
-  @Inject
-  private TagsFacade tagsFacade;
+	@Inject
+	private BrandFacade brandFacade;
+	@Inject
+	private ColorFacade colorFacade;
+	@Inject
+	private ConditionResolverFacade conditionResolverFacade;
+	@Inject
+	private EraFacade eraFacade;
+	@Inject
+	private MakerFacade makerFacade;
+	@Inject
+	private Paginator paginator;
+	@Inject
+	private TagsFacade tagsFacade;
 
-  @RequestMapping(method = RequestMethod.GET)
-  public ModelAndView getFacets() {
-    ModelAndView mv = new ModelAndView("facets");
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView getFacets() {
+		ModelAndView mv = new ModelAndView("facets");
 
-    conditionResolverFacade.clearAll();
-    addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
-    addCarsToView(mv);
-    mv.addObject("brands", new SortedList<BrandModel>(brandFacade.findAllBrands()).getCollection());
-    mv.addObject("eras", new SortedList<EraModel>(eraFacade.findAllEras()).getCollection());
-    mv.addObject("makers", new SortedList<MakerModel>(makerFacade.findAllMakers()).getCollection());
-    mv.addObject("categories", new SortedList<TagModel>(tagsFacade.findAllTags()).getCollection());
-    mv.addObject("colors", new SortedList<ColorModel>(colorFacade.findAllColors()).getCollection());
-    mv.addObject("countries",
-                 new SortedList<CountryModel>(brandFacade.findCountries()).getCollection());
+		conditionResolverFacade.clearAll();
+		addBasicInformationToModel(mv);
+		addCarsToView(mv);
+		mv.addObject("brands", new SortedList<BrandModel>(brandFacade.findAllBrands()).getCollection());
+		mv.addObject("eras", new SortedList<EraModel>(eraFacade.findAllEras()).getCollection());
+		mv.addObject("makers", new SortedList<MakerModel>(makerFacade.findAllMakers()).getCollection());
+		mv.addObject("categories", new SortedList<TagModel>(tagsFacade.findAllTags()).getCollection());
+		mv.addObject("colors", new SortedList<ColorModel>(colorFacade.findAllColors()).getCollection());
+		mv.addObject("countries", new SortedList<CountryModel>(brandFacade.findCountries()).getCollection());
 
-    return mv;
-  }
+		return mv;
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/addbrand")
-  public ModelAndView addBrandCondition(String brand, int carCount) {
-    conditionResolverFacade.addCondition(new BrandCondition(brand));
+	@RequestMapping(method = RequestMethod.POST, value = "/addbrand")
+	public ModelAndView addBrandCondition(String brand, int carCount) {
+		conditionResolverFacade.addCondition(new BrandCondition(brand));
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removebrand")
-  public ModelAndView removeBrandCondition(String brand, int carCount) {
-    conditionResolverFacade.removeCondition(brand);
+	@RequestMapping(method = RequestMethod.POST, value = "/removebrand")
+	public ModelAndView removeBrandCondition(String brand, int carCount) {
+		conditionResolverFacade.removeCondition(brand);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removebrands")
-  public ModelAndView removeBrandConditions(int carCount) {
-    conditionResolverFacade.removeConditions(BrandCondition.class);
+	@RequestMapping(method = RequestMethod.POST, value = "/removebrands")
+	public ModelAndView removeBrandConditions(int carCount) {
+		conditionResolverFacade.removeConditions(BrandCondition.class);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/addmaker")
-  public ModelAndView addMakerCondition(String maker, int carCount) {
-    conditionResolverFacade.addCondition(new MakerCondition(maker));
+	@RequestMapping(method = RequestMethod.POST, value = "/addmaker")
+	public ModelAndView addMakerCondition(String maker, int carCount) {
+		conditionResolverFacade.addCondition(new MakerCondition(maker));
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removemaker")
-  public ModelAndView removeMakerCondition(String maker, int carCount) {
-    conditionResolverFacade.removeCondition(maker);
+	@RequestMapping(method = RequestMethod.POST, value = "/removemaker")
+	public ModelAndView removeMakerCondition(String maker, int carCount) {
+		conditionResolverFacade.removeCondition(maker);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removemakers")
-  public ModelAndView removeMakerConditions(int carCount) {
-    conditionResolverFacade.removeConditions(MakerCondition.class);
+	@RequestMapping(method = RequestMethod.POST, value = "/removemakers")
+	public ModelAndView removeMakerConditions(int carCount) {
+		conditionResolverFacade.removeConditions(MakerCondition.class);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/addera")
-  public ModelAndView addEraCondition(String era, int carCount) {
-    conditionResolverFacade.addCondition(new EraCondition(Era.valueOf(era)));
+	@RequestMapping(method = RequestMethod.POST, value = "/addera")
+	public ModelAndView addEraCondition(String era, int carCount) {
+		conditionResolverFacade.addCondition(new EraCondition(Era.valueOf(era)));
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removeera")
-  public ModelAndView removeEraCondition(String era, int carCount) {
-    conditionResolverFacade.removeCondition(era);
+	@RequestMapping(method = RequestMethod.POST, value = "/removeera")
+	public ModelAndView removeEraCondition(String era, int carCount) {
+		conditionResolverFacade.removeCondition(era);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removeeras")
-  public ModelAndView removeEraConditions(int carCount) {
-    conditionResolverFacade.removeConditions(EraCondition.class);
+	@RequestMapping(method = RequestMethod.POST, value = "/removeeras")
+	public ModelAndView removeEraConditions(int carCount) {
+		conditionResolverFacade.removeConditions(EraCondition.class);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/addcategory")
-  public ModelAndView addCategoryCondition(String category, int carCount) {
-    conditionResolverFacade.addCondition(new CategoryCondition(Tags.valueOf(category)));
+	@RequestMapping(method = RequestMethod.POST, value = "/addcategory")
+	public ModelAndView addCategoryCondition(String category, int carCount) {
+		conditionResolverFacade.addCondition(new CategoryCondition(Tags.valueOf(category)));
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removecategory")
-  public ModelAndView removeCategoryCondition(String category, int carCount) {
-    conditionResolverFacade.removeCondition(category);
+	@RequestMapping(method = RequestMethod.POST, value = "/removecategory")
+	public ModelAndView removeCategoryCondition(String category, int carCount) {
+		conditionResolverFacade.removeCondition(category);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removecategories")
-  public ModelAndView removeCategoriesConditions(int carCount) {
-    conditionResolverFacade.removeConditions(CategoryCondition.class);
+	@RequestMapping(method = RequestMethod.POST, value = "/removecategories")
+	public ModelAndView removeCategoriesConditions(int carCount) {
+		conditionResolverFacade.removeConditions(CategoryCondition.class);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/addcolor")
-  public ModelAndView addColorCondition(String color, int carCount) {
-    conditionResolverFacade.addCondition(new ColorCondition(color));
+	@RequestMapping(method = RequestMethod.POST, value = "/addcolor")
+	public ModelAndView addColorCondition(String color, int carCount) {
+		conditionResolverFacade.addCondition(new ColorCondition(color));
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removecolor")
-  public ModelAndView removeColorCondition(String color, int carCount) {
-    conditionResolverFacade.removeCondition(color);
+	@RequestMapping(method = RequestMethod.POST, value = "/removecolor")
+	public ModelAndView removeColorCondition(String color, int carCount) {
+		conditionResolverFacade.removeCondition(color);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removecolors")
-  public ModelAndView removeColorsConditions(int carCount) {
-    conditionResolverFacade.removeConditions(ColorCondition.class);
+	@RequestMapping(method = RequestMethod.POST, value = "/removecolors")
+	public ModelAndView removeColorsConditions(int carCount) {
+		conditionResolverFacade.removeConditions(ColorCondition.class);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/addcountry")
-  public ModelAndView addCountryCondition(String country, int carCount) {
-    conditionResolverFacade.addCondition(new CountryCondition(country, brandFacade));
+	@RequestMapping(method = RequestMethod.POST, value = "/addcountry")
+	public ModelAndView addCountryCondition(String country, int carCount) {
+		conditionResolverFacade.addCondition(new CountryCondition(country, brandFacade));
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removecountry")
-  public ModelAndView removeCountryCondition(String country, int carCount) {
-    conditionResolverFacade.removeCondition(country);
+	@RequestMapping(method = RequestMethod.POST, value = "/removecountry")
+	public ModelAndView removeCountryCondition(String country, int carCount) {
+		conditionResolverFacade.removeCondition(country);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/removecountries")
-  public ModelAndView removeCountriesConditions(int carCount) {
-    conditionResolverFacade.removeConditions(CountryCondition.class);
+	@RequestMapping(method = RequestMethod.POST, value = "/removecountries")
+	public ModelAndView removeCountriesConditions(int carCount) {
+		conditionResolverFacade.removeConditions(CountryCondition.class);
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value = "/clearall")
-  public ModelAndView clearAll(int carCount) {
-    conditionResolverFacade.clearAll();
+	@RequestMapping(method = RequestMethod.POST, value = "/clearall")
+	public ModelAndView clearAll(int carCount) {
+		conditionResolverFacade.clearAll();
 
-    return computeResults(carCount);
-  }
+		return computeResults(carCount);
+	}
 
-  private ModelAndView computeResults(int carCount) {
-    ModelAndView mv = new ModelAndView("facetsresults");
+	private ModelAndView computeResults(int carCount) {
+		ModelAndView mv = new ModelAndView("facetsresults");
 
-    addCarsToView(mv, ++carCount);
+		addCarsToView(mv, ++carCount);
 
-    return mv;
-  }
+		return mv;
+	}
 
-  private void addCarsToView(ModelAndView mv) {
-    List<CarModel> cars = conditionResolverFacade.resolveConditions();
-    SortedList<CarModel> sortedCars = new SortedList<CarModel>(cars);
+	private void addCarsToView(ModelAndView mv) {
+		List<CarModel> cars = conditionResolverFacade.resolveConditions();
+		SortedList<CarModel> sortedCars = new SortedList<CarModel>(cars);
 
-    addPaginationInformation(mv, paginator.paginate(sortedCars));
-  }
+		addPaginationInformation(mv, paginator.paginate(sortedCars));
+	}
 
-  private void addCarsToView(ModelAndView mv, int carCount) {
-    List<CarModel> cars = conditionResolverFacade.resolveConditions();
-    SortedList<CarModel> sortedCars = new SortedList<CarModel>(cars);
+	private void addCarsToView(ModelAndView mv, int carCount) {
+		List<CarModel> cars = conditionResolverFacade.resolveConditions();
+		SortedList<CarModel> sortedCars = new SortedList<CarModel>(cars);
 
-    addPaginationInformation(mv, paginator.paginateWithCount(carCount, sortedCars));
-  }
+		addBasicInformationToModel(mv);
+		addPaginationInformation(mv, paginator.paginateWithCount(carCount, sortedCars));
+	}
 }

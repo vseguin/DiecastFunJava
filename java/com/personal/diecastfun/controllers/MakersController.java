@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.personal.diecastfun.controllers.models.MakerModel;
 import com.personal.diecastfun.controllers.models.SortedList;
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.MakerFacade;
 import com.personal.diecastfun.utils.PaginationResults;
@@ -20,8 +19,6 @@ import com.personal.diecastfun.utils.Paginator;
 @RequestMapping(value = "/makers")
 public class MakersController extends BasicController {
 
-	@Inject
-	private BasicFacade basicFacade;
 	@Inject
 	private MakerFacade makerFacade;
 	@Inject
@@ -35,7 +32,7 @@ public class MakersController extends BasicController {
 
 		SortedList<MakerModel> model = new SortedList<MakerModel>(makerFacade.findAllMakers());
 		mv.addObject("sortedmakers", model);
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}
@@ -48,7 +45,7 @@ public class MakersController extends BasicController {
 		mv.addObject("title", maker);
 		mv.addObject("previousview", "makers");
 		mv.addObject("previousviewtitle", "Maker Brands");
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;

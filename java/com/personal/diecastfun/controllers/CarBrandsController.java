@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.personal.diecastfun.controllers.models.BrandModel;
 import com.personal.diecastfun.controllers.models.SortedList;
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.BrandFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.utils.PaginationResults;
@@ -23,8 +22,6 @@ public class CarBrandsController extends BasicController {
 	@Inject
 	private BrandFacade brandFacade;
 	@Inject
-	private BasicFacade basicFacade;
-	@Inject
 	private CarFacade carFacade;
 	@Inject
 	private Paginator paginator;
@@ -36,7 +33,7 @@ public class CarBrandsController extends BasicController {
 		SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findAllBrands());
 		mv.addObject("sortedbrands", model);
 		mv.addObject("countries", brandFacade.findCountries());
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}
@@ -49,7 +46,7 @@ public class CarBrandsController extends BasicController {
 		mv.addObject("title", brand);
 		mv.addObject("previousview", "carbrands");
 		mv.addObject("previousviewtitle", "Car Brands");
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;
@@ -62,6 +59,7 @@ public class CarBrandsController extends BasicController {
 		SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findBrandsByCountry(country));
 		mv.addObject("sortedbrands", model);
 		mv.addObject("countries", brandFacade.findCountries());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}

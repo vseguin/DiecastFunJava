@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.domain.Era;
 import com.personal.diecastfun.utils.PaginationResults;
@@ -19,8 +18,6 @@ import com.personal.diecastfun.utils.Paginator;
 public class ErasController extends BasicController {
 
 	@Inject
-	private BasicFacade basicFacade;
-	@Inject
 	private CarFacade carFacade;
 	@Inject
 	private Paginator paginator;
@@ -29,7 +26,7 @@ public class ErasController extends BasicController {
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("eras");
 
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		mv.addObject("eras", Era.values());
 
 		return mv;
@@ -39,12 +36,11 @@ public class ErasController extends BasicController {
 	public ModelAndView getSpecificEra(@PathVariable String era) {
 		ModelAndView mv = new ModelAndView("carlist");
 
-		PaginationResults results = paginator.paginate(carFacade
-				.findAllCarsCorrespondingToEra(era));
+		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToEra(era));
 		mv.addObject("title", era);
 		mv.addObject("previousview", "eras");
 		mv.addObject("previousviewtitle", "Eras");
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.domain.Tags;
 import com.personal.diecastfun.utils.PaginationResults;
@@ -19,8 +18,6 @@ import com.personal.diecastfun.utils.Paginator;
 public class CategoriesController extends BasicController {
 
 	@Inject
-	private BasicFacade basicFacade;
-	@Inject
 	private CarFacade carFacade;
 	@Inject
 	private Paginator paginator;
@@ -29,7 +26,7 @@ public class CategoriesController extends BasicController {
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("carcategories");
 
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		mv.addObject("tags", Tags.values());
 
 		return mv;
@@ -39,12 +36,11 @@ public class CategoriesController extends BasicController {
 	public ModelAndView getSpecificCategory(@PathVariable String category) {
 		ModelAndView mv = new ModelAndView("carlist");
 
-		PaginationResults results = paginator.paginate(carFacade
-				.findAllCarsCorrespondingToCategory(category));
+		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToCategory(category));
 		mv.addObject("title", category);
 		mv.addObject("previousview", "categories");
 		mv.addObject("previousviewtitle", "Car Categories");
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;

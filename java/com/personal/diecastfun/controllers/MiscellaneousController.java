@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.SortedList;
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.domain.Comment;
@@ -22,8 +21,6 @@ import com.personal.diecastfun.utils.Paginator;
 @Controller
 public class MiscellaneousController extends BasicController {
 
-	@Inject
-	private BasicFacade basicFacade;
 	@Inject
 	private CarFacade carFacade;
 	@Inject
@@ -40,7 +37,7 @@ public class MiscellaneousController extends BasicController {
 
 		mv.addObject("views", viewsFacade.getAllViews());
 		mv.addObject("viewscount", viewsFacade.getViewsCount());
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}
@@ -49,7 +46,7 @@ public class MiscellaneousController extends BasicController {
 	public ModelAndView getWantedList() {
 		ModelAndView mv = new ModelAndView("wantedlist");
 
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}
@@ -59,7 +56,7 @@ public class MiscellaneousController extends BasicController {
 		ModelAndView mv = new ModelAndView("guestbook");
 
 		mv.addObject("comments", commentsRepository.findAll());
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}
@@ -94,7 +91,7 @@ public class MiscellaneousController extends BasicController {
 		PaginationResults results = paginator.paginate(cars);
 		mv.addObject("title", title);
 		addPaginationInformation(mv, results);
-		addBasicInformationToModel(mv, basicFacade.getTotalCarCount());
+		addBasicInformationToModel(mv);
 
 		return mv;
 	}
