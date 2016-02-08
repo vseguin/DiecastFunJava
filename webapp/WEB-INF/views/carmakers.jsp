@@ -32,7 +32,7 @@
 			<c:import url="carmakerstemplate.jsp" />
 			<h1 class="whitetext span4 well pull-right">
 				<img class="mediumicon"
-					src="<c:url value="/resources/images/templates/zoom.png" />"><a
+					src="<c:url value="${picturesUrl}/templates/zoom.png" />"><a
 					class="whitetext underline" href="cars/allcars">See All</a>
 			</h1>
 		</div>
