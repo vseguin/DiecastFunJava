@@ -1271,6 +1271,7 @@
     </cars>
     <cars>
         <brand>Jaguar</brand>
+		<color>Yellow</color>
         <era>Nineties</era>
         <id>0</id>
         <insertionDate>12/02/2016</insertionDate>
@@ -1490,6 +1491,7 @@
     </cars>
     <cars>
         <brand>Mazda</brand>
+		<color>Lime Green</color>
         <era>Eighties</era>
         <id>5</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -1533,6 +1535,7 @@
     </cars>
     <cars>
         <brand>Jaguar</brand>
+		<color>Black</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>11/02/2016</insertionDate>
@@ -1654,6 +1657,7 @@
     </cars>
     <cars>
         <brand>Audi</brand>
+		<color>Red</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -2778,6 +2782,7 @@
     </cars>
     <cars>
         <brand>Honda</brand>
+		<color>Green</color>
         <era>Modern</era>
         <id>1</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -2788,6 +2793,7 @@
     </cars>
     <cars>
         <brand>Honda</brand>
+		<color>Green</color>
         <era>Modern</era>
         <id>2</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -3128,6 +3134,7 @@
     </cars>
     <cars>
         <brand>Audi</brand>
+		<color>White</color>
         <era>Eighties</era>
         <id>1</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -4284,6 +4291,7 @@
     </cars>
     <cars>
         <brand>Toyota</brand>
+		<color>Silver</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>12/02/2016</insertionDate>
@@ -4615,6 +4623,7 @@
     </cars>
     <cars>
         <brand>Cadillac</brand>
+		<color>Black</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -4968,6 +4977,7 @@
     </cars>
     <cars>
         <brand>Chevrolet</brand>
+		<color>Black</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>11/02/2016</insertionDate>
@@ -4979,6 +4989,7 @@
     </cars>
     <cars>
         <brand>Honda</brand>
+		<color>Red</color>
         <era>Eighties</era>
         <id>0</id>
         <insertionDate>11/02/2016</insertionDate>
@@ -5924,6 +5935,7 @@
     </cars>
     <cars>
         <brand>Jeep</brand>
+		<color>Wine Red</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>11/02/2016</insertionDate>
@@ -6022,6 +6034,7 @@
     </cars>
     <cars>
         <brand>Chevrolet</brand>
+		<color>Silver</color>
         <era>Nineties</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -6804,6 +6817,7 @@
     </cars>
     <cars>
         <brand>Porsche</brand>
+		<color>Black</color>
         <era>Fifties</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -7035,6 +7049,7 @@
     </cars>
     <cars>
         <brand>Nissan</brand>
+		<color>Wine Red</color>
         <era>Nineties</era>
         <id>0</id>
         <insertionDate>10/02/2016</insertionDate>
@@ -7144,6 +7159,7 @@
     </cars>
     <cars>
         <brand>Dodge</brand>
+		<color>Red</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>11/02/2016</insertionDate>
@@ -7861,6 +7877,7 @@
     </cars>
     <cars>
         <brand>Peugeot</brand>
+		<color>Wine Red</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>12/02/2016</insertionDate>
@@ -8047,6 +8064,7 @@
     </cars>
     <cars>
         <brand>Volkswagen</brand>
+		<color>Black</color>
         <era>Modern</era>
         <id>1</id>
         <insertionDate>12/02/2016</insertionDate>
@@ -8585,6 +8603,7 @@
     </cars>
     <cars>
         <brand>Lamborghini</brand>
+		<color>Orange</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>10/02/2016</insertionDate>
@@ -9432,6 +9451,7 @@
     </cars>
     <cars>
         <brand>Ford</brand>
+		<color>White</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -12913,6 +12933,7 @@
     </cars>
     <cars>
         <brand>GHE-O</brand>
+		<color>Red</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -15128,6 +15149,7 @@
     </cars>
     <cars>
         <brand>Chevrolet</brand>
+		<color>White</color>
         <era>Seventies</era>
         <id>1</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -16417,6 +16439,7 @@
     </cars>
     <cars>
         <brand>Nissan</brand>
+		<color>White</color>
         <era>Nineties</era>
         <id>1</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -16504,6 +16527,7 @@
     </cars>
     <cars>
         <brand>Porsche</brand>
+		<color>White</color>
         <era>Modern</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -16998,6 +17022,7 @@
     </cars>
     <cars>
         <brand>Cunningham</brand>
+		<color>White</color>
         <era>Fifties</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -17228,6 +17253,7 @@
     </cars>
     <cars>
         <brand>BMW</brand>
+		<color>Orange</color>
         <era>Eighties</era>
         <id>0</id>
         <insertionDate>13/02/2016</insertionDate>
@@ -18989,6 +19015,7 @@
     </cars>
     <cars>
         <brand>BMW</brand>
+		<color>Silver</color>
         <era>Nineties</era>
         <id>1</id>
         <insertionDate>13/02/2016</insertionDate>
