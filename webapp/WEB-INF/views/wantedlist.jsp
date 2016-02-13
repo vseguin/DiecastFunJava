@@ -130,27 +130,15 @@
         </tr>
         <tr>
           <td>Ford</td>
-          <td>Escort 1600RS '70, F-150 Raptor 2015, Transit Supervan</td>
+          <td>F-150 Raptor 2015</td>
         </tr>
         <tr>
           <td>Honda</td>
           <td>Odyssey '14</td>
         </tr>
         <tr>
-          <td>Lamborghini</td>
-          <td>Huracan</td>
-        </tr>
-        <tr>
           <td>Lincoln</td>
           <td>Futura</td>
-        </tr>
-        <tr>
-          <td>Nissan</td>
-          <td>180SX Type X</td>
-        </tr>
-        <tr>
-          <td>Porsche</td>
-          <td>917</td>
         </tr>
       </tbody>
     </table>
@@ -164,10 +152,6 @@
       </thead>
       <tbody>
         <tr>
-          <td>Aston-Martin</td>
-          <td>Lagonda</td>
-        </tr>
-        <tr>
           <td>Chevrolet</td>
           <td>HHR</td>
         </tr>
@@ -177,7 +161,7 @@
         </tr>
         <tr>
           <td>Ford</td>
-          <td>Gran Torino 1974</td>
+          <td>Galaxie 1961, Gran Torino 1974</td>
         </tr>
         <tr>
           <td>Honda</td>
@@ -199,10 +183,6 @@
           <td>Triumph</td>
           <td>TR3A</td>
         </tr>
-        <tr>
-          <td>Volkwsagen</td>
-          <td>Beetle Cabriolet</td>
-        </tr>
       </tbody>
     </table>
     <h2>Konami</h2>
@@ -217,6 +197,21 @@
         <tr>
           <td>Subaru</td>
           <td>Forester XT</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>M2 Machines</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Makers</th>
+          <th>Models</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dodge</td>
+          <td>Coronet 1954</td>
         </tr>
       </tbody>
     </table>
@@ -288,28 +283,12 @@
       </thead>
       <tbody>
         <tr>
-          <td>Cadillac</td>
-          <td>One</td>
-        </tr>
-        <tr>
           <td>Chevrolet</td>
           <td>Stingray Police</td>
         </tr>
         <tr>
           <td>Freightliner</td>
           <td>M2 106</td>
-        </tr>
-        <tr>
-          <td>Ford</td>
-          <td>F150 Contractors Truck</td>
-        </tr>
-		<tr>
-          <td>GHE-O</td>
-          <td>Rescue</td>
-        </tr>
-        <tr>
-          <td>Jaguar</td>
-          <td>F-Type</td>
         </tr>
         <tr>
           <td>Mazda</td>
@@ -364,10 +343,6 @@
         <tr>
           <td>Honda</td>
           <td>Civic 1975</td>
-        </tr>
-        <tr>
-          <td>Plymouth</td>
-          <td>Reliant</td>
         </tr>
       </tbody>
     </table>
@@ -489,7 +464,7 @@
         </tr>
         <tr>
           <td>Honda</td>
-          <td>City Turbo II, Civic Si-R, CR-V, NSX-R, S660, T500</td>
+          <td>Civic Si-R, CR-V, NSX-R, S660, T500</td>
         </tr>
         <tr>
           <td>Isuzu</td>
@@ -544,19 +519,11 @@
       <tbody>
         <tr>
           <td>Audi</td>
-          <td>A2, TT Coupe</td>
+          <td>TT Coupe</td>
         </tr>
         <tr>
           <td>BMW</td>
           <td>335i</td>
-        </tr>
-        <tr>
-          <td>Chevrolet</td>
-          <td>Niva</td>
-        </tr>
-        <tr>
-          <td>Jaguar</td>
-          <td>XK180</td>
         </tr>
         <tr>
           <td>Mercedes-Benz</td>

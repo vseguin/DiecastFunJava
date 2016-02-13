@@ -31,7 +31,7 @@ public class CarFacade {
 	@Autowired
 	private VotesRepository votesRepository;
 
-	public int addCar(CarModel carModel) {
+	public String addCar(CarModel carModel) {
 		DateFormat dateFormat = new SimpleDateFormat(Car.INSERTION_DATE_FORMAT);
 
 		int id = 0;
@@ -49,7 +49,7 @@ public class CarFacade {
 
 		carRepository.save(car);
 
-		return car.getId();
+		return car.getCompleteId();
 	}
 
 	public int countByEra(Era era) {

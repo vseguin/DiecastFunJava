@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.google.common.base.Strings;
-
 public class Car {
 
 	public static final String INSERTION_DATE_FORMAT = "dd/MM/yyyy";
@@ -189,16 +187,8 @@ public class Car {
 	public boolean containsWord(String word) {
 		word = word.toLowerCase();
 
-		boolean result = getCompleteName().toLowerCase().contains(word);
-		if (!result) {
-			result = maker.toLowerCase().contains(word);
-		}
-
-		if (!result && !Strings.isNullOrEmpty(color)) {
-			result = color.toLowerCase().contains(word);
-		}
-
-		return result;
+		return getCompleteName().toLowerCase().contains(word) || maker.toLowerCase().contains(word)
+				|| color.toLowerCase().contains(word);
 	}
 
 	public Calendar getInsertionDateAsCalendar() {
