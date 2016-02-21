@@ -1,16 +1,15 @@
 package com.personal.diecastfun.controllers.service;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.personal.diecastfun.domain.CarRepository;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 
 public class BasicFacade {
 
-	@Inject
+	@Autowired
 	private CarRepository carRepository;
 
-	public int getTotalCarCount() {
-		return carRepository.countAll();
+	public long getTotalCarCount() {
+		return carRepository.count();
 	}
-
 }

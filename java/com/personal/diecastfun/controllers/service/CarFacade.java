@@ -1,55 +1,61 @@
 package com.personal.diecastfun.controllers.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
-import com.personal.diecastfun.domain.CarRepository;
 import com.personal.diecastfun.domain.Era;
 import com.personal.diecastfun.domain.Tags;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 import com.personal.diecastfun.domain.repositories.VotesRepository;
 
+@Component
+@DependsOn("carRepository")
 public class CarFacade {
 
-	private Map<String, CarModel> cachedCars = new HashMap<String, CarModel>();
+	private Map<String, CarModel> cachedCarModels = new HashMap<String, CarModel>();
+	private Map<String, Car> cachedCars = Maps.newHashMap();
 
-	@Inject
+	@Autowired
 	private CarRepository carRepository;
 	@Autowired
 	private VotesRepository votesRepository;
 
 	public String addCar(CarModel carModel) {
-		DateFormat dateFormat = new SimpleDateFormat(Car.INSERTION_DATE_FORMAT);
-
 		int id = 0;
 
 		Car car = new Car().withBrand(carModel.getBrand()).withModel(carModel.getModel()).withMaker(carModel.getMaker())
 				.withEra(carModel.getEra()).withScale(carModel.getScale()).withColor(carModel.getColorName())
-				.withRestaured(carModel.getIsRestaured() ? 1 : 0).withCustomized(carModel.getIsCustomized() ? 1 : 0)
-				.withInsertionDate(dateFormat.format(Calendar.getInstance().getTime())).withTags(carModel.getTags())
-				.withId(0);
+				.withRestored(carModel.getIsRestaured()).withCustomized(carModel.getIsCustomized())
+				.withInsertionDate(new Date(new java.util.Date().getTime())).withTags(carModel.getTags()).withCount(0);
 
-		while (carRepository.exists(car.getCompleteId())) {
+		while (carRepository.exists(car.generateId())) {
 			id++;
-			car.setId(id);
+			car.setCount(id);
 		}
 
-		carRepository.save(car);
+		car.withId(car.generateId());
 
-		return car.getCompleteId();
+		carRepository.save(car);
+		cachedCars.put(car.getId(), car);
+
+		return car.getId();
 	}
 
 	public int countByEra(Era era) {
@@ -57,19 +63,19 @@ public class CarFacade {
 	}
 
 	public int countByTag(Tags tag) {
-		return carRepository.countByTag(tag);
+		return carRepository.countByTags(tag);
 	}
 
 	public SortedList<CarModel> findAllCars() {
-		List<Car> allCars = new ArrayList<Car>(carRepository.findAll());
-		if (cachedCars.values().size() != allCars.size()) {
-			cachedCars = new HashMap<String, CarModel>();
+		List<Car> allCars = getAllCars();
+		if (cachedCarModels.values().size() != allCars.size()) {
+			cachedCarModels = new HashMap<String, CarModel>();
 			for (Car car : allCars) {
-				cachedCars.put(car.getCompleteId(), new CarModel(car));
+				cachedCarModels.put(car.getId(), new CarModel(car));
 			}
 		}
 
-		return new SortedList<CarModel>(new ArrayList<CarModel>(cachedCars.values()));
+		return new SortedList<CarModel>(new ArrayList<CarModel>(cachedCarModels.values()));
 	}
 
 	public SortedList<CarModel> findAllCarsCorrespondingToBrand(String brand) {
@@ -85,7 +91,7 @@ public class CarFacade {
 	public SortedList<CarModel> findAllCarsCorrespondingToCategory(String category) {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		for (Car car : carRepository.findByCategory(category)) {
+		for (Car car : carRepository.findByTags(Tags.valueOf(category))) {
 			addCarModel(models, car);
 		}
 		return new SortedList<CarModel>(models);
@@ -106,15 +112,15 @@ public class CarFacade {
 		List<CarModel> models = new ArrayList<CarModel>();
 		List<String> foundIds = new ArrayList<String>();
 
-		for (Car car : carRepository.findAll()) {
+		for (Car car : getAllCars()) {
 			if (!Strings.isNullOrEmpty(keywords)) {
-				if (car.containsWord(keywords) && !foundIds.contains(car.getCompleteId())) {
+				if (car.containsWord(keywords) && !foundIds.contains(car.getId())) {
 					addCarModel(models, car);
-					foundIds.add(car.getCompleteId());
+					foundIds.add(car.getId());
 				}
 			} else {
 				addCarModel(models, car);
-				foundIds.add(car.getCompleteId());
+				foundIds.add(car.getId());
 			}
 		}
 
@@ -133,7 +139,7 @@ public class CarFacade {
 	public List<CarModel> findCustomizations() {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		for (Car car : carRepository.findCustomizations()) {
+		for (Car car : carRepository.findByCustomized(true)) {
 			addCarModel(models, car);
 		}
 		return models;
@@ -142,7 +148,7 @@ public class CarFacade {
 	public List<CarModel> findRandomRestorations() {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		List<Car> restorations = carRepository.findRestorations();
+		List<Car> restorations = carRepository.findByRestored(true);
 		int numberOfCars = 0;
 		if (!restorations.isEmpty()) {
 			while (numberOfCars < 10) {
@@ -159,7 +165,7 @@ public class CarFacade {
 	public List<CarModel> findRestorations() {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		for (Car car : carRepository.findRestorations()) {
+		for (Car car : carRepository.findByRestored(true)) {
 			addCarModel(models, car);
 		}
 		return models;
@@ -167,40 +173,56 @@ public class CarFacade {
 
 	public CarModel findCarById(String id) {
 		CarModel carModel;
-		if (cachedCars.containsKey(id)) {
-			carModel = cachedCars.get(id);
+		if (cachedCarModels.containsKey(id)) {
+			carModel = cachedCarModels.get(id);
 		} else {
-			Car realCar = carRepository.findById(id);
+			Car realCar = carRepository.findOne(id);
+			Hibernate.initialize(realCar.getTags());
+
 			carModel = new CarModel(realCar);
-			cachedCars.put(realCar.getCompleteId(), carModel);
+			cachedCarModels.put(realCar.getId(), carModel);
 		}
 		return carModel;
 	}
 
 	public String findRandomCarId() {
-		return carRepository.findRandomId();
+		Random generator = new Random();
+		List<Car> cars = getAllCars();
+
+		return cars.get(generator.nextInt(cars.size())).getId();
 	}
 
 	public List<CarModel> findMostPopular() {
-		return new MostPopularStrategy(carRepository, votesRepository).findCars();
+		return new MostPopularStrategy(carRepository, votesRepository).findCars(getAllCars());
 	}
 
 	public List<CarModel> findNewAdditions() {
-		return new NewAdditionsStrategy(carRepository).findCars();
+		return new NewAdditionsStrategy(carRepository).findCars(getAllCars());
 	}
 
 	public List<CarModel> findSeeAlso(String id) {
-		return new SeeAlsoStrategy(carRepository, id).findCars();
+		return new SeeAlsoStrategy(id).findCars(getAllCars());
 	}
 
 	private void addCarModel(List<CarModel> models, Car car) {
-		String carId = car.getCompleteId();
-		if (cachedCars.containsKey(carId)) {
-			models.add(cachedCars.get(carId));
+		String carId = car.getId();
+		if (cachedCarModels.containsKey(carId)) {
+			models.add(cachedCarModels.get(carId));
 		} else {
 			CarModel carModel = new CarModel(car);
-			cachedCars.put(car.getCompleteId(), carModel);
+			cachedCarModels.put(car.getId(), carModel);
 			models.add(carModel);
 		}
+	}
+
+	private List<Car> getAllCars() {
+		return Lists.newArrayList(cachedCars.values());
+	}
+
+	@PostConstruct
+	private void init() {
+		carRepository.findAll().forEach(c -> {
+			cachedCars.put(c.getId(), c);
+		});
 	}
 }

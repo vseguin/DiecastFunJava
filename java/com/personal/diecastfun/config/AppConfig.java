@@ -26,8 +26,6 @@ import com.personal.diecastfun.controllers.service.MakerFacade;
 import com.personal.diecastfun.controllers.service.TagsFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
-import com.personal.diecastfun.domain.CarRepository;
-import com.personal.diecastfun.persistence.XMLCarRepository;
 import com.personal.diecastfun.utils.Paginator;
 
 @Configuration
@@ -95,18 +93,18 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public CarRepository carRepository() throws Exception {
-		return new XMLCarRepository();
-	}
-
-	@Bean
 	public Paginator paginator() {
 		return new Paginator();
 	}
 
 	@Bean
-	public ConditionResolverFacade conditionResolver() throws Exception {
-		return new ConditionResolverFacade(new ConditionResolver(carRepository().findAll()));
+	public ConditionResolver conditionResolver() {
+		return new ConditionResolver();
+	}
+
+	@Bean
+	public ConditionResolverFacade conditionResolverFacade() throws Exception {
+		return new ConditionResolverFacade(conditionResolver());
 	}
 
 	@Bean(name = "jspViewResolver")

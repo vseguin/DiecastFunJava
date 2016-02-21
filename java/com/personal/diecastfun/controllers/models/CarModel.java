@@ -32,7 +32,7 @@ public class CarModel implements Comparable<CarModel>, Serializable {
 	}
 
 	public CarModel(Car car) {
-		this.id = car.getCompleteId();
+		this.id = car.getId();
 		this.brand = car.getBrand();
 		this.model = car.getModel();
 		this.maker = car.getMaker();
@@ -40,8 +40,8 @@ public class CarModel implements Comparable<CarModel>, Serializable {
 		this.setEra(car.getEra());
 		this.colorName = car.getColor();
 		this.color = ColorTranslator.translateColor(colorName);
-		this.isRestaured = car.isRestaured();
-		this.isCustomized = car.isCustomized();
+		this.isRestaured = car.getRestored();
+		this.isCustomized = car.getCustomized();
 		this.tags = car.getTags();
 		pictures.add(id + "-1.jpg");
 		pictures.add(id + "-2.jpg");

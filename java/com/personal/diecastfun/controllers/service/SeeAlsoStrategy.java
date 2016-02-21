@@ -6,39 +6,34 @@ import java.util.List;
 
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.domain.Car;
-import com.personal.diecastfun.domain.CarRepository;
 
 public class SeeAlsoStrategy extends Strategy {
 
 	private static final int SEE_ALSO_SIZE = 4;
 
-	private CarRepository carRepository;
 	private String id;
 
-	public SeeAlsoStrategy(CarRepository carRepository, String id) {
-		this.carRepository = carRepository;
+	public SeeAlsoStrategy(String id) {
 		this.id = id;
 	}
 
 	@Override
-	public List<CarModel> findCars() {
+	public List<CarModel> findCars(List<Car> cars) {
 		List<CarModel> models = new ArrayList<CarModel>();
 
 		double currentSimilarity = 1;
 		double limitValue = 0;
-		List<Car> cars = new ArrayList<Car>(carRepository.findAll());
 
 		while (models.size() <= SEE_ALSO_SIZE && currentSimilarity > limitValue) {
 			currentSimilarity -= 0.1;
 			Iterator<Car> iterator = cars.iterator();
 			while (iterator.hasNext()) {
 				Car car = iterator.next();
-				if (car.getCompleteId().equals(id)) {
+				if (car.getId().equals(id)) {
 					iterator.remove();
 				} else if (models.size() <= SEE_ALSO_SIZE) {
-					double dice = dice(bigram(car.getCompleteId()), bigram(id));
-					if (dice > currentSimilarity
-							|| dice < (currentSimilarity * -1)) {
+					double dice = dice(bigram(car.getId()), bigram(id));
+					if (dice > currentSimilarity || dice < (currentSimilarity * -1)) {
 						addCarModel(models, car);
 						iterator.remove();
 					}

@@ -7,7 +7,7 @@ import com.personal.diecastfun.domain.Car;
 
 public abstract class Strategy {
 
-	public abstract List<CarModel> findCars();
+	public abstract List<CarModel> findCars(List<Car> cars);
 
 	protected void addCarModel(List<CarModel> models, Car car) {
 		CarModel carModel = new CarModel(car);

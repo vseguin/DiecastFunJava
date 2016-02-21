@@ -7,10 +7,11 @@ import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.collect.Lists;
 import com.personal.diecastfun.controllers.models.ViewModel;
 import com.personal.diecastfun.domain.Car;
-import com.personal.diecastfun.domain.CarRepository;
 import com.personal.diecastfun.domain.View;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 import com.personal.diecastfun.domain.repositories.ViewsRepository;
 
 public class ViewsFacade {
@@ -38,9 +39,10 @@ public class ViewsFacade {
 	}
 
 	public List<ViewModel> getAllViews() {
+		List<Car> cars = Lists.newArrayList(carsRepository.findAll());
 		List<ViewModel> views = new ArrayList<ViewModel>();
 		for (View view : viewsRepository.findAllByOrderByNumberDesc()) {
-			Car car = carsRepository.findById(view.getCarId());
+			Car car = cars.stream().filter(c -> c.getId().equals(view.getCarId())).findFirst().get();
 			views.add(new ViewModel(view.getCarId(), car.getCompleteName(), car.getMaker(), view.getNumber()));
 		}
 

@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.personal.diecastfun.controllers.models.EraModel;
-import com.personal.diecastfun.domain.CarRepository;
 import com.personal.diecastfun.domain.Era;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 
 public class EraFacade {
 

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
 import com.personal.diecastfun.controllers.models.MakerModel;
-import com.personal.diecastfun.domain.CarRepository;
 import com.personal.diecastfun.domain.Maker;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 import com.personal.diecastfun.domain.repositories.MakersRepository;
 import com.personal.diecastfun.utils.PicturesHelper;
 

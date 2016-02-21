@@ -1,48 +1,32 @@
 package com.personal.diecastfun.domain;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+public class XMLCar {
 
-@Entity
-@Table(name = "Cars")
-public class Car {
+	public static final String INSERTION_DATE_FORMAT = "dd/MM/yyyy";
 
-	@Id
-	private String id;
-
-	private int count = 0;
+	private int id = 0;
 	private String model;
 	private String brand;
 	private String maker;
 	private String scale = "1:64";
 	private String color;
-	private Date insertionDate;
-
-	@Enumerated(EnumType.STRING)
+	private String insertionDate = "01/01/2012";
 	private Era era = Era.Unknown;
-	private Boolean restored = false;
-	private Boolean customized = false;
-
-	@ElementCollection(targetClass = Tags.class, fetch = FetchType.LAZY)
-	@CollectionTable(name = "Tags", joinColumns = @JoinColumn(name = "id") )
-	@Column(name = "tags", nullable = false)
-	@Enumerated(EnumType.STRING)
+	private int restaured = 0;
+	private int customized = 0;
 	private List<Tags> tags = new ArrayList<Tags>();
 
 	public Era getEra() {
+		if (era == null) {
+			era = Era.Unknown;
+		}
+
 		return era;
 	}
 
@@ -66,12 +50,12 @@ public class Car {
 		this.model = model;
 	}
 
-	public int getCount() {
-		return count;
+	public int getId() {
+		return id;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMaker() {
@@ -98,11 +82,35 @@ public class Car {
 		this.color = color;
 	}
 
-	public Date getInsertionDate() {
+	public boolean isRestaured() {
+		return restaured == 1;
+	}
+
+	public boolean isCustomized() {
+		return customized == 1;
+	}
+
+	public int getRestaured() {
+		return restaured;
+	}
+
+	public void setRestaured(int isRestaured) {
+		this.restaured = isRestaured;
+	}
+
+	public int getCustomized() {
+		return customized;
+	}
+
+	public void setCustomized(int isCustomized) {
+		this.customized = isCustomized;
+	}
+
+	public String getInsertionDate() {
 		return insertionDate;
 	}
 
-	public void setInsertionDate(Date insertionDate) {
+	public void setInsertionDate(String insertionDate) {
 		this.insertionDate = insertionDate;
 	}
 
@@ -114,57 +122,57 @@ public class Car {
 		this.tags = tags;
 	}
 
-	public Car withBrand(String brand) {
+	public XMLCar withBrand(String brand) {
 		setBrand(brand);
 		return this;
 	}
 
-	public Car withColor(String color) {
+	public XMLCar withColor(String color) {
 		setColor(color);
 		return this;
 	}
 
-	public Car withCustomized(Boolean customized) {
+	public XMLCar withCustomized(int customized) {
 		setCustomized(customized);
 		return this;
 	}
 
-	public Car withEra(Era era) {
+	public XMLCar withEra(Era era) {
 		setEra(era);
 		return this;
 	}
 
-	public Car withCount(int count) {
-		setCount(count);
+	public XMLCar withId(int id) {
+		setId(id);
 		return this;
 	}
 
-	public Car withInsertionDate(Date insertionDate) {
+	public XMLCar withInsertionDate(String insertionDate) {
 		setInsertionDate(insertionDate);
 		return this;
 	}
 
-	public Car withMaker(String maker) {
+	public XMLCar withMaker(String maker) {
 		setMaker(maker);
 		return this;
 	}
 
-	public Car withModel(String model) {
+	public XMLCar withModel(String model) {
 		setModel(model);
 		return this;
 	}
 
-	public Car withRestored(Boolean restaured) {
-		setRestored(restaured);
+	public XMLCar withRestaured(int restaured) {
+		setRestaured(restaured);
 		return this;
 	}
 
-	public Car withScale(String scale) {
+	public XMLCar withScale(String scale) {
 		setScale(scale);
 		return this;
 	}
 
-	public Car withTags(List<Tags> tags) {
+	public XMLCar withTags(List<Tags> tags) {
 		setTags(tags);
 		return this;
 	}
@@ -185,48 +193,24 @@ public class Car {
 
 	public Calendar getInsertionDateAsCalendar() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(getInsertionDate());
+		SimpleDateFormat dateFormat = new SimpleDateFormat(INSERTION_DATE_FORMAT);
+		try {
+			calendar.setTime(dateFormat.parse(getInsertionDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		return calendar;
 	}
 
+	public String getCompleteId() {
+		String basicId = getBrand().toLowerCase() + getModel().toLowerCase();
+		String completeId = id == 0 ? basicId : basicId + id;
+		return trimId(completeId);
+	}
+
 	public String getCompleteName() {
 		return brand + " " + model;
-	}
-
-	public Boolean getRestored() {
-		return restored;
-	}
-
-	public void setRestored(Boolean restored) {
-		this.restored = restored;
-	}
-
-	public Boolean getCustomized() {
-		return customized;
-	}
-
-	public void setCustomized(Boolean customized) {
-		this.customized = customized;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public Car withId(String id) {
-		setId(id);
-		return this;
-	}
-
-	public String generateId() {
-		String basicId = getBrand().toLowerCase() + getModel().toLowerCase();
-		String completeId = count == 0 ? basicId : basicId + count;
-		return trimId(completeId);
 	}
 
 	private String trimId(String id) {

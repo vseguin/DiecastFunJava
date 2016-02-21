@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.diecastfun.controllers.models.AddBrandModel;
 import com.personal.diecastfun.controllers.models.CarModel;
+import com.personal.diecastfun.controllers.service.BrandFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.MakerFacade;
 import com.personal.diecastfun.utils.JsonIdWrapper;
@@ -18,9 +20,18 @@ import com.personal.diecastfun.utils.JsonIdWrapper;
 public class AdminController {
 
 	@Inject
+	private BrandFacade brandFacade;
+	@Inject
 	private CarFacade carFacade;
 	@Inject
 	private MakerFacade makerFacade;
+
+	@RequestMapping(value = "/carbrands", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody JsonIdWrapper addBrand(@RequestBody AddBrandModel addBrandModel) {
+		brandFacade.addBrand(addBrandModel.getName(), addBrandModel.getCountry());
+
+		return new JsonIdWrapper().withId(addBrandModel.getName());
+	}
 
 	@RequestMapping(value = "/cars", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody JsonIdWrapper addCar(@RequestBody CarModel carModel) {
@@ -29,6 +40,8 @@ public class AdminController {
 		if (!makerFacade.findAllMakers().stream().anyMatch(m -> m.getName().equals(carModel.getMaker()))) {
 			makerFacade.addMaker(carModel.getMaker());
 		}
+
+		brandFacade.updateBrand(carModel.getBrand());
 
 		return new JsonIdWrapper().withId(id);
 	}

@@ -6,8 +6,9 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.personal.diecastfun.controllers.models.CarModel;
-import com.personal.diecastfun.domain.CarRepository;
+import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Vote;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 import com.personal.diecastfun.domain.repositories.VotesRepository;
 
 public class MostPopularStrategy extends Strategy {
@@ -23,7 +24,7 @@ public class MostPopularStrategy extends Strategy {
 	}
 
 	@Override
-	public List<CarModel> findCars() {
+	public List<CarModel> findCars(List<Car> cars) {
 		List<CarModel> models = new ArrayList<CarModel>();
 
 		int currentVoteValue = votesRepository.findTop1ByOrderByNumberDesc().getNumber();
@@ -36,7 +37,7 @@ public class MostPopularStrategy extends Strategy {
 			while (iterator.hasNext()) {
 				Vote vote = iterator.next();
 				if (vote != null && vote.getNumber() > currentVoteValue) {
-					addCarModel(models, carRepository.findById(vote.getId()));
+					addCarModel(models, carRepository.findOne(vote.getId()));
 					iterator.remove();
 				}
 			}

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.personal.diecastfun.controllers.models.ColorModel;
-import com.personal.diecastfun.domain.CarRepository;
+import com.personal.diecastfun.domain.repositories.CarRepository;
 import com.personal.diecastfun.utils.ColorTranslator;
 
 public class ColorFacade {

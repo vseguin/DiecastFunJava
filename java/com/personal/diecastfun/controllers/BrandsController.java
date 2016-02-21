@@ -17,7 +17,7 @@ import com.personal.diecastfun.utils.Paginator;
 
 @Controller
 @RequestMapping(value = "/carbrands")
-public class CarBrandsController extends BasicController {
+public class BrandsController extends BasicController {
 
 	@Inject
 	private BrandFacade brandFacade;

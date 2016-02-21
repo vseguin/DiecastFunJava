@@ -31,4 +31,14 @@ public class Brand {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
+
+	public Brand withCountry(Country country) {
+		setCountry(country);
+		return this;
+	}
+
+	public Brand withName(String name) {
+		setName(name);
+		return this;
+	}
 }
