@@ -9,7 +9,6 @@ import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -177,7 +176,6 @@ public class CarFacade {
 			carModel = cachedCarModels.get(id);
 		} else {
 			Car realCar = carRepository.findOne(id);
-			Hibernate.initialize(realCar.getTags());
 
 			carModel = new CarModel(realCar);
 			cachedCarModels.put(realCar.getId(), carModel);

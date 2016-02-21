@@ -36,7 +36,7 @@ public class Car {
 	private Boolean restored = false;
 	private Boolean customized = false;
 
-	@ElementCollection(targetClass = Tags.class, fetch = FetchType.LAZY)
+	@ElementCollection(targetClass = Tags.class, fetch = FetchType.EAGER)
 	@CollectionTable(name = "Tags", joinColumns = @JoinColumn(name = "id") )
 	@Column(name = "tags", nullable = false)
 	@Enumerated(EnumType.STRING)
