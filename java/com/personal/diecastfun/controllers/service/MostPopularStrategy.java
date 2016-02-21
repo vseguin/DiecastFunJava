@@ -27,18 +27,22 @@ public class MostPopularStrategy extends Strategy {
 	public List<CarModel> findCars(List<Car> cars) {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		int currentVoteValue = votesRepository.findTop1ByOrderByNumberDesc().getNumber();
-		int limitValue = 0;
-		List<Vote> votes = Lists.newArrayList(votesRepository.findAll());
+		Vote topVote = votesRepository.findTop1ByOrderByNumberDesc();
 
-		while (models.size() <= MOST_POPULAR_SIZE && currentVoteValue > limitValue) {
-			currentVoteValue--;
-			Iterator<Vote> iterator = votes.iterator();
-			while (iterator.hasNext()) {
-				Vote vote = iterator.next();
-				if (vote != null && vote.getNumber() > currentVoteValue) {
-					addCarModel(models, carRepository.findOne(vote.getId()));
-					iterator.remove();
+		if (topVote != null) {
+			int currentVoteValue = topVote.getNumber();
+			int limitValue = 0;
+			List<Vote> votes = Lists.newArrayList(votesRepository.findAll());
+
+			while (models.size() <= MOST_POPULAR_SIZE && currentVoteValue > limitValue) {
+				currentVoteValue--;
+				Iterator<Vote> iterator = votes.iterator();
+				while (iterator.hasNext()) {
+					Vote vote = iterator.next();
+					if (vote != null && vote.getNumber() > currentVoteValue) {
+						addCarModel(models, carRepository.findOne(vote.getId()));
+						iterator.remove();
+					}
 				}
 			}
 		}
