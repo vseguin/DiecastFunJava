@@ -140,6 +140,14 @@
           <td>Lincoln</td>
           <td>Futura</td>
         </tr>
+        <tr>
+          <td>Mazda</td>
+          <td>RX-3</td>
+        </tr>
+        <tr>
+          <td>Renault</td>
+          <td>RS 01</td>
+        </tr>
       </tbody>
     </table>
     <h2>Johnny Lightning</h2>
@@ -439,6 +447,10 @@
       </thead>
       <tbody>
         <tr>
+          <td>Alfa Romeo</td>
+          <td>1750 GTV</td>
+        </tr>
+        <tr>
           <td>Audi</td>
           <td>5000</td>
         </tr>
@@ -448,7 +460,7 @@
         </tr>
         <tr>
           <td>Datsun</td>
-          <td>Fairlady 1500</td>
+          <td>Fairlady 1500, Sunny 1000DX</td>
         </tr>
         <tr>
           <td>Dome</td>
@@ -480,15 +492,15 @@
         </tr>
         <tr>
           <td>Mazda</td>
-          <td>Cosmo, MX-5, Roadster</td>
+          <td>Cosmo, Luce, Luce Rotary Coupe, MX-5, Roadster</td>
         </tr>
         <tr>
           <td>Mitsubishi</td>
-          <td>Lancer 1st Gen</td>
+          <td>Lancer 1st Gen, Starion</td>
         </tr>
         <tr>
           <td>Nissan</td>
-          <td>X-Trail(new)</td>
+          <td>Gloria 280E, Leopard TRX, Prairie Extra, X-Trail(new)</td>
         </tr>
         <tr>
           <td>Spyker</td>
@@ -500,7 +512,7 @@
         </tr>
         <tr>
           <td>Toyota</td>
-          <td>Ipsum, Probox, Town Ace, Will Vi</td>
+          <td>Celica 1800GTR, Century, Ipsum, Probox, Town Ace, Will Vi</td>
         </tr>
         <tr>
           <td>Volkswagen</td>

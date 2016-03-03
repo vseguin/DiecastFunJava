@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -33,6 +34,7 @@ import com.personal.diecastfun.utils.Paginator;
 @EntityScan(basePackages = { "com.personal.diecastfun.domain" })
 @EnableTransactionManagement
 @EnableWebMvc
+@EnableScheduling
 @EnableJpaRepositories(basePackages = { "com.personal.diecastfun.domain.repositories" })
 @PropertySources(value = { @PropertySource("classpath:application.properties") })
 public class AppConfig extends WebMvcConfigurerAdapter {

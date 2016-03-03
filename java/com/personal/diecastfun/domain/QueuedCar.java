@@ -17,8 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Cars")
-public class Car {
+@Table(name = "QueuedCars")
+public class QueuedCar {
 
 	@Id
 	private String id;
@@ -37,7 +37,7 @@ public class Car {
 	private Boolean customized = false;
 
 	@ElementCollection(targetClass = Tags.class, fetch = FetchType.EAGER)
-	@CollectionTable(name = "Tags", joinColumns = @JoinColumn(name = "id") )
+	@CollectionTable(name = "QueuedTags", joinColumns = @JoinColumn(name = "id") )
 	@Column(name = "tags", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private List<Tags> tags = new ArrayList<Tags>();
@@ -114,57 +114,57 @@ public class Car {
 		this.tags = tags;
 	}
 
-	public Car withBrand(String brand) {
+	public QueuedCar withBrand(String brand) {
 		setBrand(brand);
 		return this;
 	}
 
-	public Car withColor(String color) {
+	public QueuedCar withColor(String color) {
 		setColor(color);
 		return this;
 	}
 
-	public Car withCustomized(Boolean customized) {
+	public QueuedCar withCustomized(Boolean customized) {
 		setCustomized(customized);
 		return this;
 	}
 
-	public Car withEra(Era era) {
+	public QueuedCar withEra(Era era) {
 		setEra(era);
 		return this;
 	}
 
-	public Car withCount(int count) {
+	public QueuedCar withCount(int count) {
 		setCount(count);
 		return this;
 	}
 
-	public Car withInsertionDate(Date insertionDate) {
+	public QueuedCar withInsertionDate(Date insertionDate) {
 		setInsertionDate(insertionDate);
 		return this;
 	}
 
-	public Car withMaker(String maker) {
+	public QueuedCar withMaker(String maker) {
 		setMaker(maker);
 		return this;
 	}
 
-	public Car withModel(String model) {
+	public QueuedCar withModel(String model) {
 		setModel(model);
 		return this;
 	}
 
-	public Car withRestored(Boolean restaured) {
+	public QueuedCar withRestored(Boolean restaured) {
 		setRestored(restaured);
 		return this;
 	}
 
-	public Car withScale(String scale) {
+	public QueuedCar withScale(String scale) {
 		setScale(scale);
 		return this;
 	}
 
-	public Car withTags(List<Tags> tags) {
+	public QueuedCar withTags(List<Tags> tags) {
 		setTags(tags);
 		return this;
 	}
@@ -218,8 +218,18 @@ public class Car {
 		this.id = id;
 	}
 
-	public Car withId(String id) {
+	public QueuedCar withId(String id) {
 		setId(id);
 		return this;
+	}
+
+	public String generateId() {
+		String basicId = getBrand().toLowerCase() + getModel().toLowerCase();
+		String completeId = count == 0 ? basicId : basicId + count;
+		return trimId(completeId);
+	}
+
+	private String trimId(String id) {
+		return id.replace(" ", "").replace(".", "").replace("/", "");
 	}
 }

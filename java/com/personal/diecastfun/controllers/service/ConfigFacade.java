@@ -7,12 +7,17 @@ import com.personal.diecastfun.domain.repositories.ConfigRepository;
 
 public class ConfigFacade {
 
+	private static final String CONFIG_BUCKET_NAME = "S3BucketName";
 	private static final String CONFIG_PICTURES_URL = "S3BucketUrl";
 
 	private String picturesUrl;
 
 	@Autowired
 	private ConfigRepository configRepository;
+
+	public String getBucketName() {
+		return configRepository.findOne(CONFIG_BUCKET_NAME).getValue();
+	}
 
 	public String getPicturesUrl() {
 		if (Strings.isNullOrEmpty(picturesUrl)) {

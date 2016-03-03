@@ -1,6 +1,5 @@
 package com.personal.diecastfun.controllers.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +19,10 @@ import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Era;
+import com.personal.diecastfun.domain.QueuedCar;
 import com.personal.diecastfun.domain.Tags;
 import com.personal.diecastfun.domain.repositories.CarRepository;
+import com.personal.diecastfun.domain.repositories.QueuedCarsRepository;
 import com.personal.diecastfun.domain.repositories.VotesRepository;
 
 @Component
@@ -34,15 +35,22 @@ public class CarFacade {
 	@Autowired
 	private CarRepository carRepository;
 	@Autowired
+	private QueuedCarsRepository queuedCarsRepository;
+	@Autowired
 	private VotesRepository votesRepository;
+
+	public void addCar(Car car) {
+		carRepository.save(car);
+		cachedCars.put(car.getId(), car);
+	}
 
 	public String addCar(CarModel carModel) {
 		int id = 0;
 
-		Car car = new Car().withBrand(carModel.getBrand()).withModel(carModel.getModel()).withMaker(carModel.getMaker())
-				.withEra(carModel.getEra()).withScale(carModel.getScale()).withColor(carModel.getColorName())
-				.withRestored(carModel.getIsRestaured()).withCustomized(carModel.getIsCustomized())
-				.withInsertionDate(new Date(new java.util.Date().getTime())).withTags(carModel.getTags()).withCount(0);
+		QueuedCar car = new QueuedCar().withBrand(carModel.getBrand()).withModel(carModel.getModel())
+				.withMaker(carModel.getMaker()).withEra(carModel.getEra()).withScale(carModel.getScale())
+				.withColor(carModel.getColorName()).withRestored(carModel.getIsRestaured())
+				.withCustomized(carModel.getIsCustomized()).withTags(carModel.getTags()).withCount(0);
 
 		while (carRepository.exists(car.generateId())) {
 			id++;
@@ -51,8 +59,7 @@ public class CarFacade {
 
 		car.withId(car.generateId());
 
-		carRepository.save(car);
-		cachedCars.put(car.getId(), car);
+		queuedCarsRepository.save(car);
 
 		return car.getId();
 	}
