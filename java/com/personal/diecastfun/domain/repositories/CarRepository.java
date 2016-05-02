@@ -18,7 +18,6 @@ public interface CarRepository extends PagingAndSortingRepository<Car, String> {
 
 	public int countByMaker(String maker);
 
-	// TODO how to do this
 	public int countByTags(Tags tags);
 
 	public List<Car> findByBrand(String brand);

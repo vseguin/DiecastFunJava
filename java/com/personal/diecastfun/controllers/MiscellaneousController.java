@@ -42,15 +42,6 @@ public class MiscellaneousController extends BasicController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/wantedlist", method = RequestMethod.GET)
-	public ModelAndView getWantedList() {
-		ModelAndView mv = new ModelAndView("wantedlist");
-
-		addBasicInformationToModel(mv);
-
-		return mv;
-	}
-
 	@RequestMapping(value = "/guestbook", method = RequestMethod.GET)
 	public ModelAndView getGuestBook() {
 		ModelAndView mv = new ModelAndView("guestbook");
