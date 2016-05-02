@@ -1,5 +1,7 @@
 package com.personal.diecastfun.controllers;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,15 @@ public class WantedListController extends BasicController {
 		List<WantedCar> wantedCars = Lists.newArrayList(wantedCarRepository.findAllByOrderByMakerAsc());
 		Map<String, List<WantedCar>> groupedCars = wantedCars.stream()
 				.collect(Collectors.groupingBy(WantedCar::getMaker, LinkedHashMap::new, Collectors.toList()));
+
+		groupedCars.values().stream().forEach(l -> {
+			Collections.sort(l, new Comparator<WantedCar>() {
+				@Override
+				public int compare(WantedCar o1, WantedCar o2) {
+					return o1.getBrand().compareTo(o2.getBrand());
+				}
+			});
+		});
 
 		mv.addObject("wantedList", groupedCars);
 
