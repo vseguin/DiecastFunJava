@@ -36,7 +36,12 @@ public class WantedListController extends BasicController {
 			Collections.sort(l, new Comparator<WantedCar>() {
 				@Override
 				public int compare(WantedCar o1, WantedCar o2) {
-					return o1.getBrand().compareTo(o2.getBrand());
+					int result = o1.getBrand().compareTo(o2.getBrand());
+					if (result == 0) {
+						return o1.getModel().compareTo(o2.getModel());
+					}
+
+					return result;
 				}
 			});
 		});
