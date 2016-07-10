@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav>
   <div class="navbar-fixed">
+     <i class="left large material-icons" id="menuButton">list</i>
      <form class="right" id="searchForm">
        <div class="input-field">
          <input id="search" type="search" required class="grey-text text-darken-3">
