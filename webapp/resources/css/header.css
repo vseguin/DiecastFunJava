@@ -1,19 +1,41 @@
-.carousel-inner .item {
-	height:90%;
+#mainPicture {
+    height: 600px;
+    background: url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/header.jpg') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
-#nav-buttons-container {
-	width:100%;
+#mainPictureHover {
+    height: inherit;
+    position: relative;
+    background-color: rgba(255,255,255,0.2);
 }
 
-.nav-button {
-	width:14.36%;
-	height:45px;
-	border-left-style:solid;
-	border-right-style:solid;
-	font-size:16px;
+#mainPictureLine {
+    height: 200px;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(67,125,173,0.6);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
-.nav-button:hover {
-  background-color:white;
+#mainPictureLabel {
+    width: 200px;
+    font-size: 38px;
+    text-align: left;
+    text-transform: uppercase;
+    color: white;
+    margin: auto;
+    border-left: 5px solid white;
+    padding-left: 20px;
+}
+
+#mainPictureLabel h2 {
+    margin-top: 15px;
 }
