@@ -32,9 +32,9 @@ import com.personal.diecastfun.utils.Paginator;
 @Configuration
 @ComponentScan(basePackages = { "com.personal.diecastfun" })
 @EntityScan(basePackages = { "com.personal.diecastfun.domain" })
+@EnableScheduling
 @EnableTransactionManagement
 @EnableWebMvc
-@EnableScheduling
 @EnableJpaRepositories(basePackages = { "com.personal.diecastfun.domain.repositories" })
 @PropertySources(value = { @PropertySource("classpath:application.properties") })
 public class AppConfig extends WebMvcConfigurerAdapter {
