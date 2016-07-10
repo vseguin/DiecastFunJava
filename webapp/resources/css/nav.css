@@ -1,0 +1,29 @@
+nav {
+	background-color: transparent;
+    position: absolute;
+    box-shadow: none;
+    top: 20px;
+    line-height: 56px;
+}
+
+nav form {
+	width: 50%;
+	margin-bottom: 0;
+	transition: width 0.5s;
+}
+
+@media screen and (max-width:600px) {
+	nav form {
+		width: 80%;
+	}
+}
+
+nav .input-field label i, nav .input-field label.active i {
+	color: #424242;
+}
+
+.input-field input[type=search] {
+	margin-bottom: 0;
+	background-color: rgba(255,255,255,0.5);
+	height: 56px;
+}
