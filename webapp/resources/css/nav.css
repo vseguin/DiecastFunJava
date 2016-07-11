@@ -24,14 +24,11 @@ nav .input-field label i, nav .input-field label.active i {
 
 .input-field input[type=search] {
 	margin-bottom: 0;
-	background-color: rgba(255,255,255,0.5);
 	height: 56px;
 }
 
 #menuButton {
 	margin-left: 10px;
 	cursor: pointer;
-	color: #444;
-    background-color: rgba(255,255,255,0.5);
     padding: 0 10px;
 }

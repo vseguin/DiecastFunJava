@@ -2,8 +2,8 @@
 <header>
 	<div id="mainPicture">
 	    <div id="mainPictureHover">
-	        <div id="mainPictureLine" style="display:none;">
-	            <div id="mainPictureLabel" style="display:none;">
+	        <div class="blue-bg" id="mainPictureLine" style="display:none;">
+	            <div class="white-text" id="mainPictureLabel" style="display:none;">
 	                <h2>1/64 Diecast Fun</h2>
 	            </div>
 	        </div>
