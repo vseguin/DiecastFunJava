@@ -27,6 +27,10 @@ nav .input-field label i, nav .input-field label.active i {
 	height: 56px;
 }
 
+.input-field input[type=search]::-webkit-input-placeholder {
+   color: #9e9e9e;
+}
+
 #menuButton {
 	margin-left: 10px;
 	cursor: pointer;
