@@ -10,3 +10,13 @@
      </form>
   </div>
 </nav>
+
+<div id="sidePanelContainer" style="display:none;">
+	<div id="sidePanelInnerContainer">
+	    <div id="sidePanelInner">
+			<div class="blue-bg white-text" id="sidePanelLogo">
+				<div class="logo-text">1/64 Diecast Fun</div>
+			</div>
+	    </div>
+	</div>
+</div>

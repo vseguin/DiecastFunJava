@@ -9,3 +9,8 @@ body {
 .white-bg {
 	background-color: rgba(255,255,255,0.5) !important;
 }
+
+.logo-text {
+	text-transform: uppercase;
+	border-left: 5px solid white;
+}

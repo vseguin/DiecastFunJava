@@ -26,11 +26,7 @@
 
 #mainPictureLabel {
     width: 200px;
-    font-size: 38px;
-    text-align: left;
-    text-transform: uppercase;
     margin: auto;
-    border-left: 5px solid white;
     padding-left: 20px;
 }
 
