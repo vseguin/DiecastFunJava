@@ -3,6 +3,10 @@ body {
 }
 
 .blue-bg {
+	background-color: rgb(67,125,173);
+}
+
+.blue-bg-fade {
 	background-color: rgba(67,125,173,0.6);
 }
 

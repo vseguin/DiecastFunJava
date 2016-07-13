@@ -2,7 +2,7 @@
 <header>
 	<div id="mainPicture">
 	    <div id="mainPictureHover">
-	        <div class="blue-bg" id="mainPictureLine" style="display:none;">
+	        <div class="blue-bg-fade" id="mainPictureLine" style="display:none;">
 	            <div class="white-text logo-text" id="mainPictureLabel" style="display:none;">
 	                <h2>1/64 Diecast Fun</h2>
 	            </div>
