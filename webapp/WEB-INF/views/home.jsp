@@ -30,37 +30,36 @@
 <body>
     <c:import url="nav.jsp" />
     <c:import url="header.jsp" />
-    <div class="container">
+    <div>
     	<div class="row">
-   			<h4>About</h4>
+    		<div class="headliner">
+	   			<h4>About</h4>
+   			</div>
    			<p>1/64 Diecast Fun displays my entire diecast collection that started when i was only 3 years old. The collection is mainly focused
    			on road cars and trucks, coming from various makers and eras. I currently own <strong>${carcount}</strong> models, and this just keep
    			on growing. Enjoy browsing them, take a look at my <a href="https://www.instagram.com/164diecastfun">Instagram feed</a> and my <a href="<c:url value="/wantedlist"/>">wanted list</a> as well!</p>
     	</div>
     	<div class="row row-reversed blue-bg-fade">
-   			<h4>Featured car</h4>
+    		<div class="headliner">
+	   			<h4>Featured car</h4>
+	   			<h5><a href="<c:url value="/cars/${featuredcar.id}"/>">${featuredcar.maker}&nbsp;<c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</a></h5>
+   			</div>
    			<div>
    			<c:forEach var="picture" items="${featuredcar.pictures}">
 	   			<div class="col l4 m12 s12">
 					<div class="card">
 						<div class="card-image">
-							<img src="<c:url value="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/cars-small/${picture}"/>">
+							<a href="<c:url value="/cars/${featuredcar.id}"/>"><img src="<c:url value="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/cars-small/${picture}"/>"></a>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
-			<div class="col s12">
-				<div class="card">
-					<div class="card-action">
-						<!--  vseguin: todo this -->
-						<a href="<c:url value="/cars/${featuredcar.id}"/>">${featuredcar.maker}&nbsp;<c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</a>
-					</div>
-				</div>
-			</div>
 			</div>
     	</div>
     	<div class="row">
-   			<h4>New additions</h4>
+    		<div class="headliner">
+	   			<h4>New additions</h4>
+   			</div>
 			<c:choose>
 				<c:when test="${fn:length(newadditions) == 0}">
 					<span>No recent additions.</span>
@@ -83,7 +82,9 @@
 			</c:choose>
     	</div>
     	<div class="row row-reversed blue-bg-fade">
-   			<h4>Test</h4>
+    		<div class="headliner">
+	   			<h4>Test</h4>
+   			</div>
     	</div>
     </div>
 </body>
