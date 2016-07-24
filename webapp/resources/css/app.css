@@ -1,5 +1,7 @@
 body {
 	font-family: 'Open Sans',sans-serif;
+	font-size: 20px;
+	color: #424242;
 }
 
 .blue-bg {
@@ -17,4 +19,27 @@ body {
 .logo-text {
 	text-transform: uppercase;
 	border-left: 5px solid white;
+}
+
+.container {
+	padding-top: 30px;
+}
+
+.row {
+	padding: 40px 0;
+}
+
+.row-reversed {
+	color: white;
+}
+
+h4 {
+	text-transform: uppercase;
+	color: rgb(67,125,173);
+	border-bottom: rgba(67,125,173, 0.6) 5px solid;
+}
+
+.row-reversed h4 {
+	color: white;
+	border-bottom-color: white;
 }
