@@ -36,7 +36,7 @@
 	   			<h4>About</h4>
    			</div>
    			<p>1/64 Diecast Fun displays my entire diecast collection that started when i was only 3 years old. The collection is mainly focused
-   			on road cars and trucks, coming from various makers and eras. I currently own <strong>${carcount}</strong> models, and this just keep
+   			on road cars and trucks, coming from various makers and eras. I currently own <b>${carcount}</b> models, and this just keep
    			on growing. Enjoy browsing them, take a look at my <a href="https://www.instagram.com/164diecastfun">Instagram feed</a> and my <a href="<c:url value="/wantedlist"/>">wanted list</a> as well!</p>
     	</div>
     	<div class="row row-reversed blue-bg-fade">
