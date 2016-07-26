@@ -94,6 +94,12 @@
 			    <jsp:param name="headercontainerclass" value="grey-border"/>
 			    <jsp:param name="headerclass" value="grey-bg-fade"/>
 			</jsp:include>
+			<jsp:include page="homecard.jsp">
+			    <jsp:param name="title" value="Most popular"/>
+			    <jsp:param name="url" value="/mostpopular"/>
+			    <jsp:param name="car" value="${mostpopular.thumbnail}"/>
+			    <jsp:param name="headerclass" value="blue-bg-fade"/>
+			</jsp:include>
     	</div>
     </div>
 </body>
