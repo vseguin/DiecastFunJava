@@ -39,7 +39,7 @@
    			on road cars and trucks, coming from various makers and eras. I currently own <b>${carcount}</b> models, and this just keep
    			on growing. Enjoy browsing them, take a look at my <a href="https://www.instagram.com/164diecastfun">Instagram feed</a> and my <a href="<c:url value="/wantedlist"/>">wanted list</a> as well!</p>
     	</div>
-    	<div class="row row-reversed blue-bg-fade">
+    	<div class="row row-reversed grey-bg-fade">
     		<div class="headliner">
 	   			<h4>Featured car</h4>
 	   			<h5><a href="<c:url value="/cars/${featuredcar.id}"/>">${featuredcar.maker}&nbsp;<c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</a></h5>
@@ -80,7 +80,7 @@
 				</c:otherwise>
 			</c:choose>
     	</div>
-    	<div class="row row-reversed blue-bg-fade">
+    	<div class="row row-reversed grey-bg-fade">
 			<jsp:include page="homecard.jsp">
 			    <jsp:param name="title" value="Restorations"/>
 			    <jsp:param name="url" value="/restorations"/>
