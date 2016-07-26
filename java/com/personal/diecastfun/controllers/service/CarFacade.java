@@ -151,23 +151,6 @@ public class CarFacade {
 		return models;
 	}
 
-	public List<CarModel> findRandomRestorations() {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		List<Car> restorations = carRepository.findByRestored(true);
-		int numberOfCars = 0;
-		if (!restorations.isEmpty()) {
-			while (numberOfCars < 10) {
-				int index = new Random().nextInt(restorations.size());
-				addCarModel(models, restorations.get(index));
-				numberOfCars++;
-				restorations.remove(index);
-			}
-		}
-
-		return models;
-	}
-
 	public List<CarModel> findRestorations() {
 		List<CarModel> models = new ArrayList<CarModel>();
 

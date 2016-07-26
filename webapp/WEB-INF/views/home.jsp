@@ -77,14 +77,23 @@
 									<b>${car.brand} ${car.model}</b>
 								</p></li>
 						</c:forEach>
-					</ul>
 				</c:otherwise>
 			</c:choose>
     	</div>
     	<div class="row row-reversed blue-bg-fade">
-    		<div class="headliner">
-	   			<h4>Test</h4>
-   			</div>
+			<jsp:include page="homecard.jsp">
+			    <jsp:param name="title" value="Restorations"/>
+			    <jsp:param name="url" value="/restorations"/>
+			    <jsp:param name="car" value="${restoration.thumbnail}"/>
+			    <jsp:param name="headerclass" value="blue-bg-fade"/>
+			</jsp:include>
+			<jsp:include page="homecard.jsp">
+			    <jsp:param name="title" value="Customs"/>
+			    <jsp:param name="url" value="/customs"/>
+			    <jsp:param name="car" value="${custom.thumbnail}"/>
+			    <jsp:param name="headercontainerclass" value="grey-border"/>
+			    <jsp:param name="headerclass" value="grey-bg-fade"/>
+			</jsp:include>
     	</div>
     </div>
 </body>
