@@ -42,11 +42,11 @@ body {
 	padding: 0;
 }
 
-.row h4, .row h5 {
+.row h4, .row h5, .row h6 {
 	color: rgba(66, 66, 66, 0.6);
 }
 
-h4, h5, .row-reversed h4, .row-reversed h5 {
+h4, h5, h6, .row-reversed h4, .row-reversed h5, .row-reversed h6 {
 	text-transform: uppercase;
 	color: white;
 }
@@ -119,4 +119,17 @@ h4, h5, .row-reversed h4, .row-reversed h5 {
 
 .card .card-image .header .headliner h4 {
 	margin-top: 44px;
+}
+
+@media screen and (min-width:1200px) {
+	.card.small {
+		height: 360px;
+	}
+}
+
+@media screen and (min-width:993px) {
+	.car-thumbnail {
+		max-height: 250px;
+		overflow: hidden;
+	}
 }

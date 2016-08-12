@@ -70,18 +70,18 @@
 					<span>No recent additions.</span>
 				</c:when>
 				<c:otherwise>
-					<!--  vseguin: todo this -->
-					<ul class="thumbnails">
-						<c:forEach var="car" items="${newadditions}">
-							<c:set var="carpicture" value="${car.thumbnail}" />
-							<li class="span3" style="margin-left: 0px; height: 150px;"><a
-								href="<c:url value="/cars/${car.id}"/>" class="thumbnail"
-								title="${car.brand} ${car.model}"> <img
-									src="<c:url value="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/cars-small/${car.thumbnail}"/>" style="width: 250px;"></a>
-								<p class="centered whitetext" style="font-size: 12px;">
-									<b>${car.brand} ${car.model}</b>
-								</p></li>
-						</c:forEach>
+					<c:forEach var="car" items="${newadditions}">
+				  		<div class="col l3 m6 s12">
+							<a href="<c:url value="/cars/${car.id}"/>">
+								<div class="card small">
+									<div class="card-image">
+											<img class="car-thumbnail" src="<c:url value="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/cars-small/${car.thumbnail}"/>">
+									</div>
+									<div class="card-content"><h5>${car.brand} ${car.model}</h5></div>
+								</div>
+							</a>
+						</div>
+					</c:forEach>
 				</c:otherwise>
 			</c:choose>
     	</div>
@@ -107,5 +107,6 @@
 			</jsp:include>
     	</div>
     </div>
+    <c:import url="footer.jsp" />
 </body>
 </html>

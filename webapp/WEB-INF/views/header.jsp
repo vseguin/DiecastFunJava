@@ -11,6 +11,7 @@
 	</div>
 </header>
 <script>
+
 $(document).ready(function() {
 	$("#mainPictureLine").animate({width:'toggle'},350,function() {
 	    $("#mainPictureLabel").fadeIn(350);

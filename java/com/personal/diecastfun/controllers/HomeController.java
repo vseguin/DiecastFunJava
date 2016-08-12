@@ -2,7 +2,6 @@ package com.personal.diecastfun.controllers;
 
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -24,15 +23,11 @@ public class HomeController extends BasicController {
 	public ModelAndView home() {
 		ModelAndView mv = new ModelAndView("home");
 
-		CarModel featuredCar = carFacade.findCarById(carFacade.findRandomCarId());
-		featuredCar.setPictures(
-				featuredCar.getPictures().stream().map(p -> p.replace("'", "%27")).collect(Collectors.toList()));
-
 		mv.addObject("newadditions", carFacade.findNewAdditions());
 		mv.addObject("restoration", getRandomCarModelFromList(carFacade.findRestorations()));
 		mv.addObject("custom", getRandomCarModelFromList(carFacade.findCustomizations()));
 		mv.addObject("mostpopular", getRandomCarModelFromList(carFacade.findMostPopular()));
-		mv.addObject("featuredcar", featuredCar);
+		mv.addObject("featuredcar", carFacade.findCarById(carFacade.findRandomCarId()));
 		addBasicInformationToModel(mv);
 
 		return mv;

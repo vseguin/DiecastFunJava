@@ -3,6 +3,7 @@ package com.personal.diecastfun.controllers.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Era;
@@ -48,6 +49,8 @@ public class CarModel implements Comparable<CarModel>, Serializable {
 		pictures.add(id + "-3.jpg");
 		this.thumbnail = pictures.get(0);
 		this.isNew = car.isNew();
+
+		setPictures(getPictures().stream().map(p -> p.replace("'", "%27")).collect(Collectors.toList()));
 	}
 
 	public String getId() {
