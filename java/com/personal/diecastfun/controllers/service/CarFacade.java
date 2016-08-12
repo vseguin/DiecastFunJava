@@ -170,6 +170,7 @@ public class CarFacade {
 			carModel = new CarModel(realCar);
 			cachedCarModels.put(realCar.getId(), carModel);
 		}
+
 		return carModel;
 	}
 

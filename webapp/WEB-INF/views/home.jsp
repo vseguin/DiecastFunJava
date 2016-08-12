@@ -42,14 +42,19 @@
     	<div class="row row-reversed grey-bg-fade">
     		<div class="headliner">
 	   			<h4>Featured car</h4>
-	   			<h5><a href="<c:url value="/cars/${featuredcar.id}"/>">${featuredcar.maker}&nbsp;<c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</a></h5>
    			</div>
    			<div>
-   			<c:forEach var="picture" items="${featuredcar.pictures}">
+   			<c:forEach var="picture" items="${featuredcar.pictures}" varStatus="loop">
 	   			<div class="col l4 m12 s12">
 					<div class="card">
 						<div class="card-image">
-							<a href="<c:url value="/cars/${featuredcar.id}"/>"><img src="<c:url value="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/cars-small/${picture}"/>"></a>
+							<a href="<c:url value="/cars/${featuredcar.id}"/>">
+							<div class="img" style="background-image:url('<c:url value="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/cars-small/${picture}"/>')">
+								<c:if test="${loop.index == 1}">
+									<div class="blank-state blue-bg-fade"><h5>${featuredcar.maker}&nbsp;<c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</h5></div>
+								</c:if>
+							</div>
+							</a>
 						</div>
 					</div>
 				</div>
