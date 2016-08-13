@@ -13,6 +13,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"
     rel="stylesheet">
 <link href="<c:url value="/resources/css/app.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/footer.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/header.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/nav.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/sidepanel.css" />" rel="stylesheet">
@@ -31,7 +32,7 @@
     <c:import url="nav.jsp" />
     <c:import url="header.jsp" />
     <div>
-    	<div class="row">
+    	<div class="row row-bg">
     		<div class="headliner">
 	   			<h4>About</h4>
    			</div>
@@ -61,7 +62,7 @@
 			</c:forEach>
 			</div>
     	</div>
-    	<div class="row">
+    	<div class="row row-bg">
     		<div class="headliner">
 	   			<h4>New additions</h4>
    			</div>

@@ -27,9 +27,12 @@ body {
 
 .row {
 	padding: 30px 100px;
+	margin-bottom: 0;
+}
+
+.row-bg {
 	background:
 		url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/backgroundpattern.png');
-	margin-bottom: 0;
 }
 
 @media screen and (max-width:600px) {
