@@ -26,6 +26,7 @@
 </head>
 <body>
     <c:import url="nav.jsp" />
+    <c:import url="sidepanel.jsp" />
     <c:import url="header.jsp" />
     <c:import url="${view}.jsp" />
     <c:import url="footer.jsp" />
