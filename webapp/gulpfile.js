@@ -1,15 +1,20 @@
+require('es6-promise').polyfill();
 var gulp = require('gulp');
 var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var sass = require('gulp-sass');
+var autoprefix = require('gulp-autoprefixer');
 
-var cssPath = 'resources/css/*.css';
+var cssPath = 'resources/sass/*.scss';
 var jsPath = 'resources/js/*.js';
 
 gulp.task('minify-css', function() {
-	gulp.src([cssPath]).pipe(concat('app.min.css'))
-			.pipe(gulp.dest('resources/target/css'));
+	gulp.src([ cssPath]).pipe(sass({
+		outputStyle : 'compressed'
+	})).pipe(concat('app.min.css')).pipe(autoprefix('last 10 version')).pipe(
+			gulp.dest('resources/target/css'));
 });
 
 gulp.task('minify-js', function() {

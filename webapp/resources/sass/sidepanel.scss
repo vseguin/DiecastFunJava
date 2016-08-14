@@ -1,0 +1,32 @@
+@import 'utils';
+
+#sidePanelContainer {
+  position: fixed;
+  height: 100%;
+  width: 200px;
+  z-index: 1000;
+  border-right: $white-border;
+  background-color: transparent;
+}
+
+#sidePanelInnerContainer {
+  width: 98%;
+  height: inherit;
+  background-color: $white-color;
+}
+
+#sidePanelInner {
+  padding-top: 20px;
+  margin: auto;
+  width: 75%;
+}
+
+#sidePanelLogo {
+  height: 120px;
+  font-size: 24px;
+  padding: 5px;
+
+  div {
+    padding-left: 10px;
+  }
+}

@@ -1,0 +1,76 @@
+@import 'utils';
+
+.card {
+  box-shadow: none;
+
+  .card-image {
+    .header-container, .header {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1;
+    }
+
+    .header {
+      height: 125px;
+
+      .headliner h4 {
+        margin-top: 44px;
+      }
+    }
+
+    .header-container {
+      height: 135px;
+      border-bottom: $border-size rgba($blue-color, 0.65);
+      opacity: 0;
+      transition: opacity 0.5s linear;
+      z-index: 2;
+
+      .grey-border {
+        border-bottom: $grey-border;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .img {
+      position: relative;
+      float: left;
+      width: 100%;
+      height: 300px;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      .blank-state {
+        height: 100%;
+        text-align: center;
+        padding: 20px;
+        padding-top: 130px;
+
+        h5 {
+          margin: 0;
+        }
+      }
+    }
+
+    .car-thumbnail {
+      @include respond-to(computer) {
+        max-height: 250px;
+        overflow: hidden;
+      }
+      @include respond-to(phone) {
+        top: -50px;
+      }
+    }
+  }
+
+  &.small {
+    @include respond-to(large-computer) {
+      height: 360px;
+    }
+  }
+}

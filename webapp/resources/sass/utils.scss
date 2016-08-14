@@ -1,0 +1,59 @@
+// Colors
+$primary-text-color: #424242;
+$blue-color: #009688;
+$white-color: #FFFFFF;
+
+// Backgrounds
+@mixin white-bg($opacity) {
+  background-color: rgba($white-color, $opacity);
+}
+
+// Border
+$border-size: 5px solid;
+$white-border: $border-size $white-color;
+$grey-border: $border-size rgba($primary-text-color, 0.6);
+
+// Mixins
+@mixin respond-to($media) {
+  @if $media == phone {
+    @media screen and (max-width: 600px) {
+      @content;
+    }
+  } @else if $media == tablet {
+    @media only screen and (max-width: 993px) {
+      @content;
+    }
+  } @else if $media == computer {
+    @media only screen and (min-width: 993px) {
+      @content;
+    }
+  } @else if $media == large-computer {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+}
+
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}

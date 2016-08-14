@@ -1,0 +1,71 @@
+@import 'utils';
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  color: $primary-text-color;
+  text-transform: uppercase;
+
+  p {
+    text-transform: none;
+  }
+}
+
+.blue-bg {
+  background: rgba($blue-color, 1);
+}
+
+.blue-bg-fade {
+  background: rgba($blue-color, 0.65);
+}
+
+.white-bg {
+  @include white-bg(0.5);
+}
+
+.grey-bg-fade {
+  background: rgba($primary-text-color, 0.6);
+}
+
+.logo-text {
+  border-left: $white-border;
+}
+
+.row {
+  padding: 30px 100px;
+  margin-bottom: 0;
+  @include respond-to(phone) {
+    padding: 30px;
+  }
+
+  .col {
+    padding: 0;
+  }
+
+  h4, h5, h6 {
+    color: rgba($primary-text-color, 0.6);
+  }
+}
+
+.row-bg {
+  background: url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/backgroundpattern.png');
+}
+
+.row-reversed {
+  h4, h5, h6 {
+    color: $white-color;
+  }
+
+  .headliner {
+    border-left: $white-border;
+
+    a {
+      color: $white-color;
+    }
+  }
+}
+
+.headliner {
+  border-left: $grey-border;
+  padding-left: 20px;
+}
