@@ -12,11 +12,11 @@ body {
 }
 
 .blue-bg {
-  background: rgba($blue-color, 1);
+  @include blue-bg(1);
 }
 
 .blue-bg-fade {
-  background: rgba($blue-color, 0.65);
+  @include blue-bg(0.65);
 }
 
 .white-bg {
@@ -48,7 +48,7 @@ body {
 }
 
 .row-bg {
-  background: url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/backgroundpattern.png');
+  @include car-bg;
 }
 
 .row-reversed {

@@ -4,8 +4,14 @@ $blue-color: #009688;
 $white-color: #FFFFFF;
 
 // Backgrounds
+@mixin blue-bg($opacity) {
+  background-color: rgba($blue-color, $opacity);
+}
 @mixin white-bg($opacity) {
   background-color: rgba($white-color, $opacity);
+}
+@mixin car-bg() {
+  background: url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/backgroundpattern.png');
 }
 
 // Border

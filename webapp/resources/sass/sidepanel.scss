@@ -7,18 +7,23 @@
   z-index: 1000;
   border-right: $white-border;
   background-color: transparent;
+
+  @include respond-to(phone) {
+    width: 100%;
+  }
 }
 
 #sidePanelInnerContainer {
   width: 98%;
   height: inherit;
-  background-color: $white-color;
+  @include car-bg;
+  padding-top: 20px;
 }
 
-#sidePanelInner {
-  padding-top: 20px;
+#sidePanelLogo, #sidePanelLinks a {
   margin: auto;
   width: 75%;
+  display: block;
 }
 
 #sidePanelLogo {
@@ -26,7 +31,31 @@
   font-size: 24px;
   padding: 5px;
 
+  @include respond-to(phone) {
+    height: 46px;
+  }
+
   div {
     padding-left: 10px;
+  }
+}
+
+#sidePanelLinks {
+  padding-top: 20px;
+
+  li {
+    padding: 15px 0;
+
+    a {
+      color: $primary-text-color;
+    }
+
+    &:hover {
+      @include blue-bg(0.65);
+
+      a {
+        color: $white-color;
+      }
+    }
   }
 }
