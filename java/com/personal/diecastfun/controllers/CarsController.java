@@ -29,11 +29,10 @@ public class CarsController extends BasicController {
 
 	@RequestMapping(value = "/allcars", method = RequestMethod.GET)
 	public ModelAndView getAllCars() {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		PaginationResults results = paginator.paginate(carFacade.findAllCars());
 		mv.addObject("title", "All Cars");
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;
@@ -42,14 +41,13 @@ public class CarsController extends BasicController {
 	@RequestMapping(value = "/{carId}", method = RequestMethod.GET)
 	public ModelAndView getSpecificCar(@PathVariable String carId) {
 		viewsFacade.addView(carId);
-		ModelAndView mv = new ModelAndView("cardetails");
+		ModelAndView mv = getModelAndView("cardetails");
 
 		mv.addObject("id", carId);
 		mv.addObject("car", carFacade.findCarById(carId));
 		mv.addObject("seealso", carFacade.findSeeAlso(carId));
 		mv.addObject("votes", votesFacade.getVotesById(carId));
 		mv.addObject("views", viewsFacade.getViews(carId));
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}

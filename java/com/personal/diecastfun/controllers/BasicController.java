@@ -14,14 +14,9 @@ import com.personal.diecastfun.utils.PaginationResults;
 public abstract class BasicController {
 
 	@Inject
-	private BasicFacade basicFacade;
+	protected BasicFacade basicFacade;
 	@Inject
 	private ConfigFacade configFacade;
-
-	protected void addBasicInformationToModel(ModelAndView mv) {
-		mv.addObject("carcount", basicFacade.getTotalCarCount());
-		mv.addObject("picturesUrl", configFacade.getPicturesUrl());
-	}
 
 	protected void addPaginationInformation(ModelAndView mv, PaginationResults results) {
 		mv.addObject("currentpage", results.getCurrentPage());
@@ -30,6 +25,15 @@ public abstract class BasicController {
 		mv.addObject("cars", results.getPaginationResults());
 		mv.addObject("completeresults", results.getCompleteResults());
 		mv.addObject("countries", getCountries());
+	}
+
+	protected ModelAndView getModelAndView(String viewName) {
+		ModelAndView mv = new ModelAndView("main");
+
+		mv.addObject("picturesUrl", configFacade.getPicturesUrl());
+		mv.addObject("view", viewName);
+
+		return mv;
 	}
 
 	private String[] getCountries() {

@@ -21,14 +21,14 @@ public class HomeController extends BasicController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
-		ModelAndView mv = new ModelAndView("home");
+		ModelAndView mv = getModelAndView("home");
 
+		mv.addObject("carcount", basicFacade.getTotalCarCount());
 		mv.addObject("newadditions", carFacade.findNewAdditions());
 		mv.addObject("restoration", getRandomCarModelFromList(carFacade.findRestorations()));
 		mv.addObject("custom", getRandomCarModelFromList(carFacade.findCustomizations()));
 		mv.addObject("mostpopular", getRandomCarModelFromList(carFacade.findMostPopular()));
 		mv.addObject("featuredcar", carFacade.findCarById(carFacade.findRandomCarId()));
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}

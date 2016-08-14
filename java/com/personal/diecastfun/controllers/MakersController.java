@@ -28,24 +28,22 @@ public class MakersController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("carmakers");
+		ModelAndView mv = getModelAndView("carmakers");
 
 		SortedList<MakerModel> model = new SortedList<MakerModel>(makerFacade.findAllMakers());
 		mv.addObject("sortedmakers", model);
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/{maker}", method = RequestMethod.GET)
 	public ModelAndView getSpecificMaker(@PathVariable String maker) {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToMaker(maker));
 		mv.addObject("title", maker);
 		mv.addObject("previousview", "makers");
 		mv.addObject("previousviewtitle", "Maker Brands");
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;

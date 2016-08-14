@@ -54,10 +54,9 @@ public class FacetsController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getFacets() {
-		ModelAndView mv = new ModelAndView("facets");
+		ModelAndView mv = getModelAndView("facets");
 
 		conditionResolverFacade.clearAll();
-		addBasicInformationToModel(mv);
 		addCarsToView(mv);
 		mv.addObject("brands", new SortedList<BrandModel>(brandFacade.findAllBrands()).getCollection());
 		mv.addObject("eras", new SortedList<EraModel>(eraFacade.findAllEras()).getCollection());
@@ -203,7 +202,7 @@ public class FacetsController extends BasicController {
 	}
 
 	private ModelAndView computeResults(int carCount) {
-		ModelAndView mv = new ModelAndView("facetsresults");
+		ModelAndView mv = getModelAndView("facetsresults");
 
 		addCarsToView(mv, ++carCount);
 
@@ -221,7 +220,6 @@ public class FacetsController extends BasicController {
 		List<CarModel> cars = conditionResolverFacade.resolveConditions();
 		SortedList<CarModel> sortedCars = new SortedList<CarModel>(cars);
 
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, paginator.paginateWithCount(carCount, sortedCars));
 	}
 }

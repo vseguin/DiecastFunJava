@@ -1,7 +1,5 @@
 package com.personal.diecastfun.controllers;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -27,28 +25,13 @@ public class SearchController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView search(@RequestParam(required = false, value = "q") String query) {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		SortedList<CarModel> cars = carFacade.findAllCarsCorrespondingToKeywords(query);
 		PaginationResults results = paginator.paginate(cars);
 		mv.addObject("title", "Search Results");
 		mv.addObject("searchresults", cars.size());
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
-
-		return mv;
-	}
-
-	@RequestMapping(value = "/filterByCount", method = RequestMethod.POST)
-	public ModelAndView filterByCount(@RequestParam(value = "cars", required = true) ArrayList<String> cars,
-			@RequestParam(value = "carCount", required = true) int carCount,
-			@RequestParam(value = "view", required = true) String view) {
-		ModelAndView mv = new ModelAndView(view);
-
-		PaginationResults results = paginator.paginateWithCount(++carCount);
-		addPaginationInformation(mv, results);
-		addBasicInformationToModel(mv);
-		mv.addObject("completeresults", cars);
 
 		return mv;
 	}

@@ -24,7 +24,7 @@ public class PaginationController extends BasicController {
 	@RequestMapping(value = "next/{currentPage}", method = RequestMethod.POST)
 	public ModelAndView nextPage(@PathVariable int currentPage, String title, String view,
 			@RequestParam(value = "cars", required = false) ArrayList<String> cars) {
-		ModelAndView mv = new ModelAndView(view);
+		ModelAndView mv = getModelAndView(view);
 
 		PaginationResults results = paginator.paginate(++currentPage);
 		getModelAndView(title, mv, results);
@@ -36,7 +36,7 @@ public class PaginationController extends BasicController {
 	@RequestMapping(value = "previous/{currentPage}", method = RequestMethod.POST)
 	public ModelAndView previousPage(@PathVariable int currentPage, String title, String view,
 			@RequestParam(value = "cars", required = false) ArrayList<String> cars) {
-		ModelAndView mv = new ModelAndView(view);
+		ModelAndView mv = getModelAndView(view);
 
 		PaginationResults results = paginator.paginate(--currentPage);
 		getModelAndView(title, mv, results);
@@ -47,7 +47,6 @@ public class PaginationController extends BasicController {
 
 	private void getModelAndView(String title, ModelAndView mv, PaginationResults results) {
 		mv.addObject("title", title);
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 	}
 }

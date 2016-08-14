@@ -44,9 +44,7 @@ public class StatisticsController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getStatisticsPage() {
-		ModelAndView mv = new ModelAndView("statistics");
-
-		addBasicInformationToModel(mv);
+		ModelAndView mv = getModelAndView("statistics");
 
 		return mv;
 	}

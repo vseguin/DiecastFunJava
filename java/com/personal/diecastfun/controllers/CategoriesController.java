@@ -24,9 +24,8 @@ public class CategoriesController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("carcategories");
+		ModelAndView mv = getModelAndView("carcategories");
 
-		addBasicInformationToModel(mv);
 		mv.addObject("tags", Tags.values());
 
 		return mv;
@@ -34,13 +33,12 @@ public class CategoriesController extends BasicController {
 
 	@RequestMapping(value = "/{category}", method = RequestMethod.GET)
 	public ModelAndView getSpecificCategory(@PathVariable String category) {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToCategory(category));
 		mv.addObject("title", category);
 		mv.addObject("previousview", "categories");
 		mv.addObject("previousviewtitle", "Car Categories");
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;

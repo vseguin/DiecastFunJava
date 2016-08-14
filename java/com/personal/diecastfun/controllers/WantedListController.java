@@ -26,7 +26,7 @@ public class WantedListController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getWantedList() {
-		ModelAndView mv = new ModelAndView("wantedlist");
+		ModelAndView mv = getModelAndView("wantedlist");
 
 		List<WantedCar> wantedCars = Lists.newArrayList(wantedCarRepository.findAllByOrderByMakerAsc());
 		Map<String, List<WantedCar>> groupedCars = wantedCars.stream()
@@ -47,8 +47,6 @@ public class WantedListController extends BasicController {
 		});
 
 		mv.addObject("wantedList", groupedCars);
-
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}

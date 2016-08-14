@@ -33,21 +33,19 @@ public class MiscellaneousController extends BasicController {
 
 	@RequestMapping(value = "/views", method = RequestMethod.GET)
 	public ModelAndView getViews() {
-		ModelAndView mv = new ModelAndView("views");
+		ModelAndView mv = getModelAndView("views");
 
 		mv.addObject("views", viewsFacade.getAllViews());
 		mv.addObject("viewscount", viewsFacade.getViewsCount());
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/guestbook", method = RequestMethod.GET)
 	public ModelAndView getGuestBook() {
-		ModelAndView mv = new ModelAndView("guestbook");
+		ModelAndView mv = getModelAndView("guestbook");
 
 		mv.addObject("comments", commentsRepository.findAll());
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}
@@ -77,12 +75,11 @@ public class MiscellaneousController extends BasicController {
 	}
 
 	private ModelAndView buildModelAndView(String title, SortedList<CarModel> cars) {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		PaginationResults results = paginator.paginate(cars);
 		mv.addObject("title", title);
 		addPaginationInformation(mv, results);
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}

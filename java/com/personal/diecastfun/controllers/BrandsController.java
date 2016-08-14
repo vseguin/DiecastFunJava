@@ -28,25 +28,23 @@ public class BrandsController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("carbrands");
+		ModelAndView mv = getModelAndView("carbrands");
 
 		SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findAllBrands());
 		mv.addObject("sortedbrands", model);
 		mv.addObject("countries", brandFacade.findCountries());
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/{brand}", method = RequestMethod.GET)
 	public ModelAndView getSpecificBrand(@PathVariable String brand) {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToBrand(brand));
 		mv.addObject("title", brand);
 		mv.addObject("previousview", "carbrands");
 		mv.addObject("previousviewtitle", "Car Brands");
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;
@@ -54,12 +52,11 @@ public class BrandsController extends BasicController {
 
 	@RequestMapping(value = "/{country}", method = RequestMethod.POST)
 	public ModelAndView getBrandsByCountry(@PathVariable String country) {
-		ModelAndView mv = new ModelAndView("carbrandstemplate");
+		ModelAndView mv = getModelAndView("carbrandstemplate");
 
 		SortedList<BrandModel> model = new SortedList<BrandModel>(brandFacade.findBrandsByCountry(country));
 		mv.addObject("sortedbrands", model);
 		mv.addObject("countries", brandFacade.findCountries());
-		addBasicInformationToModel(mv);
 
 		return mv;
 	}

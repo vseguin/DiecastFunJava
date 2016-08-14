@@ -24,9 +24,8 @@ public class ErasController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("eras");
+		ModelAndView mv = getModelAndView("eras");
 
-		addBasicInformationToModel(mv);
 		mv.addObject("eras", Era.values());
 
 		return mv;
@@ -34,13 +33,12 @@ public class ErasController extends BasicController {
 
 	@RequestMapping(value = "/{era}", method = RequestMethod.GET)
 	public ModelAndView getSpecificEra(@PathVariable String era) {
-		ModelAndView mv = new ModelAndView("carlist");
+		ModelAndView mv = getModelAndView("carlist");
 
 		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToEra(era));
 		mv.addObject("title", era);
 		mv.addObject("previousview", "eras");
 		mv.addObject("previousviewtitle", "Eras");
-		addBasicInformationToModel(mv);
 		addPaginationInformation(mv, results);
 
 		return mv;
