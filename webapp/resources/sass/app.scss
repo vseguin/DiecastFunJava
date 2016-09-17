@@ -6,7 +6,7 @@ body {
   color: $primary-text-color;
   text-transform: uppercase;
 
-  p {
+  p, span {
     text-transform: none;
   }
 }

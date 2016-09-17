@@ -1,5 +1,5 @@
 // Colors
-$primary-text-color: #424242;
+$primary-text-color: #616161;
 $blue-color: #009688;
 $white-color: #FFFFFF;
 
@@ -12,6 +12,16 @@ $white-color: #FFFFFF;
 }
 @mixin car-bg() {
   background: url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/backgroundpattern.png');
+}
+@mixin cover-bg() {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+@mixin contain-bg() {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 // Border
