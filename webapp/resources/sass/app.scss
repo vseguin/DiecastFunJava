@@ -11,7 +11,7 @@ body {
   }
 
   .flow-text {
-    .row {
+    .row:first-child {
       min-height: 275px;
     }
   }
