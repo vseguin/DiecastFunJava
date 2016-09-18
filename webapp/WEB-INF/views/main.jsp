@@ -31,7 +31,9 @@
     <c:import url="nav.jsp" />
     <c:import url="sidepanel.jsp" />
     <c:import url="header.jsp" />
-    <c:import url="${view}.jsp" />
+    <div class="flow-text">
+    	<c:import url="${view}.jsp" />
+    </div>
     <c:import url="footer.jsp" />
 </body>
 </html>
