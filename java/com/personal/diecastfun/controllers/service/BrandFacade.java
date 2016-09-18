@@ -48,7 +48,7 @@ public class BrandFacade {
 		for (Country countryEnum : Country.values()) {
 			if (countryEnum != Country.Unknown) {
 				int totalCarCount = 0;
-				for (BrandModel brand : findBrandsByCountry(String.valueOf(countryEnum))) {
+				for (BrandModel brand : findBrandsByCountry(countryEnum)) {
 					totalCarCount += brand.getCarCount();
 				}
 				countries.add(new CountryModel(countryEnum, totalCarCount));
@@ -58,8 +58,8 @@ public class BrandFacade {
 		return countries;
 	}
 
-	public List<BrandModel> findBrandsByCountry(String country) {
-		return getModels(brandsRepository.findByCountry(Country.valueOf(country)));
+	public List<BrandModel> findBrandsByCountry(Country country) {
+		return getModels(brandsRepository.findByCountry(country));
 	}
 
 	public BrandModel findBrand(String brandName) {

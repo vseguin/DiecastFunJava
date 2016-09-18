@@ -9,6 +9,12 @@ body {
   p, span {
     text-transform: none;
   }
+
+  .flow-text {
+    .row {
+      min-height: 275px;
+    }
+  }
 }
 
 .blue-bg {
@@ -68,4 +74,12 @@ body {
 .headliner {
   border-left: $grey-border;
   padding-left: 20px;
+}
+
+.btn, .btn-large {
+	@include blue-bg(1);
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+	color: $primary-text-color;
 }

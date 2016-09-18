@@ -1,55 +1,70 @@
 package com.personal.diecastfun.controllers.models;
 
 import com.personal.diecastfun.domain.Country;
+import com.personal.diecastfun.utils.PicturesHelper;
 
 public class CountryModel implements Comparable<CountryModel> {
 
-  private String country;
-  private String picture;
-  private int carCount;
+	private String code;
+	private String country;
+	private String picture;
+	private int carCount;
 
-  public CountryModel(Country country, int carCount) {
-    this.country = String.valueOf(country);
-    this.picture = this.country.toLowerCase() + ".png";
-    this.carCount = carCount;
+	public CountryModel(Country country) {
+		this(country, 0);
+	}
 
-    if (country == Country.UnitedKingdom) {
-      this.country = "United Kingdom";
-    } else if (country == Country.UnitedStates) {
-      this.country = "United States";
-    } else if (country == Country.SouthKorea) {
-      this.country = "South Korea";
-    } else if (country == Country.CzechRepublic) {
-      this.country = "Czech Republic";
-    }
-  }
+	public CountryModel(Country country, int carCount) {
+		this.code = country.getCode();
+		this.country = String.valueOf(country);
+		this.picture = PicturesHelper.getPictureName(this.country.toLowerCase());
+		this.carCount = carCount;
 
-  public String getCountry() {
-    return country;
-  }
+		if (country == Country.UnitedKingdom) {
+			this.country = "United Kingdom";
+		} else if (country == Country.UnitedStates) {
+			this.country = "United States";
+		} else if (country == Country.SouthKorea) {
+			this.country = "South Korea";
+		} else if (country == Country.CzechRepublic) {
+			this.country = "Czech Republic";
+		}
+	}
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+	public String getCountry() {
+		return country;
+	}
 
-  public String getPicture() {
-    return picture;
-  }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-  public void setPicture(String picture) {
-    this.picture = picture;
-  }
+	public String getPicture() {
+		return picture;
+	}
 
-  public int getCarCount() {
-    return carCount;
-  }
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 
-  public void setCarCount(int carCount) {
-    this.carCount = carCount;
-  }
+	public int getCarCount() {
+		return carCount;
+	}
 
-  @Override
-  public int compareTo(CountryModel model) {
-    return this.getCountry().compareTo(model.getCountry());
-  }
+	public void setCarCount(int carCount) {
+		this.carCount = carCount;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	@Override
+	public int compareTo(CountryModel model) {
+		return this.getCountry().compareTo(model.getCountry());
+	}
 }

@@ -1,0 +1,11 @@
+@import 'utils';
+
+.btn-filter {
+  @include respond-to(phone) {
+    width: 100%;
+  }
+}
+
+.filter-list-icon {
+  float: right;
+}
