@@ -94,10 +94,10 @@ public class CarFacade {
 
 	}
 
-	public SortedList<CarModel> findAllCarsCorrespondingToCategory(String category) {
+	public SortedList<CarModel> findAllCarsCorrespondingToCategory(Tags tag) {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		for (Car car : carRepository.findByTags(Tags.valueOf(category))) {
+		for (Car car : carRepository.findByTags(tag)) {
 			addCarModel(models, car);
 		}
 		return new SortedList<CarModel>(models);
