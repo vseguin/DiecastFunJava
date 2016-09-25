@@ -22,7 +22,7 @@
    			
 			<c:forEach var="brand" items="${sortedbrands.collection}">
 	   			<div class="col l4 m12 s12">
-	   				<a href="<c:url value="/carbrands/${brand.name}"/>">
+	   				<a href="<c:url value="/cars?brand=${brand.name}"/>">
 	   					<div class="list-item">
 	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/brands/${brand.pictureName}"/>')"></div>
 	   						<h4>${brand.name}</h4>

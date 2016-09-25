@@ -1,12 +1,16 @@
 package com.personal.diecastfun.controllers.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
@@ -16,6 +20,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.personal.diecastfun.controllers.models.CarModel;
+import com.personal.diecastfun.controllers.models.CarQueryModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Era;
@@ -29,7 +34,6 @@ import com.personal.diecastfun.domain.repositories.VotesRepository;
 @DependsOn("carRepository")
 public class CarFacade {
 
-	private Map<String, CarModel> cachedCarModels = new HashMap<String, CarModel>();
 	private Map<String, Car> cachedCars = Maps.newHashMap();
 
 	@Autowired
@@ -38,6 +42,9 @@ public class CarFacade {
 	private QueuedCarsRepository queuedCarsRepository;
 	@Autowired
 	private VotesRepository votesRepository;
+
+	@Autowired
+	private EntityManager entityManager;
 
 	public void addCar(Car car) {
 		carRepository.save(car);
@@ -72,106 +79,54 @@ public class CarFacade {
 		return carRepository.countByTags(tag);
 	}
 
+	public SortedList<CarModel> findCars(CarQueryModel queryModel) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Car> cq = builder.createQuery(Car.class);
+
+		Root<Car> root = cq.from(Car.class);
+
+		if (!Strings.isNullOrEmpty(queryModel.getBrand())) {
+			cq.where(builder.equal(root.get("brand"), queryModel.getBrand()));
+		}
+
+		cq.orderBy(builder.asc(root.get("id")));
+
+		TypedQuery<Car> typedQuery = entityManager.createQuery(cq);
+		typedQuery.setFirstResult(queryModel.getPage() * queryModel.getPerPage());
+		typedQuery.setMaxResults(queryModel.getPerPage());
+
+		return new SortedList<>(getModelsFromCars(typedQuery.getResultList()));
+	}
+
 	public SortedList<CarModel> findAllCars() {
-		List<Car> allCars = getAllCars();
-		if (cachedCarModels.values().size() != allCars.size()) {
-			cachedCarModels = new HashMap<String, CarModel>();
-			for (Car car : allCars) {
-				cachedCarModels.put(car.getId(), new CarModel(car));
-			}
-		}
-
-		return new SortedList<CarModel>(new ArrayList<CarModel>(cachedCarModels.values()));
+		return new SortedList<>(getModelsFromCars(Lists.newArrayList(carRepository.findAll())));
 	}
 
-	public SortedList<CarModel> findAllCarsCorrespondingToBrand(String brand) {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		for (Car car : carRepository.findByBrand(brand)) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
-
-	}
-
-	public SortedList<CarModel> findAllCarsCorrespondingToCategory(Tags tag) {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		for (Car car : carRepository.findByTags(tag)) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
-
-	}
-
-	public SortedList<CarModel> findAllCarsCorrespondingToEra(Era era) {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		for (Car car : carRepository.findByEra(era)) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
-
-	}
-
-	public SortedList<CarModel> findAllCarsCorrespondingToKeywords(String keywords) {
-		List<CarModel> models = new ArrayList<CarModel>();
-		List<String> foundIds = new ArrayList<String>();
-
-		for (Car car : getAllCars()) {
-			if (!Strings.isNullOrEmpty(keywords)) {
-				if (car.containsWord(keywords) && !foundIds.contains(car.getId())) {
-					addCarModel(models, car);
-					foundIds.add(car.getId());
-				}
-			} else {
-				addCarModel(models, car);
-				foundIds.add(car.getId());
-			}
-		}
-
-		return new SortedList<CarModel>(models);
-	}
-
-	public SortedList<CarModel> findAllCarsCorrespondingToMaker(String maker) {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		for (Car car : carRepository.findByMaker(maker)) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
-	}
+	/*
+	 * public SortedList<CarModel> findAllCarsCorrespondingToKeywords(String
+	 * keywords) { List<CarModel> models = new ArrayList<CarModel>();
+	 * List<String> foundIds = new ArrayList<String>();
+	 * 
+	 * for (Car car : getAllCars()) { if (!Strings.isNullOrEmpty(keywords)) { if
+	 * (car.containsWord(keywords) && !foundIds.contains(car.getId())) {
+	 * addCarModel(models, car); foundIds.add(car.getId()); } } else {
+	 * addCarModel(models, car); foundIds.add(car.getId()); } }
+	 * 
+	 * return new SortedList<CarModel>(models); }
+	 */
 
 	public List<CarModel> findCustomizations() {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		for (Car car : carRepository.findByCustomized(true)) {
-			addCarModel(models, car);
-		}
-		return models;
+		return getModelsFromCars(carRepository.findByCustomized(true));
 	}
 
 	public List<CarModel> findRestorations() {
-		List<CarModel> models = new ArrayList<CarModel>();
-
-		for (Car car : carRepository.findByRestored(true)) {
-			addCarModel(models, car);
-		}
-		return models;
+		return getModelsFromCars(carRepository.findByRestored(true));
 	}
 
 	public CarModel findCarById(String id) {
-		CarModel carModel;
-		if (cachedCarModels.containsKey(id)) {
-			carModel = cachedCarModels.get(id);
-		} else {
-			Car realCar = carRepository.findOne(id);
+		Car realCar = carRepository.findOne(id);
 
-			carModel = new CarModel(realCar);
-			cachedCarModels.put(realCar.getId(), carModel);
-		}
-
-		return carModel;
+		return new CarModel(realCar);
 	}
 
 	public String findRandomCarId() {
@@ -193,15 +148,8 @@ public class CarFacade {
 		return new SeeAlsoStrategy(id).findCars(getAllCars());
 	}
 
-	private void addCarModel(List<CarModel> models, Car car) {
-		String carId = car.getId();
-		if (cachedCarModels.containsKey(carId)) {
-			models.add(cachedCarModels.get(carId));
-		} else {
-			CarModel carModel = new CarModel(car);
-			cachedCarModels.put(car.getId(), carModel);
-			models.add(carModel);
-		}
+	private List<CarModel> getModelsFromCars(List<Car> cars) {
+		return cars.stream().map(c -> new CarModel(c)).collect(Collectors.toList());
 	}
 
 	private List<Car> getAllCars() {

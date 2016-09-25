@@ -7,7 +7,6 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +17,7 @@ import com.personal.diecastfun.controllers.models.BrandModel;
 import com.personal.diecastfun.controllers.models.CountryModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.controllers.service.BrandFacade;
-import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.domain.Country;
-import com.personal.diecastfun.utils.PaginationResults;
-import com.personal.diecastfun.utils.Paginator;
 
 @Controller
 @RequestMapping(value = "/carbrands")
@@ -29,10 +25,6 @@ public class BrandsController extends BasicController {
 
 	@Inject
 	private BrandFacade brandFacade;
-	@Inject
-	private CarFacade carFacade;
-	@Inject
-	private Paginator paginator;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getBrands(@RequestParam(required = false, value = "country") String country) {
@@ -53,19 +45,6 @@ public class BrandsController extends BasicController {
 		SortedList<BrandModel> model = new SortedList<BrandModel>(brands);
 		mv.addObject("sortedbrands", model);
 		mv.addObject("countries", brandFacade.findCountries());
-
-		return mv;
-	}
-
-	@RequestMapping(value = "/{brand}", method = RequestMethod.GET)
-	public ModelAndView getSpecificBrand(@PathVariable String brand) {
-		ModelAndView mv = getModelAndView("carlist");
-
-		PaginationResults results = paginator.paginate(carFacade.findAllCarsCorrespondingToBrand(brand));
-		mv.addObject("title", brand);
-		mv.addObject("previousview", "carbrands");
-		mv.addObject("previousviewtitle", "Car Brands");
-		addPaginationInformation(mv, results);
 
 		return mv;
 	}

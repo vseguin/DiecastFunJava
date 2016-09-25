@@ -18,6 +18,7 @@ public abstract class BasicController {
 	@Inject
 	private ConfigFacade configFacade;
 
+	// TODO vseguin remove this eventually
 	protected void addPaginationInformation(ModelAndView mv, PaginationResults results) {
 		mv.addObject("currentpage", results.getCurrentPage());
 		mv.addObject("hasprevious", results.hasPrevious());

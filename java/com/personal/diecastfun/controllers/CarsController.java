@@ -6,13 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.personal.diecastfun.controllers.models.CarQueryModel;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
-import com.personal.diecastfun.utils.PaginationResults;
-import com.personal.diecastfun.utils.Paginator;
 
 @Controller
 @RequestMapping(value = "/cars")
@@ -24,16 +24,17 @@ public class CarsController extends BasicController {
 	private ViewsFacade viewsFacade;
 	@Inject
 	private VotesFacade votesFacade;
-	@Inject
-	private Paginator paginator;
 
-	@RequestMapping(value = "/allcars", method = RequestMethod.GET)
-	public ModelAndView getAllCars() {
+	@RequestMapping(method = RequestMethod.GET, params = "brand")
+	public ModelAndView getCars(@RequestParam(required = false, value = "brand") String brand,
+			@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+			@RequestParam(required = false, value = "perPage", defaultValue = "20") Integer perPage) {
+
 		ModelAndView mv = getModelAndView("carlist");
 
-		PaginationResults results = paginator.paginate(carFacade.findAllCars());
-		mv.addObject("title", "All Cars");
-		addPaginationInformation(mv, results);
+		mv.addObject("cars",
+				carFacade.findCars(new CarQueryModel().withBrand(brand).withPage(page).withPerPage(perPage)));
+		mv.addObject("title", "Car brand - " + brand);
 
 		return mv;
 	}
