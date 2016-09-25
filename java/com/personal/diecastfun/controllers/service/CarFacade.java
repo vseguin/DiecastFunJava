@@ -104,10 +104,10 @@ public class CarFacade {
 
 	}
 
-	public SortedList<CarModel> findAllCarsCorrespondingToEra(String era) {
+	public SortedList<CarModel> findAllCarsCorrespondingToEra(Era era) {
 		List<CarModel> models = new ArrayList<CarModel>();
 
-		for (Car car : carRepository.findByEra(Era.valueOf(era))) {
+		for (Car car : carRepository.findByEra(era)) {
 			addCarModel(models, car);
 		}
 		return new SortedList<CarModel>(models);
