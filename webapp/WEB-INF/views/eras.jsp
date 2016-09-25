@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
     	<div class="row row-bg">
     		<div class="headliner">
-	   			<h4>Categories</h4>
+	   			<h4>Eras</h4>
    			</div>
    			
 			<c:forEach var="era" items="${eras.collection}">

@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.controllers.service.CarFacade;
-import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.domain.Comment;
 import com.personal.diecastfun.domain.repositories.CommentsRepository;
 import com.personal.diecastfun.utils.PaginationResults;
@@ -24,22 +23,10 @@ public class MiscellaneousController extends BasicController {
 	@Inject
 	private CarFacade carFacade;
 	@Inject
-	private ViewsFacade viewsFacade;
-	@Inject
 	private Paginator paginator;
 
 	@Autowired
 	private CommentsRepository commentsRepository;
-
-	@RequestMapping(value = "/views", method = RequestMethod.GET)
-	public ModelAndView getViews() {
-		ModelAndView mv = getModelAndView("views");
-
-		mv.addObject("views", viewsFacade.getAllViews());
-		mv.addObject("viewscount", viewsFacade.getViewsCount());
-
-		return mv;
-	}
 
 	@RequestMapping(value = "/guestbook", method = RequestMethod.GET)
 	public ModelAndView getGuestBook() {

@@ -57,7 +57,7 @@
 
     .car-thumbnail {
       @include respond-to(computer) {
-        max-height: 250px;
+        max-height: 260px;
         overflow: hidden;
       }
       @include respond-to(phone) {
@@ -71,4 +71,14 @@
       height: 360px;
     }
   }
+}
+
+.card.small, .card.medium, .card.large {
+	.card-image {
+		max-height: 65%;
+	}
+	
+	.card-content {
+		max-height: 35%;
+	}
 }
