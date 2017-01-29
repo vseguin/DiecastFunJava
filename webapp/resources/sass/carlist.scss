@@ -1,0 +1,17 @@
+@import 'utils';
+
+.list-item {
+  &.car {
+    display: flex;
+    justify-content: space-around;
+
+    .list-item-picture {
+      height: 150px;
+      position: static;
+      opacity: 1;
+      width: 200px;
+      @include cover-bg;
+      background-position: center;
+    }
+  }
+}

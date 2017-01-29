@@ -8,7 +8,7 @@
   color: $primary-text-color;
   height: 150px;
 
-  h4 {
+  h4, h5, h6 {
     color: $primary-text-color;
   }
 
@@ -20,5 +20,9 @@
     width: 100px;
     @include contain-bg;
     opacity: 0.75;
+  }
+
+  .list-item-text {
+    padding-right: 5px;
   }
 }

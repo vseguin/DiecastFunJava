@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.CarQueryModel;
+import com.personal.diecastfun.controllers.models.CarQueryResultModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Era;
@@ -90,7 +91,7 @@ public class CarFacade
         return carRepository.countByTags(tag);
     }
 
-    public SortedList<CarModel> findCars(CarQueryModel queryModel)
+    public CarQueryResultModel findCars(CarQueryModel queryModel)
     {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Car> cq = builder.createQuery(Car.class);
@@ -107,7 +108,15 @@ public class CarFacade
         typedQuery.setFirstResult(queryModel.getPage() * queryModel.getPerPage());
         typedQuery.setMaxResults(queryModel.getPerPage());
 
-        return new SortedList<>(getModelsFromCars(typedQuery.getResultList()));
+        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+        Root<Car> carRoot = countQuery.from(Car.class);
+        countQuery.select(builder.count(carRoot));
+        countQuery.where(builder.and(cq.getRestriction()));
+
+        Integer totalCount = entityManager.createQuery(countQuery).getSingleResult().intValue();
+
+        return new CarQueryResultModel().withCars(new SortedList<>(getModelsFromCars(typedQuery.getResultList())))
+                                        .withTotalCount(totalCount);
     }
 
     public SortedList<CarModel> findAllCars()
@@ -119,12 +128,12 @@ public class CarFacade
      * public SortedList<CarModel> findAllCarsCorrespondingToKeywords(String
      * keywords) { List<CarModel> models = new ArrayList<CarModel>();
      * List<String> foundIds = new ArrayList<String>();
-     * 
+     *
      * for (Car car : getAllCars()) { if (!Strings.isNullOrEmpty(keywords)) { if
      * (car.containsWord(keywords) && !foundIds.contains(car.getId())) {
      * addCarModel(models, car); foundIds.add(car.getId()); } } else {
      * addCarModel(models, car); foundIds.add(car.getId()); } }
-     * 
+     *
      * return new SortedList<CarModel>(models); }
      */
 

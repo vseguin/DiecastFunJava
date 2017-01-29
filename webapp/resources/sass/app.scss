@@ -83,3 +83,7 @@ body {
 .dropdown-content li>a, .dropdown-content li>span {
 	color: $primary-text-color;
 }
+
+.pagination li.active {
+  @include blue-bg(1);
+}

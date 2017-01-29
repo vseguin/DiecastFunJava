@@ -10,8 +10,10 @@
 	   				<a href="<c:url value="/makers/${maker.name}"/>">
 	   					<div class="list-item">
 	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/makers/${maker.pictureName}"/>')"></div>
-	   						<h4>${maker.name}</h4>
-	   						<div>${maker.carCount} car<c:if test="${maker.carCount != 1}">s</c:if></div>
+	   						<div>
+	   							<h4>${maker.name}</h4>
+	   							<div>${maker.carCount} car<c:if test="${maker.carCount != 1}">s</c:if></div>
+	   						</div>
 	   					</div>
 	   				</a>
 				</div>

@@ -10,8 +10,10 @@
 	   				<a href="<c:url value="/categories/${tag.tag}"/>">
 	   					<div class="list-item">
 	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/tags/${fn:toLowerCase(tag.tag)}.png"/>')"></div>
-	   						<h4>${tag.displayName}</h4>
-	   						<div>${tag.carCount} car<c:if test="${tag.carCount != 1}">s</c:if></div>
+	   						<div>
+	   							<h4>${tag.displayName}</h4>
+	   							<div>${tag.carCount} car<c:if test="${tag.carCount != 1}">s</c:if></div>
+	   						</div>
 	   					</div>
 	   				</a>
 				</div>

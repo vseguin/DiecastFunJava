@@ -10,8 +10,10 @@
 	   				<a href="<c:url value="/eras/${era.era}"/>">
 	   					<div class="list-item">
 	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/eras/${fn:toLowerCase(era.era)}.png"/>')"></div>
-	   						<h4>${era.era}</h4>
-	   						<div>${era.carCount} car<c:if test="${era.carCount != 1}">s</c:if></div>
+	   						<div>
+	   							<h4>${era.era}</h4>
+	   							<div>${era.carCount} car<c:if test="${era.carCount != 1}">s</c:if></div>
+	   						</div>
 	   					</div>
 	   				</a>
 				</div>

@@ -10,51 +10,63 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.personal.diecastfun.controllers.models.CarQueryModel;
+import com.personal.diecastfun.controllers.models.CarQueryResultModel;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
 
 @Controller
 @RequestMapping(value = "/cars")
-public class CarsController extends BasicController {
+public class CarsController extends BasicController
+{
 
-	@Inject
-	private CarFacade carFacade;
-	@Inject
-	private ViewsFacade viewsFacade;
-	@Inject
-	private VotesFacade votesFacade;
+    @Inject
+    private CarFacade carFacade;
+    @Inject
+    private ViewsFacade viewsFacade;
+    @Inject
+    private VotesFacade votesFacade;
 
-	@RequestMapping(method = RequestMethod.GET, params = "brand")
-	public ModelAndView getCars(@RequestParam(required = false, value = "brand") String brand,
-			@RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
-			@RequestParam(required = false, value = "perPage", defaultValue = "20") Integer perPage) {
+    @RequestMapping(method = RequestMethod.GET, params = "brand")
+    public ModelAndView getCars(@RequestParam(required = false, value = "brand") String brand,
+                                @RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                                @RequestParam(required = false, value = "perPage", defaultValue = "20") Integer perPage)
+    {
 
-		ModelAndView mv = getModelAndView("carlist");
+        ModelAndView mv = getModelAndView("carlist");
 
-		mv.addObject("cars",
-				carFacade.findCars(new CarQueryModel().withBrand(brand).withPage(page).withPerPage(perPage)));
-		mv.addObject("title", "Car brand - " + brand);
+        CarQueryResultModel queryResult = carFacade.findCars(new CarQueryModel().withBrand(brand)
+                                                                                .withPage(page)
+                                                                                .withPerPage(perPage));
 
-		return mv;
-	}
+        mv.addObject("cars", queryResult.getCars());
+        mv.addObject("page", page);
+        mv.addObject("perPage", perPage);
+        mv.addObject("query", "?brand=" + brand);
+        mv.addObject("title", "Car brand - " + brand);
+        mv.addObject("totalCount", queryResult.getTotalCount());
 
-	@RequestMapping(value = "/{carId}", method = RequestMethod.GET)
-	public ModelAndView getSpecificCar(@PathVariable String carId) {
-		viewsFacade.addView(carId);
-		ModelAndView mv = getModelAndView("cardetails");
+        return mv;
+    }
 
-		mv.addObject("id", carId);
-		mv.addObject("car", carFacade.findCarById(carId));
-		mv.addObject("seealso", carFacade.findSeeAlso(carId));
-		mv.addObject("votes", votesFacade.getVotesById(carId));
-		mv.addObject("views", viewsFacade.getViews(carId));
+    @RequestMapping(value = "/{carId}", method = RequestMethod.GET)
+    public ModelAndView getSpecificCar(@PathVariable String carId)
+    {
+        viewsFacade.addView(carId);
+        ModelAndView mv = getModelAndView("cardetails");
 
-		return mv;
-	}
+        mv.addObject("id", carId);
+        mv.addObject("car", carFacade.findCarById(carId));
+        mv.addObject("seealso", carFacade.findSeeAlso(carId));
+        mv.addObject("votes", votesFacade.getVotesById(carId));
+        mv.addObject("views", viewsFacade.getViews(carId));
 
-	@RequestMapping(value = "/random", method = RequestMethod.GET)
-	public ModelAndView getRandomCar() {
-		return getSpecificCar(carFacade.findRandomCarId());
-	}
+        return mv;
+    }
+
+    @RequestMapping(value = "/random", method = RequestMethod.GET)
+    public ModelAndView getRandomCar()
+    {
+        return getSpecificCar(carFacade.findRandomCarId());
+    }
 }
