@@ -28,25 +28,33 @@ public class CarsController extends BasicController
     private VotesFacade votesFacade;
 
     @RequestMapping(method = RequestMethod.GET, params = "brand")
-    public ModelAndView getCars(@RequestParam(required = false, value = "brand") String brand,
-                                @RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
-                                @RequestParam(required = false, value = "perPage", defaultValue = "20") Integer perPage)
+    public ModelAndView getCarsWithBrand(@RequestParam(required = false, value = "brand") String brand,
+                                         @RequestParam(required = false,
+                                                       value = "page",
+                                                       defaultValue = "0") Integer page,
+                                         @RequestParam(required = false,
+                                                       value = "perPage",
+                                                       defaultValue = "20") Integer perPage)
     {
 
-        ModelAndView mv = getModelAndView("carlist");
+        CarQueryModel carQueryModel = new CarQueryModel().withBrand(brand).withPage(page).withPerPage(perPage);
 
-        CarQueryResultModel queryResult = carFacade.findCars(new CarQueryModel().withBrand(brand)
-                                                                                .withPage(page)
-                                                                                .withPerPage(perPage));
+        return getModelAndView(carQueryModel, "?brand=" + brand, "Car brand - " + brand);
+    }
 
-        mv.addObject("cars", queryResult.getCars());
-        mv.addObject("page", page);
-        mv.addObject("perPage", perPage);
-        mv.addObject("query", "?brand=" + brand);
-        mv.addObject("title", "Car brand - " + brand);
-        mv.addObject("totalCount", queryResult.getTotalCount());
+    @RequestMapping(method = RequestMethod.GET, params = "maker")
+    public ModelAndView getCarsWithMaker(@RequestParam(required = false, value = "maker") String maker,
+                                         @RequestParam(required = false,
+                                                       value = "page",
+                                                       defaultValue = "0") Integer page,
+                                         @RequestParam(required = false,
+                                                       value = "perPage",
+                                                       defaultValue = "20") Integer perPage)
+    {
 
-        return mv;
+        CarQueryModel carQueryModel = new CarQueryModel().withMaker(maker).withPage(page).withPerPage(perPage);
+
+        return getModelAndView(carQueryModel, "?maker=" + maker, "Diecast brand - " + maker);
     }
 
     @RequestMapping(value = "/{carId}", method = RequestMethod.GET)
@@ -67,6 +75,22 @@ public class CarsController extends BasicController
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     public ModelAndView getRandomCar()
     {
-        return getSpecificCar(carFacade.findRandomCarId());
+        return new ModelAndView("redirect:" + "/cars/" + carFacade.findRandomCarId());
+    }
+
+    private ModelAndView getModelAndView(CarQueryModel carQueryModel, String query, String title)
+    {
+        ModelAndView mv = getModelAndView("carlist");
+
+        CarQueryResultModel queryResult = carFacade.findCars(carQueryModel);
+
+        mv.addObject("cars", queryResult.getCars());
+        mv.addObject("page", carQueryModel.getPage());
+        mv.addObject("perPage", carQueryModel.getPerPage());
+        mv.addObject("query", query);
+        mv.addObject("title", title);
+        mv.addObject("totalCount", queryResult.getTotalCount());
+
+        return mv;
     }
 }

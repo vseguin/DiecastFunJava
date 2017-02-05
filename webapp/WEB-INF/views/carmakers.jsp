@@ -7,7 +7,7 @@
    			
 			<c:forEach var="maker" items="${sortedmakers.collection}">
 	   			<div class="col l4 m12 s12">
-	   				<a href="<c:url value="/makers/${maker.name}"/>">
+	   				<a href="<c:url value="/cars?maker=${maker.name}"/>">
 	   					<div class="list-item">
 	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/makers/${maker.pictureName}"/>')"></div>
 	   						<div>

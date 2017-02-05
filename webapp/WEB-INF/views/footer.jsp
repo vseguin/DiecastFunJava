@@ -7,7 +7,7 @@
 		<div class="col l4 s12">
 			<ul>
 				<li><a class="white-text text-lighten-3"
-					href="<c:url value="/random"/>">Random car</a></li>
+					href="<c:url value="/cars/random"/>">Random car</a></li>
 				<li><a class="white-text text-lighten-3"
 					href="https://www.instagram.com/164diecastfun">Instagram</a></li>
 				<li><a class="white-text text-lighten-3"

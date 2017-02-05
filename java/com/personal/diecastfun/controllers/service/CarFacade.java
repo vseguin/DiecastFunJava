@@ -98,6 +98,10 @@ public class CarFacade
             cq.where(builder.equal(root.get("brand"), queryModel.getBrand()));
         }
 
+        if (!Strings.isNullOrEmpty(queryModel.getMaker())) {
+            cq.where(builder.equal(root.get("maker"), queryModel.getMaker()));
+        }
+
         cq.orderBy(builder.asc(root.get("id")));
 
         TypedQuery<Car> typedQuery = entityManager.createQuery(cq);
