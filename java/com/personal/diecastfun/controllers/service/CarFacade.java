@@ -1,11 +1,9 @@
 package com.personal.diecastfun.controllers.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.CarQueryModel;
 import com.personal.diecastfun.controllers.models.CarQueryResultModel;
@@ -35,8 +32,7 @@ import com.personal.diecastfun.domain.repositories.VotesRepository;
 @DependsOn("carRepository")
 public class CarFacade
 {
-
-    private Map<String, Car> cachedCars = Maps.newHashMap();
+    private List<Car> cars;
 
     @Autowired
     private CarRepository carRepository;
@@ -51,7 +47,7 @@ public class CarFacade
     public void addCar(Car car)
     {
         carRepository.save(car);
-        cachedCars.put(car.getId(), car);
+        cars.add(car);
     }
 
     public String addCar(CarModel carModel)
@@ -184,14 +180,10 @@ public class CarFacade
 
     private List<Car> getAllCars()
     {
-        return Lists.newArrayList(cachedCars.values());
-    }
+        if (cars == null) {
+            cars = Lists.newArrayList(carRepository.findAll());
+        }
 
-    @PostConstruct
-    private void init()
-    {
-        carRepository.findAll().forEach(c -> {
-            cachedCars.put(c.getId(), c);
-        });
+        return cars;
     }
 }
