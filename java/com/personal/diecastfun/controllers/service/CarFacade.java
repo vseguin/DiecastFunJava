@@ -1,5 +1,7 @@
 package com.personal.diecastfun.controllers.service;
 
+import static java.lang.Math.toIntExact;
+
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -12,6 +14,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
@@ -89,6 +93,14 @@ public class CarFacade
 
     public CarQueryResultModel findCars(CarQueryModel queryModel)
     {
+        if (!Strings.isNullOrEmpty(queryModel.getCategory())) {
+            Page<Car> cars = carRepository.findByTagsIn(Tags.valueOf(queryModel.getCategory()),
+                                                        new PageRequest(queryModel.getPage(), queryModel.getPerPage()));
+
+            return new CarQueryResultModel().withCars(new SortedList<>(getModelsFromCars(cars.getContent())))
+                                            .withTotalCount(toIntExact(cars.getTotalElements()));
+        }
+
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Car> cq = builder.createQuery(Car.class);
 
@@ -100,6 +112,10 @@ public class CarFacade
 
         if (!Strings.isNullOrEmpty(queryModel.getMaker())) {
             cq.where(builder.equal(root.get("maker"), queryModel.getMaker()));
+        }
+
+        if (queryModel.getEra() != null) {
+            cq.where(builder.equal(root.get("era"), queryModel.getEra()));
         }
 
         cq.orderBy(builder.asc(root.get("id")));
@@ -123,19 +139,6 @@ public class CarFacade
     {
         return new SortedList<>(getModelsFromCars(Lists.newArrayList(carRepository.findAll())));
     }
-
-    /*
-     * public SortedList<CarModel> findAllCarsCorrespondingToKeywords(String
-     * keywords) { List<CarModel> models = new ArrayList<CarModel>();
-     * List<String> foundIds = new ArrayList<String>();
-     *
-     * for (Car car : getAllCars()) { if (!Strings.isNullOrEmpty(keywords)) { if
-     * (car.containsWord(keywords) && !foundIds.contains(car.getId())) {
-     * addCarModel(models, car); foundIds.add(car.getId()); } } else {
-     * addCarModel(models, car); foundIds.add(car.getId()); } }
-     *
-     * return new SortedList<CarModel>(models); }
-     */
 
     public List<CarModel> findCustomizations()
     {

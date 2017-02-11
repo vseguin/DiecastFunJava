@@ -14,6 +14,7 @@ import com.personal.diecastfun.controllers.models.CarQueryResultModel;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
+import com.personal.diecastfun.domain.Era;
 
 @Controller
 @RequestMapping(value = "/cars")
@@ -27,14 +28,10 @@ public class CarsController extends BasicController
     @Inject
     private VotesFacade votesFacade;
 
-    @RequestMapping(method = RequestMethod.GET, params = "brand")
-    public ModelAndView getCarsWithBrand(@RequestParam(required = false, value = "brand") String brand,
-                                         @RequestParam(required = false,
-                                                       value = "page",
-                                                       defaultValue = "0") Integer page,
-                                         @RequestParam(required = false,
-                                                       value = "perPage",
-                                                       defaultValue = "20") Integer perPage)
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView getCars(@RequestParam(required = false, value = "brand") String brand,
+                                @RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                                @RequestParam(required = false, value = "perPage", defaultValue = "20") Integer perPage)
     {
 
         CarQueryModel carQueryModel = new CarQueryModel().withBrand(brand).withPage(page).withPerPage(perPage);
@@ -55,6 +52,34 @@ public class CarsController extends BasicController
         CarQueryModel carQueryModel = new CarQueryModel().withMaker(maker).withPage(page).withPerPage(perPage);
 
         return getModelAndView(carQueryModel, "?maker=" + maker, "Diecast brand - " + maker);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "category")
+    public ModelAndView getCarsWithCategory(@RequestParam(required = false, value = "category") String category,
+                                            @RequestParam(required = false,
+                                                          value = "page",
+                                                          defaultValue = "0") Integer page,
+                                            @RequestParam(required = false,
+                                                          value = "perPage",
+                                                          defaultValue = "20") Integer perPage)
+    {
+
+        CarQueryModel carQueryModel = new CarQueryModel().withCategory(category).withPage(page).withPerPage(perPage);
+
+        return getModelAndView(carQueryModel, "?category=" + category, "Category - " + category);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "era")
+    public ModelAndView getCarsWithEra(@RequestParam(required = false, value = "era") String era,
+                                       @RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                                       @RequestParam(required = false,
+                                                     value = "perPage",
+                                                     defaultValue = "20") Integer perPage)
+    {
+
+        CarQueryModel carQueryModel = new CarQueryModel().withEra(Era.valueOf(era)).withPage(page).withPerPage(perPage);
+
+        return getModelAndView(carQueryModel, "?era=" + era, "Era - " + era);
     }
 
     @RequestMapping(value = "/{carId}", method = RequestMethod.GET)

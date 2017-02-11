@@ -7,7 +7,7 @@
    			
 			<c:forEach var="era" items="${eras.collection}">
 	   			<div class="col l4 m12 s12">
-	   				<a href="<c:url value="/eras/${era.era}"/>">
+	   				<a href="<c:url value="/cars?era=${era.era}"/>">
 	   					<div class="list-item">
 	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/eras/${fn:toLowerCase(era.era)}.png"/>')"></div>
 	   						<div>

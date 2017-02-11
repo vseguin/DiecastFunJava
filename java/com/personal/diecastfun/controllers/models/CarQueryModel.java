@@ -1,11 +1,15 @@
 package com.personal.diecastfun.controllers.models;
 
+import com.personal.diecastfun.domain.Era;
+
 public class CarQueryModel
 {
     private Integer page;
     private Integer perPage;
 
     private String brand;
+    private String category;
+    private Era era;
     private String maker;
 
     public Integer getPage()
@@ -53,6 +57,38 @@ public class CarQueryModel
     public CarQueryModel withBrand(String brand)
     {
         setBrand(brand);
+        return this;
+    }
+
+    public Era getEra()
+    {
+        return era;
+    }
+
+    public void setEra(Era era)
+    {
+        this.era = era;
+    }
+
+    public CarQueryModel withEra(Era era)
+    {
+        setEra(era);
+        return this;
+    }
+
+    public String getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(String category)
+    {
+        this.category = category;
+    }
+
+    public CarQueryModel withCategory(String category)
+    {
+        setCategory(category);
         return this;
     }
 
