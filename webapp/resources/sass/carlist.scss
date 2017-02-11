@@ -5,13 +5,21 @@
     display: flex;
     justify-content: space-around;
 
+    @include respond-to(phone) {
+      justify-content: flex-start;
+    }
+
     .list-item-picture {
-      height: 150px;
+      height: 110px;
       position: static;
       opacity: 1;
       width: 200px;
       @include cover-bg;
       background-position: center;
+
+      @include respond-to(phone) {
+        display: none;
+      }
     }
   }
 }

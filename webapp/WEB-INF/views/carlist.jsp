@@ -3,7 +3,8 @@
    	<div class="row row-bg">
    		<div class="headliner">
    			<h4>${title}</h4>
-  			</div>
+   			<h6>${totalCount} results</h6>
+  		</div>
   			
 		<c:forEach var="car" items="${cars.collection}">
    			<div class="col l6 m12 s12">
