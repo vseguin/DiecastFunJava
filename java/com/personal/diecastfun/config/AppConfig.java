@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.personal.diecastfun.controllers.service.BasicFacade;
 import com.personal.diecastfun.controllers.service.BrandFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
 import com.personal.diecastfun.controllers.service.ColorFacade;
@@ -25,7 +24,6 @@ import com.personal.diecastfun.controllers.service.MakerFacade;
 import com.personal.diecastfun.controllers.service.TagsFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
-import com.personal.diecastfun.utils.Paginator;
 
 @Configuration
 @ComponentScan(basePackages = { "com.personal.diecastfun" })
@@ -42,12 +40,6 @@ public class AppConfig extends WebMvcConfigurerAdapter
     public ObjectMapper objectMapper()
     {
         return new ObjectMapper();
-    }
-
-    @Bean
-    public BasicFacade basicFacade()
-    {
-        return new BasicFacade();
     }
 
     @Bean
@@ -102,12 +94,6 @@ public class AppConfig extends WebMvcConfigurerAdapter
     public VotesFacade votesFacade()
     {
         return new VotesFacade();
-    }
-
-    @Bean
-    public Paginator paginator()
-    {
-        return new Paginator();
     }
 
     @Bean(name = "jspViewResolver")

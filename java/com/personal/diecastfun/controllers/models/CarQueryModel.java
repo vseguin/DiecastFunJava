@@ -11,6 +11,7 @@ public class CarQueryModel
     private String category;
     private Era era;
     private String maker;
+    private String query;
 
     public Integer getPage()
     {
@@ -105,6 +106,22 @@ public class CarQueryModel
     public CarQueryModel withMaker(String maker)
     {
         setMaker(maker);
+        return this;
+    }
+
+    public String getQuery()
+    {
+        return query;
+    }
+
+    public void setQuery(String query)
+    {
+        this.query = query;
+    }
+
+    public CarQueryModel withQuery(String query)
+    {
+        setQuery(query);
         return this;
     }
 }

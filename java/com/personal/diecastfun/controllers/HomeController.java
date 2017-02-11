@@ -14,33 +14,36 @@ import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.service.CarFacade;
 
 @Controller
-public class HomeController extends BasicController {
+public class HomeController extends BasicController
+{
 
-	@Inject
-	private CarFacade carFacade;
+    @Inject
+    private CarFacade carFacade;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home() {
-		ModelAndView mv = getModelAndView("home");
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView home()
+    {
+        ModelAndView mv = getModelAndView("home");
 
-		mv.addObject("carcount", basicFacade.getTotalCarCount());
-		mv.addObject("newadditions", carFacade.findNewAdditions());
-		mv.addObject("restoration", getRandomCarModelFromList(carFacade.findRestorations()));
-		mv.addObject("custom", getRandomCarModelFromList(carFacade.findCustomizations()));
-		mv.addObject("mostpopular", getRandomCarModelFromList(carFacade.findMostPopular()));
-		mv.addObject("featuredcar", carFacade.findCarById(carFacade.findRandomCarId()));
+        mv.addObject("carcount", carFacade.getTotalCarCount());
+        mv.addObject("newadditions", carFacade.findNewAdditions());
+        mv.addObject("restoration", getRandomCarModelFromList(carFacade.findRestorations()));
+        mv.addObject("custom", getRandomCarModelFromList(carFacade.findCustomizations()));
+        mv.addObject("mostpopular", getRandomCarModelFromList(carFacade.findMostPopular()));
+        mv.addObject("featuredcar", carFacade.findCarById(carFacade.findRandomCarId()));
 
-		return mv;
-	}
+        return mv;
+    }
 
-	private CarModel getRandomCarModelFromList(List<CarModel> carModels) {
-		CarModel car = null;
-		Random random = new Random();
+    private CarModel getRandomCarModelFromList(List<CarModel> carModels)
+    {
+        CarModel car = null;
+        Random random = new Random();
 
-		if (!carModels.isEmpty()) {
-			car = carModels.get(random.nextInt(carModels.size()));
-		}
+        if (!carModels.isEmpty()) {
+            car = carModels.get(random.nextInt(carModels.size()));
+        }
 
-		return car;
-	}
+        return car;
+    }
 }

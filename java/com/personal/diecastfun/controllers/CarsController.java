@@ -103,6 +103,17 @@ public class CarsController extends BasicController
         return new ModelAndView("redirect:" + "/cars/" + carFacade.findRandomCarId());
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "q")
+    public ModelAndView search(@RequestParam(required = false, value = "q") String query,
+                               @RequestParam(required = false, value = "page", defaultValue = "0") Integer page,
+                               @RequestParam(required = false, value = "perPage", defaultValue = "20") Integer perPage)
+    {
+
+        CarQueryModel carQueryModel = new CarQueryModel().withQuery(query).withPage(page).withPerPage(perPage);
+
+        return getModelAndView(carQueryModel, "?q=" + query, "Search Results for '" + query + "'");
+    }
+
     private ModelAndView getModelAndView(CarQueryModel carQueryModel, String query, String title)
     {
         ModelAndView mv = getModelAndView("carlist");

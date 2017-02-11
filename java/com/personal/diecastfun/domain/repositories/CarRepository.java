@@ -35,4 +35,10 @@ public interface CarRepository extends PagingAndSortingRepository<Car, String>
     public List<Car> findByTags(Tags tags);
 
     Page<Car> findByTagsIn(Tags tags, Pageable pageable);
+
+    Page<Car> findByModelContainingIgnoreCaseOrBrandContainingIgnoreCaseOrMakerContainingIgnoreCaseOrColorContainingIgnoreCase(String model,
+                                                                                                                               String brand,
+                                                                                                                               String maker,
+                                                                                                                               String color,
+                                                                                                                               Pageable pageable);
 }

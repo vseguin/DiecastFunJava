@@ -24,26 +24,29 @@
 	var totalOfPages = Math.ceil(totalCount / perPage);
 	var maxPage = totalOfPages - 1;
 	
-	var url = '${query}&page={0}&perPage={1}'
-	
-	var pageLeftCssClass = currentPage === 0 ? 'disabled' : 'waves-effect';
-	var pageRightCssClass = currentPage === maxPage ? 'disabled' : 'waves-effect';
+	if (totalCount === 0) {
+		$('.pagination').hide();
+	} else {
+		var url = '${query}&page={0}&perPage={1}'
+			
+		var pageLeftCssClass = currentPage === 0 ? 'disabled' : 'waves-effect';
+		var pageRightCssClass = currentPage === maxPage ? 'disabled' : 'waves-effect';
 
-	$('#page-left').addClass(pageLeftCssClass);
-	$('#page-right').addClass(pageRightCssClass);
-	
-	var currentElement = $('#page-left');
-	for (var i = 0; i < totalOfPages; i++) {
-		var cssClass = currentPage === i ? 'active' : 'waves-effect';
-		var elementToInsert = $('<li class="' + cssClass +'"><a href="' + url.format(i, perPage) + '">' + (i+1) + '</a></li>')
-		currentElement.after(elementToInsert);
-		currentElement = elementToInsert;
+		$('#page-left').addClass(pageLeftCssClass);
+		$('#page-right').addClass(pageRightCssClass);
+		
+		var currentElement = $('#page-left');
+		for (var i = 0; i < totalOfPages; i++) {
+			var cssClass = currentPage === i ? 'active' : 'waves-effect';
+			var elementToInsert = $('<li class="' + cssClass +'"><a href="' + url.format(i, perPage) + '">' + (i+1) + '</a></li>')
+			currentElement.after(elementToInsert);
+			currentElement = elementToInsert;
+		}
+		
+		var previousPage = currentPage === 0 ? 0 : currentPage - 1;
+		var nextPage = currentPage === maxPage ? maxPage : currentPage + 1;
+
+		$('#page-left a').attr("href", url.format(previousPage, perPage));
+		$('#page-right a').attr("href", url.format(nextPage, perPage));
 	}
-	
-	var previousPage = currentPage === 0 ? 0 : currentPage - 1;
-	var nextPage = currentPage === maxPage ? maxPage : currentPage + 1;
-
-	$('#page-left a').attr("href", url.format(previousPage, perPage));
-	$('#page-right a').attr("href", url.format(nextPage, perPage));
-	
 </script>

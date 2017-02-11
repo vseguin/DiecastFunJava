@@ -93,6 +93,18 @@ public class CarFacade
 
     public CarQueryResultModel findCars(CarQueryModel queryModel)
     {
+        if (!Strings.isNullOrEmpty(queryModel.getQuery())) {
+            Page<Car> cars = carRepository.findByModelContainingIgnoreCaseOrBrandContainingIgnoreCaseOrMakerContainingIgnoreCaseOrColorContainingIgnoreCase(queryModel.getQuery(),
+                                                                                                                                                            queryModel.getQuery(),
+                                                                                                                                                            queryModel.getQuery(),
+                                                                                                                                                            queryModel.getQuery(),
+                                                                                                                                                            new PageRequest(queryModel.getPage(),
+                                                                                                                                                                            queryModel.getPerPage()));
+
+            return new CarQueryResultModel().withCars(new SortedList<>(getModelsFromCars(cars.getContent())))
+                                            .withTotalCount(toIntExact(cars.getTotalElements()));
+        }
+
         if (!Strings.isNullOrEmpty(queryModel.getCategory())) {
             Page<Car> cars = carRepository.findByTagsIn(Tags.valueOf(queryModel.getCategory()),
                                                         new PageRequest(queryModel.getPage(), queryModel.getPerPage()));
@@ -178,6 +190,11 @@ public class CarFacade
     public List<CarModel> findSeeAlso(String id)
     {
         return new SeeAlsoStrategy(id).findCars(getAllCars());
+    }
+
+    public long getTotalCarCount()
+    {
+        return carRepository.count();
     }
 
     private List<CarModel> getModelsFromCars(List<Car> cars)
