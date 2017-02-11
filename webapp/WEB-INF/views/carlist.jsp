@@ -3,7 +3,7 @@
    	<div class="row row-bg">
    		<div class="headliner">
    			<h4>${title}</h4>
-   			<h6>${totalCount} results</h6>
+   			<h6>${totalCount} result<c:if test="${totalCount != 1}">s</c:if></h6>
   		</div>
   			
 		<c:forEach var="car" items="${cars.collection}">
