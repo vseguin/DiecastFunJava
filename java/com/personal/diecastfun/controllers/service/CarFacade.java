@@ -2,6 +2,7 @@ package com.personal.diecastfun.controllers.service;
 
 import static java.lang.Math.toIntExact;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,22 +117,24 @@ public class CarFacade
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Car> cq = builder.createQuery(Car.class);
+        List<Predicate> predicates = new ArrayList<>();
 
         Root<Car> root = cq.from(Car.class);
 
         if (!Strings.isNullOrEmpty(queryModel.getBrand())) {
-            cq.where(builder.equal(root.get("brand"), queryModel.getBrand()));
+            predicates.add(builder.equal(root.get("brand"), queryModel.getBrand()));
         }
 
         if (!Strings.isNullOrEmpty(queryModel.getMaker())) {
-            cq.where(builder.equal(root.get("maker"), queryModel.getMaker()));
+            predicates.add(builder.equal(root.get("maker"), queryModel.getMaker()));
         }
 
         if (queryModel.getEra() != null) {
-            cq.where(builder.equal(root.get("era"), queryModel.getEra()));
+            predicates.add(builder.equal(root.get("era"), queryModel.getEra()));
         }
 
         cq.orderBy(builder.asc(root.get("id")));
+        cq.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
 
         TypedQuery<Car> typedQuery = entityManager.createQuery(cq);
         typedQuery.setFirstResult(queryModel.getPage() * queryModel.getPerPage());
@@ -179,12 +183,12 @@ public class CarFacade
 
     public List<CarModel> findMostPopular()
     {
-        return new MostPopularStrategy(carRepository, votesRepository).findCars(getAllCars());
+        return getModelsFromCars(new MostPopularStrategy(carRepository, votesRepository).findCars());
     }
 
     public List<CarModel> findNewAdditions()
     {
-        return new NewAdditionsStrategy(carRepository).findCars(getAllCars());
+        return getModelsFromCars(new NewAdditionsStrategy(carRepository).findCars());
     }
 
     public List<CarModel> findSeeAlso(String id)

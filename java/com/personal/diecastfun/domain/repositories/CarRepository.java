@@ -1,5 +1,6 @@
 package com.personal.diecastfun.domain.repositories;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,27 +13,29 @@ import com.personal.diecastfun.domain.Tags;
 
 public interface CarRepository extends PagingAndSortingRepository<Car, String>
 {
-    public int countByBrand(String brand);
+    int countByBrand(String brand);
 
-    public int countByColor(String color);
+    int countByColor(String color);
 
-    public int countByEra(Era era);
+    int countByEra(Era era);
 
-    public int countByMaker(String maker);
+    int countByMaker(String maker);
 
-    public int countByTags(Tags tags);
+    int countByTags(Tags tags);
 
-    public List<Car> findByBrand(String brand);
+    List<Car> findByInsertionDateAfter(Date date);
 
-    public List<Car> findByCustomized(Boolean customized);
+    List<Car> findByBrand(String brand);
 
-    public List<Car> findByEra(Era era);
+    List<Car> findByCustomized(Boolean customized);
 
-    public List<Car> findByMaker(String maker);
+    List<Car> findByEra(Era era);
 
-    public List<Car> findByRestored(Boolean restored);
+    List<Car> findByMaker(String maker);
 
-    public List<Car> findByTags(Tags tags);
+    List<Car> findByRestored(Boolean restored);
+
+    List<Car> findByTags(Tags tags);
 
     Page<Car> findByTagsIn(Tags tags, Pageable pageable);
 
@@ -41,4 +44,5 @@ public interface CarRepository extends PagingAndSortingRepository<Car, String>
                                                                                                                                String maker,
                                                                                                                                String color,
                                                                                                                                Pageable pageable);
+
 }
