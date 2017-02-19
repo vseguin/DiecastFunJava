@@ -82,6 +82,36 @@ public class CarsController extends BasicController
         return getModelAndView(carQueryModel, "?era=" + era, "Era - " + era);
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "customized=true")
+    public ModelAndView getCustomizedCars(@RequestParam(required = false, value = "customized") boolean customized,
+                                          @RequestParam(required = false,
+                                                        value = "page",
+                                                        defaultValue = "0") Integer page,
+                                          @RequestParam(required = false,
+                                                        value = "perPage",
+                                                        defaultValue = "20") Integer perPage)
+    {
+        CarQueryModel carQueryModel = new CarQueryModel().withCustomized(customized)
+                                                         .withPage(page)
+                                                         .withPerPage(perPage);
+
+        return getModelAndView(carQueryModel, "?customized=true", "Customs");
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "restored=true")
+    public ModelAndView getRestoredCars(@RequestParam(required = false, value = "restored") boolean restored,
+                                        @RequestParam(required = false,
+                                                      value = "page",
+                                                      defaultValue = "0") Integer page,
+                                        @RequestParam(required = false,
+                                                      value = "perPage",
+                                                      defaultValue = "20") Integer perPage)
+    {
+        CarQueryModel carQueryModel = new CarQueryModel().withPage(page).withPerPage(perPage).withRestored(restored);
+
+        return getModelAndView(carQueryModel, "?restored=true", "Restorations");
+    }
+
     @RequestMapping(value = "/{carId}", method = RequestMethod.GET)
     public ModelAndView getSpecificCar(@PathVariable String carId)
     {

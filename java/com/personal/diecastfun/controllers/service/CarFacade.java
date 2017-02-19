@@ -133,6 +133,14 @@ public class CarFacade
             predicates.add(builder.equal(root.get("era"), queryModel.getEra()));
         }
 
+        if (queryModel.isCustomized()) {
+            predicates.add(builder.equal(root.get("customized"), true));
+        }
+
+        if (queryModel.isRestored()) {
+            predicates.add(builder.equal(root.get("restored"), true));
+        }
+
         cq.orderBy(builder.asc(root.get("id")));
         cq.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
 

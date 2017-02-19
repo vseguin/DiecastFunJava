@@ -57,13 +57,13 @@
     	<div class="row row-reversed grey-bg-fade">
 			<jsp:include page="homecard.jsp">
 			    <jsp:param name="title" value="Restorations"/>
-			    <jsp:param name="url" value="/restorations"/>
+			    <jsp:param name="url" value="/cars?restored=true"/>
 			    <jsp:param name="car" value="${restoration.thumbnail}"/>
 			    <jsp:param name="headerclass" value="blue-bg-fade"/>
 			</jsp:include>
 			<jsp:include page="homecard.jsp">
 			    <jsp:param name="title" value="Customs"/>
-			    <jsp:param name="url" value="/customs"/>
+			    <jsp:param name="url" value="/cars?customized=true"/>
 			    <jsp:param name="car" value="${custom.thumbnail}"/>
 			    <jsp:param name="headercontainerclass" value="grey-border"/>
 			    <jsp:param name="headerclass" value="grey-bg-fade"/>

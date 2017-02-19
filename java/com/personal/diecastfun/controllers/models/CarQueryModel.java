@@ -13,6 +13,9 @@ public class CarQueryModel
     private String maker;
     private String query;
 
+    private boolean customized;
+    private boolean restored;
+
     public Integer getPage()
     {
         return page;
@@ -122,6 +125,38 @@ public class CarQueryModel
     public CarQueryModel withQuery(String query)
     {
         setQuery(query);
+        return this;
+    }
+
+    public boolean isCustomized()
+    {
+        return customized;
+    }
+
+    public void setCustomized(boolean customized)
+    {
+        this.customized = customized;
+    }
+
+    public boolean isRestored()
+    {
+        return restored;
+    }
+
+    public void setRestored(boolean restored)
+    {
+        this.restored = restored;
+    }
+
+    public CarQueryModel withCustomized(boolean customized)
+    {
+        setCustomized(customized);
+        return this;
+    }
+
+    public CarQueryModel withRestored(boolean restored)
+    {
+        setRestored(restored);
         return this;
     }
 }
