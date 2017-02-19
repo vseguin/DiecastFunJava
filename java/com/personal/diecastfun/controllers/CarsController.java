@@ -20,7 +20,6 @@ import com.personal.diecastfun.domain.Era;
 @RequestMapping(value = "/cars")
 public class CarsController extends BasicController
 {
-
     @Inject
     private CarFacade carFacade;
     @Inject

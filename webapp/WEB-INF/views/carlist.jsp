@@ -20,9 +20,11 @@
 			</div>
 		</c:forEach>
 
-		<jsp:include page="pagination.jsp">
-			<jsp:param name="page" value="${page}"/>
-			<jsp:param name="perPage" value="${perPage}"/>
-		    <jsp:param name="totalCount" value="${totalCount}"/>
-		</jsp:include>
+		<c:if test="${empty hidePagination}">
+			<jsp:include page="pagination.jsp">
+				<jsp:param name="page" value="${page}"/>
+				<jsp:param name="perPage" value="${perPage}"/>
+			    <jsp:param name="totalCount" value="${totalCount}"/>
+			</jsp:include>
+		</c:if>
    	</div>
