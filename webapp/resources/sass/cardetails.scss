@@ -51,11 +51,19 @@
     a {
       color: $primary-text-color;
     }
+
+    .badge {
+      text-transform: uppercase;
+    }
   }
 
   .galleria {
     max-width: 1000px;
-    height: 550px;
+    height: 570px;
+
+    .galleria-stage {
+      margin-top: 39px;
+    }
 
     .galleria-theme-classic {
       @include grey-bg(0.6);
