@@ -33,19 +33,14 @@
   }
 
   .description {
-    padding-right: 10px;
-    position: relative;
-
     .categories {
-      position: absolute;
-      top: 0;
-      right: 10px;
+      margin-bottom: 40px;
     }
   }
 
   .collection {
     @include respond-to(computer) {
-      margin: 50px 0;
+      margin: 100px 0;
     }
 
     a {
@@ -58,6 +53,11 @@
   }
 
   .galleria {
+    @include respond-to(computer) {
+      padding-left: 50px;
+      width: 63%;
+    }
+
     max-width: 1000px;
     height: 570px;
 
@@ -72,6 +72,25 @@
 
   .see-also {
     margin-top: 20px;
+  }
+
+  .votes {
+    @include respond-to(tablet) {
+      text-align: center;
+
+      h5 {
+        display: none;
+      }
+    }
+
+    input {
+      display: inline-block;
+      width: 50px;
+      text-align: center;
+      font-size: 20px;
+      border-bottom: none;
+      font-weight: bold;
+    }
   }
 
   @include keyframes (slideAndRotateFromRight) {

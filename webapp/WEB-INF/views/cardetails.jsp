@@ -14,10 +14,7 @@
 			<div class="corner-ribbon customized">CUSTOMIZED</div>
 		</c:if>
 	
-		<div class="description col l6 m12 s12">
-			<c:if test="${car.brand != 'Generic'}"><h5><a href="<c:url value="/cars?brand=${car.brand}"/>">${car.brand}</a></h5></c:if>
-			<h4>${car.model}</h4>
-			
+		<div class="description col l4 m12 s12">
 			<div class="categories">
 				<c:forEach var="tag" items="${car.tags}">
 					<a href="<c:url value="/cars?category=${tag}"/>">
@@ -29,15 +26,23 @@
 				</c:forEach>
 			</div>
 			
+			<c:if test="${car.brand != 'Generic'}"><h5><a href="<c:url value="/cars?brand=${car.brand}"/>">${car.brand}</a></h5></c:if>
+			<h4>${car.model}</h4>
+						
 			<div class="collection">
 			    <a href="<c:url value="/cars?maker=${car.maker}"/>" class="collection-item"><span class="badge">${car.maker}</span>Diecast brand</a>
 			    <div class="collection-item"><span class="badge">${car.scale}</span>Scale</div>
 			    <div class="collection-item"><span class="badge">${views}</span>Views</div>
 			</div>
 			
-			<h5>Votes</h5>
+			<div class="votes">
+				<h5>Votes</h5>
+				<button class="waves-effect waves-light btn" id="btn-upvote"><i class="small material-icons">thumb_up</i></button>
+				<input disabled value="${votes}" />
+				<button class="waves-effect waves-light btn" id="btn-downvote"><i class="small material-icons">thumb_down</i></button>
+			</div>
 		</div>
-		<div class="galleria col l6 m12 s12">
+		<div class="galleria col l8 m12 s12">
 			<c:forEach var="picture" items="${car.pictures}">
 				<img src="${picturesUrl}/cars/${picture}">
 			</c:forEach>
@@ -64,6 +69,28 @@
     $(document).ready(function () {
         Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.4.5/themes/classic/galleria.classic.min.js');        
         Galleria.run('.galleria');
+        
+        var carId = '${car.id}';
+    	
+        $('#btn-upvote').click(function() {
+			vote('add');
+        });
+        
+        $('#btn-downvote').click(function() {
+        	vote('minus');
+        });
+        
+        function vote(operation) {
+        	var baseUrl = '${pageContext.request.contextPath}/cars/' + carId + '/votes/';
+        	
+        	$.ajax({
+        		type : 'POST',
+        		url : baseUrl + operation,
+        		success : function(data) {
+        			$('.votes input').val(data.value);
+        		}
+        	});
+        }
     });
     </script>
 </div>
