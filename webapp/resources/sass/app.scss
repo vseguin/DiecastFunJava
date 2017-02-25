@@ -1,5 +1,3 @@
-@import 'utils';
-
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 20px;
@@ -30,7 +28,7 @@ body {
 }
 
 .grey-bg-fade {
-  background: rgba($primary-text-color, 0.6);
+  @include grey-bg(0.6);
 }
 
 .logo-text {

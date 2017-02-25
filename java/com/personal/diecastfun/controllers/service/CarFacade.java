@@ -66,8 +66,8 @@ public class CarFacade
                                        .withEra(carModel.getEra())
                                        .withScale(carModel.getScale())
                                        .withColor(carModel.getColorName())
-                                       .withRestored(carModel.getIsRestaured())
-                                       .withCustomized(carModel.getIsCustomized())
+                                       .withRestored(carModel.isRestored())
+                                       .withCustomized(carModel.isCustomized())
                                        .withTags(carModel.getTags())
                                        .withCount(0);
 
@@ -201,7 +201,7 @@ public class CarFacade
 
     public List<CarModel> findSeeAlso(String id)
     {
-        return new SeeAlsoStrategy(id).findCars(getAllCars());
+        return getModelsFromCars(new SeeAlsoStrategy(carRepository, id).findCars());
     }
 
     public long getTotalCarCount()

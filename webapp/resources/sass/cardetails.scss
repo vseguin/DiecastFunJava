@@ -1,0 +1,77 @@
+#cardetails {
+  @include white-bg(0.8);
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+
+  .corner-ribbon {
+    @include animation(slideAndRotateFromRight 1s forwards);
+    @include respond-to(tablet) {
+      display: none;
+    }
+
+    &.new {
+      background: #ec0;
+    }
+
+    &.restored {
+      background: #2c7;
+      top: 35px;
+      right: -50px;
+    }
+
+    &.customized {
+      background: #39d;
+      top: 52px;
+      right: -50px;
+      width: 250px;
+    }
+  }
+
+  a {
+    color: rgba($primary-text-color, 0.6);
+  }
+
+  .description {
+    padding-right: 10px;
+    position: relative;
+
+    .categories {
+      position: absolute;
+      top: 0;
+      right: 10px;
+    }
+  }
+
+  .collection {
+    @include respond-to(computer) {
+      margin: 50px 0;
+    }
+
+    a {
+      color: $primary-text-color;
+    }
+  }
+
+  .galleria {
+    max-width: 1000px;
+    height: 550px;
+
+    .galleria-theme-classic {
+      @include grey-bg(0.6);
+    }
+  }
+
+  .see-also {
+    margin-top: 20px;
+  }
+
+  @include keyframes (slideAndRotateFromRight) {
+    0% {
+      transform: translateX(200px) rotate(45deg);
+    }
+    100% {
+      transform: translateX(0) rotate(45deg);
+    }
+  }
+}

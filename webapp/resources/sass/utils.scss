@@ -7,21 +7,29 @@ $white-color: #FFFFFF;
 @mixin blue-bg($opacity) {
   background-color: rgba($blue-color, $opacity);
 }
+
+@mixin grey-bg($opacity) {
+  background-color: rgba($primary-text-color, $opacity);
+}
+
 @mixin white-bg($opacity) {
   background-color: rgba($white-color, $opacity);
 }
+
 @mixin car-bg() {
   background: url('https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-013875902762/resources/images/templatesv2/backgroundpattern.png');
 }
+
 @mixin cover-bg() {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 @mixin contain-bg() {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 // Border
@@ -74,11 +82,12 @@ $grey-border: $border-size rgba($primary-text-color, 0.6);
   }
 }
 
+// Animations
 @mixin animation($animation) {
   -webkit-animation: $animation;
-  -moz-animation:    $animation;
-  -o-animation:      $animation;
-  animation:         $animation;
+  -moz-animation: $animation;
+  -o-animation: $animation;
+  animation: $animation;
 }
 
 @mixin keyframes($animationName) {
@@ -94,4 +103,21 @@ $grey-border: $border-size rgba($primary-text-color, 0.6);
   @keyframes #{$animationName} {
     @content;
   }
+}
+
+// Ribbons
+.corner-ribbon {
+  width: 200px;
+  background: black;
+  position: absolute;
+  top: 15px;
+  right: -70px;
+  text-align: center;
+  line-height: 30px;
+  letter-spacing: 1px;
+  color: white;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  font-size: 1.3rem;
+  z-index: 1000;
 }

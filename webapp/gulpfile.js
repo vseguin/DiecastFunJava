@@ -11,7 +11,7 @@ var cssPath = 'resources/sass/*.scss';
 var jsPath = 'resources/js/*.js';
 
 gulp.task('minify-css', function() {
-	gulp.src([ cssPath]).pipe(sass({
+	gulp.src(['resources/sass/main.scss']).pipe(sass({
 		outputStyle : 'compressed'
 	})).pipe(concat('app.min.css')).pipe(autoprefix('last 10 version')).pipe(
 			gulp.dest('resources/target/css'));
@@ -26,7 +26,7 @@ gulp.task('default', function() {
 	runSequence('minify-css', 'minify-js');
 });
 
-gulp.task('watch', function() {
+gulp.task('watch',['default'], function() {
 	gulp.watch(cssPath, [ 'minify-css' ]);
 	gulp.watch(jsPath, [ 'minify-js' ]);
 })
