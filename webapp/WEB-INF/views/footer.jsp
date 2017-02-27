@@ -2,7 +2,7 @@
 <footer class="page-footer">
 	<div class="row">
 		<div class="col l8 s12">
-			<h5 class="white-text">© Vincent Séguin</h5>
+			<h5 class="white-text">&#9400; Vincent Seguin</h5>
 		</div>
 		<div class="col l4 s12">
 			<ul>
