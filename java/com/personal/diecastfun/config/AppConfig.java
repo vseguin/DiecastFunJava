@@ -17,11 +17,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.personal.diecastfun.controllers.service.BrandFacade;
 import com.personal.diecastfun.controllers.service.CarFacade;
-import com.personal.diecastfun.controllers.service.ColorFacade;
 import com.personal.diecastfun.controllers.service.ConfigFacade;
-import com.personal.diecastfun.controllers.service.EraFacade;
 import com.personal.diecastfun.controllers.service.MakerFacade;
-import com.personal.diecastfun.controllers.service.TagsFacade;
 import com.personal.diecastfun.controllers.service.ViewsFacade;
 import com.personal.diecastfun.controllers.service.VotesFacade;
 
@@ -55,33 +52,15 @@ public class AppConfig extends WebMvcConfigurerAdapter
     }
 
     @Bean
-    public ColorFacade colorFacade()
-    {
-        return new ColorFacade();
-    }
-
-    @Bean
     public ConfigFacade configFacade()
     {
         return new ConfigFacade();
     }
 
     @Bean
-    public EraFacade eraFacade()
-    {
-        return new EraFacade();
-    }
-
-    @Bean
     public MakerFacade makerFacade()
     {
         return new MakerFacade();
-    }
-
-    @Bean
-    public TagsFacade tagsFacade()
-    {
-        return new TagsFacade();
     }
 
     @Bean

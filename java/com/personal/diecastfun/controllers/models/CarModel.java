@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Era;
 import com.personal.diecastfun.domain.Tags;
-import com.personal.diecastfun.utils.ColorTranslator;
 
 public class CarModel implements Comparable<CarModel>, Serializable
 {
-
     private static final long serialVersionUID = 1L;
 
     private String id;
@@ -21,7 +19,6 @@ public class CarModel implements Comparable<CarModel>, Serializable
     private String maker;
     private String scale;
     private Era era;
-    private String color;
     private String colorName;
     private boolean restored;
     private boolean customized;
@@ -43,7 +40,6 @@ public class CarModel implements Comparable<CarModel>, Serializable
         this.scale = car.getScale();
         this.setEra(car.getEra());
         this.colorName = car.getColor();
-        this.color = ColorTranslator.translateColor(colorName);
         this.restored = car.getRestored();
         this.customized = car.getCustomized();
         this.tags = car.getTags();
@@ -114,16 +110,6 @@ public class CarModel implements Comparable<CarModel>, Serializable
     public void setScale(String scale)
     {
         this.scale = scale;
-    }
-
-    public String getColor()
-    {
-        return color;
-    }
-
-    public void setColor(String color)
-    {
-        this.color = color;
     }
 
     public boolean isRestored()

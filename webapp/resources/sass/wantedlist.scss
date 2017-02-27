@@ -32,22 +32,4 @@
       }
     }
   }
-
-  @include keyframes (slideFromLeft) {
-    0% {
-      transform: translateX(-200px);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  @include keyframes (slideFromRight) {
-    0% {
-      transform: translateX(200px);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
 }

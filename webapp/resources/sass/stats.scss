@@ -1,0 +1,25 @@
+#stats {
+  @include white-bg(0.5);
+  padding: 20px;
+
+  .graph {
+    margin-bottom: 100px;
+  }
+
+  .main-title {
+    text-align: center;
+    @include respond-to(computer) {
+      padding: 80px 0;
+      padding-right: 50px;
+    }
+
+    h1, h5 {
+      display: inline-block;
+    }
+
+    h1 {
+      @include animation(slideFromLeft 1s forwards);
+      font-size: 15rem;
+    }
+  }
+}

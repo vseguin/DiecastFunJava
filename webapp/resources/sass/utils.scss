@@ -105,6 +105,24 @@ $grey-border: $border-size rgba($primary-text-color, 0.6);
   }
 }
 
+@include keyframes (slideFromLeft) {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@include keyframes (slideFromRight) {
+  0% {
+    transform: translateX(200px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 // Ribbons
 .corner-ribbon {
   width: 200px;

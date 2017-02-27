@@ -25,7 +25,7 @@ public class HomeController extends BasicController
     {
         ModelAndView mv = getModelAndView("home");
 
-        mv.addObject("carcount", carFacade.getTotalCarCount());
+        mv.addObject("carcount", carFacade.getTotalCount());
         mv.addObject("newadditions", carFacade.findNewAdditions());
         mv.addObject("restoration", getRandomCarModelFromList(carFacade.findRestorations()));
         mv.addObject("custom", getRandomCarModelFromList(carFacade.findCustomizations()));

@@ -25,8 +25,10 @@ import com.google.common.collect.Lists;
 import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.controllers.models.CarQueryModel;
 import com.personal.diecastfun.controllers.models.CarQueryResultModel;
+import com.personal.diecastfun.controllers.models.SingleStatisticModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
+import com.personal.diecastfun.domain.Country;
 import com.personal.diecastfun.domain.Era;
 import com.personal.diecastfun.domain.QueuedCar;
 import com.personal.diecastfun.domain.Tags;
@@ -159,11 +161,6 @@ public class CarFacade
                                         .withTotalCount(totalCount);
     }
 
-    public SortedList<CarModel> findAllCars()
-    {
-        return new SortedList<>(getModelsFromCars(Lists.newArrayList(carRepository.findAll())));
-    }
-
     public List<CarModel> findCustomizations()
     {
         return getModelsFromCars(carRepository.findByCustomized(true));
@@ -204,9 +201,69 @@ public class CarFacade
         return getModelsFromCars(new SeeAlsoStrategy(carRepository, id).findCars());
     }
 
-    public long getTotalCarCount()
+    public List<SingleStatisticModel> getBrandsCount()
+    {
+        return carRepository.findBrandsCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0]).withValue((String) o[1]))
+                            .collect(Collectors.toList());
+    }
+
+    public List<SingleStatisticModel> getCountriesCount()
+    {
+        return carRepository.findCountriesCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0])
+                                                                .withValue(((Country) o[1]).toString()))
+                            .collect(Collectors.toList());
+    }
+
+    public List<SingleStatisticModel> getErasCount()
+    {
+        return carRepository.findErasCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0])
+                                                                .withValue(((Era) o[1]).toString()))
+                            .collect(Collectors.toList());
+    }
+
+    public List<SingleStatisticModel> getMakersCount()
+    {
+        return carRepository.findMakersCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0]).withValue((String) o[1]))
+                            .collect(Collectors.toList());
+    }
+
+    public List<SingleStatisticModel> getColorsCount()
+    {
+        return carRepository.findColorsCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0]).withValue((String) o[1]))
+                            .collect(Collectors.toList());
+    }
+
+    public long getTotalCount()
     {
         return carRepository.count();
+    }
+
+    public List<SingleStatisticModel> getTagsCount()
+    {
+        return carRepository.findTagsCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0])
+                                                                .withValue(((Tags) o[1]).getDisplayName()))
+                            .collect(Collectors.toList());
+    }
+
+    public List<SingleStatisticModel> getVotesCount()
+    {
+        return carRepository.findVotesCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount(Long.valueOf((Integer) o[2]))
+                                                                .withValue((String) o[0] + " " + (String) o[1]))
+                            .collect(Collectors.toList());
     }
 
     private List<CarModel> getModelsFromCars(List<Car> cars)

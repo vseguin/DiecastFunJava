@@ -14,7 +14,6 @@
 <link href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.4.0/css/flag-icon.min.css" />" rel="stylesheet">    
 <link href="<c:url value="/resources/target/css/app.min.css" />" rel="stylesheet">
 
-
 <link rel="icon"
 	href="<c:url value="/resources/img/favicon.ico" />"
 	type="image/x-icon" />
