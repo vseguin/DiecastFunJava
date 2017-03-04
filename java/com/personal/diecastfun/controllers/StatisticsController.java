@@ -28,7 +28,7 @@ public class StatisticsController extends BasicController
 
         mv.addObject("brandcount", brandFacade.getTotalCount());
         mv.addObject("carcount", carFacade.getTotalCount());
-        mv.addObject("makercount", brandFacade.getTotalCount());
+        mv.addObject("makercount", makerFacade.getTotalCount());
 
         mv.addObject("brands", carFacade.getBrandsCount());
         mv.addObject("categories", carFacade.getTagsCount());
