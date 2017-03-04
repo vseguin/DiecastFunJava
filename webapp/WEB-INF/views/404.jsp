@@ -4,40 +4,45 @@
 <head>
 <meta name="description" content="Collection of 1/64 diecasts.">
 <meta name="keywords" content="diecast,car,cars,diecasts,models">
-<meta name="author" content="Vincent SÃ©guin">
+<meta name="author" content="Vincent Séguin">
 <meta charset="utf-8">
 <title>1/64 Diecast Fun</title>
-<link href="<c:url value="/resources/css/bootstrap.css" />"
-  rel="stylesheet">
-<link href="<c:url value="/resources/css/app.css" />" rel="stylesheet">
+
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"
+    rel="stylesheet">
+<link href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.4.0/css/flag-icon.min.css" />" rel="stylesheet">    
+<link href="<c:url value="/resources/target/css/app.min.css" />" rel="stylesheet">
+
 <link rel="icon"
-  href="<c:url value="/resources/images/templates/favicon.ico" />"
-  type="image/x-icon" />
+	href="<c:url value="/resources/img/favicon.ico" />"
+	type="image/x-icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+<script type="text/javascript"
+	src="<c:url value="/resources/target/js/app.min.js" />" /></script>
 </head>
 <body>
-  <c:import url="navbar.jsp" />
-  <div class="container">
+    <c:import url="nav.jsp" />
+    <c:import url="sidepanel.jsp" />
     <c:import url="header.jsp" />
-    <br>
-    <div class="row-fluid centered">
-      <h1 class="whitetext span6 well">Oops!</h1>
-      <span class="span12" style="margin-bottom:15px;"><img width="250px" src="<c:url value="/resources/images/templates/warning.png" />"></span>
-      <span class="span12">An unexpected error occured while processing the request, or you tried to reach an unexisting page.</span>
-      <span class="span12">Please go back to the home page.</span>
+    <div class="flow-text">
+    	<div class="row row-bg">
+    	    <div class="headliner">
+	   			<h2>Not Found</h2>
+   			</div>
+    	
+    		<div class="notfound">
+			  <div class="tumbleweed"></div>
+			  <div class="tumbleweed"></div>
+			  <div class="tumbleweed"></div>
+			</div>
+    	</div>
     </div>
-  </div>
-  <script
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script type="text/javascript"
-    src="<c:url value="/resources/js/bootstrap.js" />" /></script>
-  <script type="text/javascript"
-    src="<c:url value="/resources/js/jquery.mousewheel.min.js" />" /></script>
-  <script type="text/javascript"
-    src="<c:url value="/resources/js/jquery.kinetic.js" />" /></script>
-  <script type="text/javascript"
-    src="<c:url value="/resources/js/jquery.smoothDivScroll-1.3.js" />" /></script>
-  <script type="text/javascript"
-    src="<c:url value="/resources/js/app.js" />" /></script>
-  <c:import url="footer.jsp" />
+    <c:import url="footer.jsp" />
 </body>
 </html>

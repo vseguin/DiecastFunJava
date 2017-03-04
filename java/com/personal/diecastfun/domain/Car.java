@@ -18,208 +18,241 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Cars")
-public class Car {
+public class Car
+{
 
-	@Id
-	private String id;
+    @Id
+    private String id;
 
-	private int count = 0;
-	private String model;
-	private String brand;
-	private String maker;
-	private String scale = "1:64";
-	private String color;
-	private Date insertionDate;
+    private int count = 0;
+    private String model;
+    private String brand;
+    private String maker;
+    private String scale = "1:64";
+    private String color;
+    private Date insertionDate;
 
-	@Enumerated(EnumType.STRING)
-	private Era era = Era.Unknown;
-	private Boolean restored = false;
-	private Boolean customized = false;
+    @Enumerated(EnumType.STRING)
+    private Era era = Era.Unknown;
+    private Boolean restored = false;
+    private Boolean customized = false;
 
-	@ElementCollection(targetClass = Tags.class, fetch = FetchType.EAGER)
-	@CollectionTable(name = "Tags", joinColumns = @JoinColumn(name = "id") )
-	@Column(name = "tags", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private List<Tags> tags = new ArrayList<Tags>();
+    @ElementCollection(targetClass = Tags.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "Tags", joinColumns = @JoinColumn(name = "id") )
+    @Column(name = "tags", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Tags> tags = new ArrayList<Tags>();
 
-	public Era getEra() {
-		return era;
-	}
+    public Era getEra()
+    {
+        return era;
+    }
 
-	public void setEra(Era era) {
-		this.era = era;
-	}
+    public void setEra(Era era)
+    {
+        this.era = era;
+    }
 
-	public String getBrand() {
-		return brand;
-	}
+    public String getBrand()
+    {
+        return brand;
+    }
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    public void setBrand(String brand)
+    {
+        this.brand = brand;
+    }
 
-	public String getModel() {
-		return model;
-	}
+    public String getModel()
+    {
+        return model;
+    }
 
-	public void setModel(String model) {
-		this.model = model;
-	}
+    public void setModel(String model)
+    {
+        this.model = model;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount()
+    {
+        return count;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public void setCount(int count)
+    {
+        this.count = count;
+    }
 
-	public String getMaker() {
-		return maker;
-	}
+    public String getMaker()
+    {
+        return maker;
+    }
 
-	public void setMaker(String maker) {
-		this.maker = maker;
-	}
+    public void setMaker(String maker)
+    {
+        this.maker = maker;
+    }
 
-	public String getScale() {
-		return scale;
-	}
+    public String getScale()
+    {
+        return scale;
+    }
 
-	public void setScale(String scale) {
-		this.scale = scale;
-	}
+    public void setScale(String scale)
+    {
+        this.scale = scale;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public String getColor()
+    {
+        return color;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
 
-	public Date getInsertionDate() {
-		return insertionDate;
-	}
+    public Date getInsertionDate()
+    {
+        return insertionDate;
+    }
 
-	public void setInsertionDate(Date insertionDate) {
-		this.insertionDate = insertionDate;
-	}
+    public void setInsertionDate(Date insertionDate)
+    {
+        this.insertionDate = insertionDate;
+    }
 
-	public List<Tags> getTags() {
-		return tags;
-	}
+    public List<Tags> getTags()
+    {
+        return tags;
+    }
 
-	public void setTags(List<Tags> tags) {
-		this.tags = tags;
-	}
+    public void setTags(List<Tags> tags)
+    {
+        this.tags = tags;
+    }
 
-	public Car withBrand(String brand) {
-		setBrand(brand);
-		return this;
-	}
+    public Car withBrand(String brand)
+    {
+        setBrand(brand);
+        return this;
+    }
 
-	public Car withColor(String color) {
-		setColor(color);
-		return this;
-	}
+    public Car withColor(String color)
+    {
+        setColor(color);
+        return this;
+    }
 
-	public Car withCustomized(Boolean customized) {
-		setCustomized(customized);
-		return this;
-	}
+    public Car withCustomized(Boolean customized)
+    {
+        setCustomized(customized);
+        return this;
+    }
 
-	public Car withEra(Era era) {
-		setEra(era);
-		return this;
-	}
+    public Car withEra(Era era)
+    {
+        setEra(era);
+        return this;
+    }
 
-	public Car withCount(int count) {
-		setCount(count);
-		return this;
-	}
+    public Car withCount(int count)
+    {
+        setCount(count);
+        return this;
+    }
 
-	public Car withInsertionDate(Date insertionDate) {
-		setInsertionDate(insertionDate);
-		return this;
-	}
+    public Car withInsertionDate(Date insertionDate)
+    {
+        setInsertionDate(insertionDate);
+        return this;
+    }
 
-	public Car withMaker(String maker) {
-		setMaker(maker);
-		return this;
-	}
+    public Car withMaker(String maker)
+    {
+        setMaker(maker);
+        return this;
+    }
 
-	public Car withModel(String model) {
-		setModel(model);
-		return this;
-	}
+    public Car withModel(String model)
+    {
+        setModel(model);
+        return this;
+    }
 
-	public Car withRestored(Boolean restaured) {
-		setRestored(restaured);
-		return this;
-	}
+    public Car withRestored(Boolean restaured)
+    {
+        setRestored(restaured);
+        return this;
+    }
 
-	public Car withScale(String scale) {
-		setScale(scale);
-		return this;
-	}
+    public Car withScale(String scale)
+    {
+        setScale(scale);
+        return this;
+    }
 
-	public Car withTags(List<Tags> tags) {
-		setTags(tags);
-		return this;
-	}
+    public Car withTags(List<Tags> tags)
+    {
+        setTags(tags);
+        return this;
+    }
 
-	public boolean isNew() {
-		Calendar limitDate = Calendar.getInstance();
-		limitDate.add(Calendar.DAY_OF_WEEK, -15);
+    public boolean isNew()
+    {
+        Calendar limitDate = Calendar.getInstance();
+        limitDate.add(Calendar.DAY_OF_WEEK, -15);
 
-		return getInsertionDateAsCalendar().after(limitDate);
-	}
+        return getInsertionDateAsCalendar().after(limitDate);
+    }
 
-	public boolean containsWord(String word) {
-		word = word.toLowerCase();
+    public Calendar getInsertionDateAsCalendar()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(getInsertionDate());
 
-		return getCompleteName().toLowerCase().contains(word) || maker.toLowerCase().contains(word)
-				|| color.toLowerCase().contains(word);
-	}
+        return calendar;
+    }
 
-	public Calendar getInsertionDateAsCalendar() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(getInsertionDate());
+    public String getCompleteName()
+    {
+        return brand + " " + model;
+    }
 
-		return calendar;
-	}
+    public Boolean getRestored()
+    {
+        return restored;
+    }
 
-	public String getCompleteName() {
-		return brand + " " + model;
-	}
+    public void setRestored(Boolean restored)
+    {
+        this.restored = restored;
+    }
 
-	public Boolean getRestored() {
-		return restored;
-	}
+    public Boolean getCustomized()
+    {
+        return customized;
+    }
 
-	public void setRestored(Boolean restored) {
-		this.restored = restored;
-	}
+    public void setCustomized(Boolean customized)
+    {
+        this.customized = customized;
+    }
 
-	public Boolean getCustomized() {
-		return customized;
-	}
+    public String getId()
+    {
+        return id;
+    }
 
-	public void setCustomized(Boolean customized) {
-		this.customized = customized;
-	}
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public Car withId(String id) {
-		setId(id);
-		return this;
-	}
+    public Car withId(String id)
+    {
+        setId(id);
+        return this;
+    }
 }

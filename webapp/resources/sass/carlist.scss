@@ -1,0 +1,26 @@
+.list-item {
+  &.car {
+    height: 180px;
+
+    .list-item-picture {
+      height: 140px;
+      position: static;
+      opacity: 1;
+      width: 200px;
+      display: inline-block;
+      float: right;
+      @include cover-bg;
+      background-position: center;
+
+      @include respond-to(phone) {
+        display: none;
+      }
+    }
+
+    .list-item-text {
+      display: inline-block;
+      float: left;
+      width: 50%;
+    }
+  }
+}

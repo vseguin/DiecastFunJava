@@ -1,23 +1,34 @@
 package com.personal.diecastfun.controllers.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import static java.lang.Math.toIntExact;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.personal.diecastfun.controllers.models.CarModel;
+import com.personal.diecastfun.controllers.models.CarQueryModel;
+import com.personal.diecastfun.controllers.models.CarQueryResultModel;
+import com.personal.diecastfun.controllers.models.SingleStatisticModel;
 import com.personal.diecastfun.controllers.models.SortedList;
 import com.personal.diecastfun.domain.Car;
+import com.personal.diecastfun.domain.Country;
 import com.personal.diecastfun.domain.Era;
 import com.personal.diecastfun.domain.QueuedCar;
 import com.personal.diecastfun.domain.Tags;
@@ -27,207 +38,245 @@ import com.personal.diecastfun.domain.repositories.VotesRepository;
 
 @Component
 @DependsOn("carRepository")
-public class CarFacade {
+public class CarFacade
+{
+    private List<Car> cars;
 
-	private Map<String, CarModel> cachedCarModels = new HashMap<String, CarModel>();
-	private Map<String, Car> cachedCars = Maps.newHashMap();
+    @Autowired
+    private CarRepository carRepository;
+    @Autowired
+    private QueuedCarsRepository queuedCarsRepository;
+    @Autowired
+    private VotesRepository votesRepository;
 
-	@Autowired
-	private CarRepository carRepository;
-	@Autowired
-	private QueuedCarsRepository queuedCarsRepository;
-	@Autowired
-	private VotesRepository votesRepository;
+    @Autowired
+    private EntityManager entityManager;
 
-	public void addCar(Car car) {
-		carRepository.save(car);
-		cachedCars.put(car.getId(), car);
-	}
+    public void addCar(Car car)
+    {
+        carRepository.save(car);
+        cars.add(car);
+    }
 
-	public String addCar(CarModel carModel) {
-		int id = 0;
+    public String addCar(CarModel carModel)
+    {
+        int id = 0;
 
-		QueuedCar car = new QueuedCar().withBrand(carModel.getBrand()).withModel(carModel.getModel())
-				.withMaker(carModel.getMaker()).withEra(carModel.getEra()).withScale(carModel.getScale())
-				.withColor(carModel.getColorName()).withRestored(carModel.getIsRestaured())
-				.withCustomized(carModel.getIsCustomized()).withTags(carModel.getTags()).withCount(0);
+        QueuedCar car = new QueuedCar().withBrand(carModel.getBrand())
+                                       .withModel(carModel.getModel())
+                                       .withMaker(carModel.getMaker())
+                                       .withEra(carModel.getEra())
+                                       .withScale(carModel.getScale())
+                                       .withColor(carModel.getColorName())
+                                       .withRestored(carModel.isRestored())
+                                       .withCustomized(carModel.isCustomized())
+                                       .withTags(carModel.getTags())
+                                       .withCount(0);
 
-		while (carRepository.exists(car.generateId())) {
-			id++;
-			car.setCount(id);
-		}
+        while (carRepository.exists(car.generateId())) {
+            id++;
+            car.setCount(id);
+        }
 
-		car.withId(car.generateId());
+        car.withId(car.generateId());
 
-		queuedCarsRepository.save(car);
+        queuedCarsRepository.save(car);
 
-		return car.getId();
-	}
+        return car.getId();
+    }
 
-	public int countByEra(Era era) {
-		return carRepository.countByEra(era);
-	}
+    public int countByEra(Era era)
+    {
+        return carRepository.countByEra(era);
+    }
 
-	public int countByTag(Tags tag) {
-		return carRepository.countByTags(tag);
-	}
+    public int countByTag(Tags tag)
+    {
+        return carRepository.countByTags(tag);
+    }
 
-	public SortedList<CarModel> findAllCars() {
-		List<Car> allCars = getAllCars();
-		if (cachedCarModels.values().size() != allCars.size()) {
-			cachedCarModels = new HashMap<String, CarModel>();
-			for (Car car : allCars) {
-				cachedCarModels.put(car.getId(), new CarModel(car));
-			}
-		}
+    public CarQueryResultModel findCars(CarQueryModel queryModel)
+    {
+        if (!Strings.isNullOrEmpty(queryModel.getQuery())) {
+            Page<Car> cars = carRepository.findByModelContainingIgnoreCaseOrBrandContainingIgnoreCaseOrMakerContainingIgnoreCaseOrColorContainingIgnoreCase(queryModel.getQuery(),
+                                                                                                                                                            queryModel.getQuery(),
+                                                                                                                                                            queryModel.getQuery(),
+                                                                                                                                                            queryModel.getQuery(),
+                                                                                                                                                            new PageRequest(queryModel.getPage(),
+                                                                                                                                                                            queryModel.getPerPage()));
 
-		return new SortedList<CarModel>(new ArrayList<CarModel>(cachedCarModels.values()));
-	}
+            return new CarQueryResultModel().withCars(new SortedList<>(getModelsFromCars(cars.getContent())))
+                                            .withTotalCount(toIntExact(cars.getTotalElements()));
+        }
 
-	public SortedList<CarModel> findAllCarsCorrespondingToBrand(String brand) {
-		List<CarModel> models = new ArrayList<CarModel>();
+        if (!Strings.isNullOrEmpty(queryModel.getCategory())) {
+            Page<Car> cars = carRepository.findByTagsIn(Tags.valueOf(queryModel.getCategory()),
+                                                        new PageRequest(queryModel.getPage(), queryModel.getPerPage()));
 
-		for (Car car : carRepository.findByBrand(brand)) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
+            return new CarQueryResultModel().withCars(new SortedList<>(getModelsFromCars(cars.getContent())))
+                                            .withTotalCount(toIntExact(cars.getTotalElements()));
+        }
 
-	}
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Car> cq = builder.createQuery(Car.class);
+        List<Predicate> predicates = new ArrayList<>();
 
-	public SortedList<CarModel> findAllCarsCorrespondingToCategory(String category) {
-		List<CarModel> models = new ArrayList<CarModel>();
+        Root<Car> root = cq.from(Car.class);
 
-		for (Car car : carRepository.findByTags(Tags.valueOf(category))) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
+        if (!Strings.isNullOrEmpty(queryModel.getBrand())) {
+            predicates.add(builder.equal(root.get("brand"), queryModel.getBrand()));
+        }
 
-	}
+        if (!Strings.isNullOrEmpty(queryModel.getMaker())) {
+            predicates.add(builder.equal(root.get("maker"), queryModel.getMaker()));
+        }
 
-	public SortedList<CarModel> findAllCarsCorrespondingToEra(String era) {
-		List<CarModel> models = new ArrayList<CarModel>();
+        if (queryModel.getEra() != null) {
+            predicates.add(builder.equal(root.get("era"), queryModel.getEra()));
+        }
 
-		for (Car car : carRepository.findByEra(Era.valueOf(era))) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
+        if (queryModel.isCustomized()) {
+            predicates.add(builder.equal(root.get("customized"), true));
+        }
 
-	}
+        if (queryModel.isRestored()) {
+            predicates.add(builder.equal(root.get("restored"), true));
+        }
 
-	public SortedList<CarModel> findAllCarsCorrespondingToKeywords(String keywords) {
-		List<CarModel> models = new ArrayList<CarModel>();
-		List<String> foundIds = new ArrayList<String>();
+        cq.orderBy(builder.asc(root.get("id")));
+        cq.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
 
-		for (Car car : getAllCars()) {
-			if (!Strings.isNullOrEmpty(keywords)) {
-				if (car.containsWord(keywords) && !foundIds.contains(car.getId())) {
-					addCarModel(models, car);
-					foundIds.add(car.getId());
-				}
-			} else {
-				addCarModel(models, car);
-				foundIds.add(car.getId());
-			}
-		}
+        TypedQuery<Car> typedQuery = entityManager.createQuery(cq);
+        typedQuery.setFirstResult(queryModel.getPage() * queryModel.getPerPage());
+        typedQuery.setMaxResults(queryModel.getPerPage());
 
-		return new SortedList<CarModel>(models);
-	}
+        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+        Root<Car> carRoot = countQuery.from(Car.class);
+        countQuery.select(builder.count(carRoot));
+        countQuery.where(builder.and(cq.getRestriction()));
 
-	public SortedList<CarModel> findAllCarsCorrespondingToMaker(String maker) {
-		List<CarModel> models = new ArrayList<CarModel>();
+        Integer totalCount = entityManager.createQuery(countQuery).getSingleResult().intValue();
 
-		for (Car car : carRepository.findByMaker(maker)) {
-			addCarModel(models, car);
-		}
-		return new SortedList<CarModel>(models);
-	}
+        return new CarQueryResultModel().withCars(new SortedList<>(getModelsFromCars(typedQuery.getResultList())))
+                                        .withTotalCount(totalCount);
+    }
 
-	public List<CarModel> findCustomizations() {
-		List<CarModel> models = new ArrayList<CarModel>();
+    public List<CarModel> findCustomizations()
+    {
+        return getModelsFromCars(carRepository.findByCustomized(true));
+    }
 
-		for (Car car : carRepository.findByCustomized(true)) {
-			addCarModel(models, car);
-		}
-		return models;
-	}
+    public List<CarModel> findRestorations()
+    {
+        return getModelsFromCars(carRepository.findByRestored(true));
+    }
 
-	public List<CarModel> findRandomRestorations() {
-		List<CarModel> models = new ArrayList<CarModel>();
+    public CarModel findCarById(String id)
+    {
+        Car realCar = carRepository.findOne(id);
 
-		List<Car> restorations = carRepository.findByRestored(true);
-		int numberOfCars = 0;
-		if (!restorations.isEmpty()) {
-			while (numberOfCars < 10) {
-				int index = new Random().nextInt(restorations.size());
-				addCarModel(models, restorations.get(index));
-				numberOfCars++;
-				restorations.remove(index);
-			}
-		}
+        return new CarModel(realCar);
+    }
 
-		return models;
-	}
+    public String findRandomCarId()
+    {
+        Random generator = new Random();
+        List<Car> cars = getAllCars();
 
-	public List<CarModel> findRestorations() {
-		List<CarModel> models = new ArrayList<CarModel>();
+        return cars.get(generator.nextInt(cars.size())).getId();
+    }
 
-		for (Car car : carRepository.findByRestored(true)) {
-			addCarModel(models, car);
-		}
-		return models;
-	}
+    public List<CarModel> findMostPopular()
+    {
+        return getModelsFromCars(new MostPopularStrategy(carRepository, votesRepository).findCars());
+    }
 
-	public CarModel findCarById(String id) {
-		CarModel carModel;
-		if (cachedCarModels.containsKey(id)) {
-			carModel = cachedCarModels.get(id);
-		} else {
-			Car realCar = carRepository.findOne(id);
+    public List<CarModel> findNewAdditions()
+    {
+        return getModelsFromCars(new NewAdditionsStrategy(carRepository).findCars());
+    }
 
-			carModel = new CarModel(realCar);
-			cachedCarModels.put(realCar.getId(), carModel);
-		}
-		return carModel;
-	}
+    public List<CarModel> findSeeAlso(String id)
+    {
+        return getModelsFromCars(new SeeAlsoStrategy(carRepository, id).findCars());
+    }
 
-	public String findRandomCarId() {
-		Random generator = new Random();
-		List<Car> cars = getAllCars();
+    public List<SingleStatisticModel> getBrandsCount()
+    {
+        return carRepository.findBrandsCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0]).withValue((String) o[1]))
+                            .collect(Collectors.toList());
+    }
 
-		return cars.get(generator.nextInt(cars.size())).getId();
-	}
+    public List<SingleStatisticModel> getCountriesCount()
+    {
+        return carRepository.findCountriesCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0])
+                                                                .withValue(((Country) o[1]).toString()))
+                            .collect(Collectors.toList());
+    }
 
-	public List<CarModel> findMostPopular() {
-		return new MostPopularStrategy(carRepository, votesRepository).findCars(getAllCars());
-	}
+    public List<SingleStatisticModel> getErasCount()
+    {
+        return carRepository.findErasCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0])
+                                                                .withValue(((Era) o[1]).toString()))
+                            .collect(Collectors.toList());
+    }
 
-	public List<CarModel> findNewAdditions() {
-		return new NewAdditionsStrategy(carRepository).findCars(getAllCars());
-	}
+    public List<SingleStatisticModel> getMakersCount()
+    {
+        return carRepository.findMakersCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0]).withValue((String) o[1]))
+                            .collect(Collectors.toList());
+    }
 
-	public List<CarModel> findSeeAlso(String id) {
-		return new SeeAlsoStrategy(id).findCars(getAllCars());
-	}
+    public List<SingleStatisticModel> getColorsCount()
+    {
+        return carRepository.findColorsCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0]).withValue((String) o[1]))
+                            .collect(Collectors.toList());
+    }
 
-	private void addCarModel(List<CarModel> models, Car car) {
-		String carId = car.getId();
-		if (cachedCarModels.containsKey(carId)) {
-			models.add(cachedCarModels.get(carId));
-		} else {
-			CarModel carModel = new CarModel(car);
-			cachedCarModels.put(car.getId(), carModel);
-			models.add(carModel);
-		}
-	}
+    public long getTotalCount()
+    {
+        return carRepository.count();
+    }
 
-	private List<Car> getAllCars() {
-		return Lists.newArrayList(cachedCars.values());
-	}
+    public List<SingleStatisticModel> getTagsCount()
+    {
+        return carRepository.findTagsCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount((Long) o[0])
+                                                                .withValue(((Tags) o[1]).getDisplayName()))
+                            .collect(Collectors.toList());
+    }
 
-	@PostConstruct
-	private void init() {
-		carRepository.findAll().forEach(c -> {
-			cachedCars.put(c.getId(), c);
-		});
-	}
+    public List<SingleStatisticModel> getVotesCount()
+    {
+        return carRepository.findVotesCount()
+                            .stream()
+                            .map(o -> new SingleStatisticModel().withCount(Long.valueOf((Integer) o[2]))
+                                                                .withValue((String) o[0] + " " + (String) o[1]))
+                            .collect(Collectors.toList());
+    }
+
+    private List<CarModel> getModelsFromCars(List<Car> cars)
+    {
+        return cars.stream().map(c -> new CarModel(c)).collect(Collectors.toList());
+    }
+
+    private List<Car> getAllCars()
+    {
+        if (cars == null) {
+            cars = Lists.newArrayList(carRepository.findAll());
+        }
+
+        return cars;
+    }
 }

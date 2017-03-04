@@ -1,1 +1,4 @@
 *.properties
+webapp/node_modules
+webapp/resources/target
+.idea

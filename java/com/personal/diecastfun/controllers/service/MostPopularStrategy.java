@@ -1,52 +1,38 @@
 package com.personal.diecastfun.controllers.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-import com.personal.diecastfun.controllers.models.CarModel;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.Vote;
 import com.personal.diecastfun.domain.repositories.CarRepository;
 import com.personal.diecastfun.domain.repositories.VotesRepository;
 
-public class MostPopularStrategy extends Strategy {
+public class MostPopularStrategy extends Strategy
+{
+    private static final int MOST_POPULAR_SIZE = 20;
 
-	private static final int MOST_POPULAR_SIZE = 19;
+    private CarRepository carRepository;
+    private VotesRepository votesRepository;
 
-	private CarRepository carRepository;
-	private VotesRepository votesRepository;
+    public MostPopularStrategy(CarRepository carRepository, VotesRepository votesRepository)
+    {
+        this.carRepository = carRepository;
+        this.votesRepository = votesRepository;
+    }
 
-	public MostPopularStrategy(CarRepository carRepository, VotesRepository votesRepository) {
-		this.carRepository = carRepository;
-		this.votesRepository = votesRepository;
-	}
+    @Override
+    public List<Car> findCars()
+    {
+        List<Car> cars = new ArrayList<>();
+        List<Vote> votes = votesRepository.findAllByOrderByNumberDesc();
 
-	@Override
-	public List<CarModel> findCars(List<Car> cars) {
-		List<CarModel> models = new ArrayList<CarModel>();
+        votes = votes.subList(0, MOST_POPULAR_SIZE > votes.size() ? votes.size() : MOST_POPULAR_SIZE);
 
-		Vote topVote = votesRepository.findTop1ByOrderByNumberDesc();
+        votes.forEach(v -> {
+            cars.add(carRepository.findOne(v.getId()));
+        });
 
-		if (topVote != null) {
-			int currentVoteValue = topVote.getNumber();
-			int limitValue = 0;
-			List<Vote> votes = Lists.newArrayList(votesRepository.findAll());
-
-			while (models.size() <= MOST_POPULAR_SIZE && currentVoteValue > limitValue) {
-				currentVoteValue--;
-				Iterator<Vote> iterator = votes.iterator();
-				while (iterator.hasNext()) {
-					Vote vote = iterator.next();
-					if (vote != null && vote.getNumber() > currentVoteValue) {
-						addCarModel(models, carRepository.findOne(vote.getId()));
-						iterator.remove();
-					}
-				}
-			}
-		}
-
-		return models;
-	}
+        return cars;
+    }
 }

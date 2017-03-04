@@ -1,64 +1,160 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false"%>
-<html>
-<head>
-<meta name="description" content="Collection of 1/64 diecasts.">
-<meta name="keywords" content="diecast,car,cars,diecasts,models">
-<meta name="author" content="Vincent Séguin">
-<meta charset="utf-8">
-<title>1/64 Diecast Fun</title>
-<link href="<c:url value="/resources/css/bootstrap.css" />"
-	rel="stylesheet">
-<link href="<c:url value="/resources/css/jquery.jqplot.css" />"
-	rel="stylesheet">
-<link href="<c:url value="/resources/css/app.css" />" rel="stylesheet">
-<link rel="icon"
-	href="<c:url value="/resources/images/templates/favicon.ico" />"
-	type="image/x-icon" />
-</head>
-<body>
-	<c:import url="navbar.jsp" />
-	<div class="container">
-		<c:import url="header.jsp" />
-		<br>
-		<ul class="breadcrumb">
-			<li><a href="/">Home</a> <span class="divider">/</span></li>
-			<li class="active">Statistics</li>
-		</ul>
-		<div class="row-fluid">
-			<h1 class="whitetext span6 well centered title">Statistics</h1>
-			<span class="span12">
-				<div class="centered plotContainer" id="brandschart"
-					style="height: 1600px; width: 1000px; margin:auto;"></div>
-        <div class="centered plotContainer" id="makerschart"
-          style="height: 700px; width: 700px; margin:auto;"></div>
-        <div class="centered plotContainer" id="eraschart"
-          style="height: 500px; width: 700px; margin:auto;"></div>
-        <div class="centered plotContainer" id="colorschart"
-          style="height: 1000px; width: 700px; margin:auto;"></div>
-        <div class="centered plotContainer" id="tagschart"
-          style="height: 700px; width: 700px; margin:auto;"></div>
-        <div class="centered plotContainer" id="countrieschart"
-          style="height: 500px; width: 400px; margin:auto; float:left;"></div>
-        <div class="centered plotContainer" id="voteschart"
-          style="height: 500px; width: 400px; margin:auto; float:right;"></div>
-			</span>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+ 	<div class="row row-bg">
+ 		<div class="headliner">
+ 			<h4>Statistics</h4>
+ 			
+ 			<div class="col l12 m12 s12" id="stats">
+ 				<div class="col l8 m12 s12 main-title">
+ 					<h1>${carcount}</h1><h5>cars</h5>
+ 					<p>across <b>${brandcount}</b> car brands and <b>${makercount}</b> diecast brands.</p>
+ 				</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Votes</h4>
+	 				<canvas id="votes" width="200" height="200"></canvas>
+	 			</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Car brands</h4>
+	 				<canvas id="brands" width="100" height="100"></canvas>
+	 			</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Diecast brands</h4>
+	 				<canvas id="makers" width="200" height="200"></canvas>
+	 			</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Eras</h4>
+	 				<canvas id="eras" width="200" height="200"></canvas>
+	 			</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Categories</h4>
+	 				<canvas id="categories" width="100" height="100"></canvas>
+	 			</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Colors</h4>
+	 				<canvas id="colors" width="200" height="200"></canvas>
+	 			</div>
+	 			<div class="col l4 m12 s12 graph">
+	 				<h4>Countries</h4>
+	 				<canvas id="countries" width="200" height="200"></canvas>
+	 			</div>
+ 			</div>
 		</div>
-	</div>
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/bootstrap.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jquery.jqplot.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/jqplot.pieRenderer.js" />" /></script>
-  <script type="text/javascript"
-    src="<c:url value="/resources/js/jqplot.highlighter.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/app.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/stats.js" />" /></script>
-	<c:import url="footer.jsp" />
-</body>
-</html>
+ 	</div>
+ 	
+<script>
+	// Generate data
+	var numberOfElements = 10;
+	
+	var counts = new Array();
+	var labels = new Array();
+	
+	<c:forEach items="${brands}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'brands', 'doughnut');
+	
+	counts = new Array();
+	labels = new Array();
+	
+	<c:forEach items="${makers}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'makers', 'doughnut');
+
+	counts = new Array();
+	labels = new Array();
+	
+	<c:forEach items="${eras}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'eras', 'doughnut');
+	
+	counts = new Array();
+	labels = new Array();
+	
+	<c:forEach items="${categories}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'categories', 'doughnut');
+	
+	counts = new Array();
+	labels = new Array();
+	
+	<c:forEach items="${colors}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'colors', 'doughnut');
+	
+	counts = new Array();
+	labels = new Array();
+	
+	<c:forEach items="${countries}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'countries', 'doughnut');
+	
+	counts = new Array();
+	labels = new Array();
+	
+	<c:forEach items="${votes}" var="element">
+		counts.push(${element.count});
+		labels.push("${element.value}");
+	</c:forEach>
+	
+	generateChart(counts, labels, 'votes', 'doughnut');
+	
+	function generateChart(counts, labels, id, type) {
+		counts = counts.slice(0, numberOfElements);
+		labels = labels.slice(0, numberOfElements);
+		
+		var myChart = new Chart(document.getElementById(id), {
+		    type: type,
+		    data: {
+		        labels: labels,
+		        datasets: [{
+		        	backgroundColor: poolColors(counts.length),
+		        	borderColor: '#616161',
+		            data: counts
+		        }]
+		    },
+		    options: {
+		    	legend: {
+		    		position: 'bottom',
+		    		labels: {
+		    			fontColor: '#616161',
+		    			fontSize: 15
+		    		}
+		    	}
+		    }
+		});
+		
+		function poolColors(size) {
+	        var pool = [];
+	        pool.push('#00897b');
+	        pool.push('#e0f2f1');
+	        pool.push('#01579b');
+	        pool.push('#ef5350');
+	        pool.push('#f0f4c3');
+	        pool.push('#c8e6c9');
+	        pool.push('#795548');
+	        pool.push('#616161');
+	        pool.push('#9575cd');
+	        pool.push('#f8bbd0');
+	        
+	        return pool;
+	    }
+	}
+</script>

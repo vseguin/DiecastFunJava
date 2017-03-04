@@ -1,57 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ page session="false"%>
-<html>
-<head>
-<meta name="description" content="Collection of 1/64 diecasts.">
-<meta name="keywords" content="diecast,car,cars,diecasts,models">
-<meta name="author" content="Vincent Séguin">
-<meta charset="utf-8">
-<title>1/64 Diecast Fun</title>
-<link href="<c:url value="/resources/css/bootstrap.css" />"
-	rel="stylesheet">
-<link href="<c:url value="/resources/css/roundabout.css" />"
-  rel="stylesheet">
-<link href="<c:url value="/resources/css/app.css" />" rel="stylesheet">
-<link rel="icon"
-	href="<c:url value="/resources/images/templates/favicon.ico" />"
-	type="image/x-icon" />
-</head>
-<body>
-	<c:import url="navbar.jsp" />
-	<div class="container">
-		<c:import url="header.jsp" />
-		<br>
-		<ul class="breadcrumb">
-			<li><a href="/">Home</a> <span class="divider">/</span></li>
-			<li class="active">Car Categories</li>
-		</ul>
-		<div class="row-fluid">
-			<h1 class="whitetext span6 well centered">Search by Car Category</h1>
-			   <br><br><br><br><br>
-			<span class = "span12">
-			 <c:forEach var="tag" items="${tags}">
-			   <span class ="span4 centered category" style="margin-left:0px;">
-			   <img src="<c:url value="${picturesUrl}/tags/${fn:replace(fn:toLowerCase(tag), ' ', '')}.png" />" width="150px"><br/>
-			   <button class="btn btn-large btn-hover brandbutton categorybutton ">
-            <a href="categories/${tag}"><b>${tag} &raquo;&raquo;</b></a>
-          </button>
-          </span>
-			 </c:forEach>
-			 </span>
-		</div>
-	</div>
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/bootstrap.js" />" /></script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/app.js" />" /></script>
-	<script type="text/javascript">
-		$('.roundabout-list').roundabout({
-	         shape: 'rollerCoaster'
-	      })
-	</script>
-	<c:import url="footer.jsp" />
-</body>
-</html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+    	<div class="row row-bg">
+    		<div class="headliner">
+	   			<h4>Categories</h4>
+   			</div>
+   			
+			<c:forEach var="tag" items="${tags.collection}">
+	   			<div class="col l4 m12 s12">
+	   				<a href="<c:url value="/cars?category=${tag.tag}"/>">
+	   					<div class="list-item">
+	   						<div class="list-item-picture" style="background-image:url('<c:url value="${picturesUrl}/tags/${fn:toLowerCase(tag.tag)}.png"/>')"></div>
+	   						<div>
+	   							<h4>${tag.displayName}</h4>
+	   							<div>${tag.carCount} car<c:if test="${tag.carCount != 1}">s</c:if></div>
+	   						</div>
+	   					</div>
+	   				</a>
+				</div>
+			</c:forEach>
+    	</div>

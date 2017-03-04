@@ -1,0 +1,104 @@
+#cardetails {
+  @include white-bg(0.8);
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+
+  .corner-ribbon {
+    @include animation(slideAndRotateFromRight 1s forwards);
+    @include respond-to(tablet) {
+      display: none;
+    }
+
+    &.new {
+      background: #ec0;
+    }
+
+    &.restored {
+      background: #2c7;
+      top: 35px;
+      right: -50px;
+    }
+
+    &.customized {
+      background: #39d;
+      top: 52px;
+      right: -50px;
+      width: 250px;
+    }
+  }
+
+  a {
+    color: rgba($primary-text-color, 0.6);
+  }
+
+  .description {
+    .categories {
+      margin-bottom: 40px;
+    }
+  }
+
+  .collection {
+    @include respond-to(computer) {
+      margin: 100px 0;
+    }
+
+    a {
+      color: $primary-text-color;
+    }
+
+    .badge {
+      text-transform: uppercase;
+    }
+  }
+
+  .galleria {
+    @include respond-to(computer) {
+      padding-left: 50px;
+      width: 63%;
+    }
+
+    max-width: 1000px;
+    height: 570px;
+
+    .galleria-stage {
+      margin-top: 39px;
+    }
+
+    .galleria-theme-classic {
+      @include grey-bg(0.6);
+    }
+  }
+
+  .see-also {
+    margin-top: 20px;
+  }
+
+  .votes {
+    @include respond-to(tablet) {
+      text-align: center;
+
+      h5 {
+        display: none;
+      }
+    }
+
+    input {
+      display: inline-block;
+      width: 50px;
+      text-align: center;
+      font-size: 20px;
+      border-bottom: none;
+      font-weight: bold;
+    }
+  }
+
+  @include keyframes (slideAndRotateFromRight) {
+    0% {
+      transform: translateX(200px) rotate(45deg);
+    }
+    100% {
+      transform: translateX(0) rotate(45deg);
+    }
+  }
+}

@@ -1,0 +1,41 @@
+footer {
+  &.page-footer {
+    margin-top: 0;
+    padding-top: 0;
+    text-transform: uppercase;
+    background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%,
+                    transparent 75%, #242424 75%, #242424);
+    background-color: #131313;
+    background-size: 20px 20px;
+  }
+
+  ul {
+    @include respond-to(tablet) {
+      margin-top: 0;
+    }
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  li + li:before {
+    content: '| ';
+    color: white;
+  }
+
+  .row {
+    padding-top: 0;
+    padding-bottom: 0;
+    background: rgba(97, 97, 97, 0.5);
+  }
+
+  h5 {
+    margin: 21px 0;
+  }
+}

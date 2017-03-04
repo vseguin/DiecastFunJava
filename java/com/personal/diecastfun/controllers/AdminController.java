@@ -24,51 +24,57 @@ import com.personal.diecastfun.utils.JsonIdWrapper;
 
 @RestController
 @RequestMapping(value = "/admin")
-public class AdminController {
+public class AdminController
+{
 
-	@Inject
-	private BrandFacade brandFacade;
-	@Inject
-	private CarFacade carFacade;
-	@Inject
-	private MakerFacade makerFacade;
-	@Autowired
-	private WantedCarRepository wantedCarRepository;
+    @Inject
+    private BrandFacade brandFacade;
+    @Inject
+    private CarFacade carFacade;
+    @Inject
+    private MakerFacade makerFacade;
+    @Autowired
+    private WantedCarRepository wantedCarRepository;
 
-	@RequestMapping(value = "/carbrands", method = RequestMethod.POST, consumes = "application/json")
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public @ResponseBody JsonIdWrapper addBrand(@RequestBody AddBrandModel addBrandModel) {
-		brandFacade.addBrand(addBrandModel.getName(), addBrandModel.getCountry());
+    @RequestMapping(value = "/carbrands", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public @ResponseBody JsonIdWrapper addBrand(@RequestBody AddBrandModel addBrandModel)
+    {
+        brandFacade.addBrand(addBrandModel.getName(), addBrandModel.getCountry());
 
-		return new JsonIdWrapper().withId(addBrandModel.getName());
-	}
+        return new JsonIdWrapper().withId(addBrandModel.getName());
+    }
 
-	@RequestMapping(value = "/cars", method = RequestMethod.POST, consumes = "application/json")
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public @ResponseBody JsonIdWrapper addCar(@RequestBody CarModel carModel) {
-		String id = carFacade.addCar(carModel);
+    @RequestMapping(value = "/cars", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public @ResponseBody JsonIdWrapper addCar(@RequestBody CarModel carModel)
+    {
+        String id = carFacade.addCar(carModel);
 
-		if (!makerFacade.findAllMakers().stream().anyMatch(m -> m.getName().equals(carModel.getMaker()))) {
-			makerFacade.addMaker(carModel.getMaker());
-		}
+        if (!makerFacade.findAllMakers().stream().anyMatch(m -> m.getName().equals(carModel.getMaker()))) {
+            makerFacade.addMaker(carModel.getMaker());
+        }
 
-		brandFacade.updateBrand(carModel.getBrand());
+        brandFacade.updateBrand(carModel.getBrand());
 
-		return new JsonIdWrapper().withId(id);
-	}
+        return new JsonIdWrapper().withId(id);
+    }
 
-	@RequestMapping(value = "/wanted", method = RequestMethod.POST, consumes = "application/json")
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public @ResponseBody JsonIdWrapper addWantedCar(@RequestBody WantedCarModel wantedCarModel) {
-		WantedCar result = wantedCarRepository.save(new WantedCar().withBrand(wantedCarModel.getBrand())
-				.withMaker(wantedCarModel.getMaker()).withModel(wantedCarModel.getModel()));
+    @RequestMapping(value = "/wanted", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public @ResponseBody JsonIdWrapper addWantedCar(@RequestBody WantedCarModel wantedCarModel)
+    {
+        WantedCar result = wantedCarRepository.save(new WantedCar().withBrand(wantedCarModel.getBrand())
+                                                                   .withMaker(wantedCarModel.getMaker())
+                                                                   .withModel(wantedCarModel.getModel()));
 
-		return new JsonIdWrapper().withId(result.getId());
-	}
+        return new JsonIdWrapper().withId(result.getId());
+    }
 
-	@RequestMapping(value = "/wanted/{carId}", method = RequestMethod.DELETE)
-	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void removeWantedCar(@PathVariable String carId) {
-		wantedCarRepository.delete(carId);
-	}
+    @RequestMapping(value = "/wanted/{carId}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void removeWantedCar(@PathVariable String carId)
+    {
+        wantedCarRepository.delete(carId);
+    }
 }

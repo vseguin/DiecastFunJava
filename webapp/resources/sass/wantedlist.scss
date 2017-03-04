@@ -1,0 +1,35 @@
+#wanted-list {
+  margin-top: 30px;
+
+  .wanted {
+    display: inline-block;
+    height: 125px;
+    vertical-align: top;
+    @include animation(slideFromLeft 1s forwards);
+    @include white-bg(0.7);
+    margin-bottom: 5px;
+    padding: 10px;
+
+    h5, h6 {
+      color: $primary-text-color;
+    }
+
+    h5 {
+      font-size: 1.30rem;
+    }
+
+    h6 {
+      font-weight: 300;
+      opacity: 0.6;
+    }
+
+    &:nth-child(odd) {
+      @include blue-bg(0.65);
+      @include animation(slideFromRight 1s forwards);
+
+      h5, h6 {
+        color: white;
+      }
+    }
+  }
+}
