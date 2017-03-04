@@ -20,7 +20,10 @@
 							<a href="<c:url value="/cars/${featuredcar.id}"/>">
 							<div class="img" style="background-image:url('<c:url value="${picturesUrl}/cars-small/${picture}"/>')">
 								<c:if test="${loop.index == 1}">
-									<div class="blank-state blue-bg-fade"><h5>${featuredcar.maker}&nbsp;<c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</h5></div>
+									<div class="blank-state blue-bg-fade">
+										<h5>${featuredcar.maker}</h5>
+										<h5><c:if test="${featuredcar.brand != 'Generic'}">${featuredcar.brand}&nbsp;</c:if>${featuredcar.model}</h5>
+									</div>
 								</c:if>
 							</div>
 							</a>

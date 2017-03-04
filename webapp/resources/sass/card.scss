@@ -69,6 +69,13 @@
       height: 360px;
     }
   }
+
+  &.home-card {
+    .card-image {
+      @include cover-bg;
+      height: 340px;
+    }
+  }
 }
 
 .card.small, .card.medium, .card.large {

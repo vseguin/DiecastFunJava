@@ -70,7 +70,7 @@
         Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.4.5/themes/classic/galleria.classic.min.js');        
         Galleria.run('.galleria');
         
-        var carId = '${car.id}';
+        var carId = "${car.id}";
     	
         $('#btn-upvote').click(function() {
 			vote('add');
