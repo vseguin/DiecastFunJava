@@ -20,6 +20,10 @@
     h1 {
       @include animation(slideFromLeft 1s forwards);
       font-size: 15rem;
+
+      @include respond-to(tablet) {
+        font-size: 8rem;
+      }
     }
   }
 }

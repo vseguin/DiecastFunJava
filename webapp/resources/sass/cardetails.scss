@@ -53,16 +53,20 @@
   }
 
   .galleria {
+    height: 350px;
+
     @include respond-to(computer) {
       padding-left: 50px;
       width: 63%;
+      height: 570px;
     }
 
     max-width: 1000px;
-    height: 570px;
 
     .galleria-stage {
-      margin-top: 39px;
+      @include respond-to(computer) {
+        margin-top: 39px;
+      }
     }
 
     .galleria-theme-classic {
