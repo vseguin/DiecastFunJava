@@ -126,6 +126,17 @@ public class CarsController extends BasicController
         return mv;
     }
 
+    @RequestMapping(value = "/{carId}/seealso", method = RequestMethod.GET)
+    public ModelAndView getSeeAlso(@PathVariable String carId)
+    {
+        ModelAndView mv = new ModelAndView("seealso");
+
+        mv.addObject("picturesUrl", configFacade.getPicturesUrl());
+        mv.addObject("cars", carFacade.findSeeAlso(carId));
+
+        return mv;
+    }
+
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     public ModelAndView getRandomCar()
     {

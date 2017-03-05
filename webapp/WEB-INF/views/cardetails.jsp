@@ -49,28 +49,29 @@
 	   	</div>
 	   	
 	   	<div class="see-also col l12 m12 s12">
-	   		<h5>See also</h5>
-			<c:forEach var="car" items="${seealso}">
-			  		<div class="col l3 m6 s12">
-						<a href="<c:url value="/cars/${car.id}"/>">
-							<div class="card small">
-								<div class="card-image">
-										<img class="car-thumbnail" src="<c:url value="${picturesUrl}/cars-small/${car.thumbnail}"/>">
-								</div>
-								<div class="card-content"><h5>${car.brand} ${car.model}</h5></div>
-							</div>
-						</a>
-					</div>
-			</c:forEach>
-	   	</div>
+	   		 <h5>See also</h5>
+	   		 <div id="see-also-container">
+				 <div class="progress">
+				      <div class="indeterminate"></div>
+				  </div>
+			 </div>
+   		</div>
    	</div>
    	
     <script>
     $(document).ready(function () {
         Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.4.5/themes/classic/galleria.classic.min.js');        
         Galleria.run('.galleria');
-        
+    	
         var carId = "${car.id}";
+    	
+    	$.ajax({
+    		type : 'GET',
+    		url : '${pageContext.request.contextPath}/cars/' + carId + '/seealso',
+    		success : function(data) {
+    			$("#see-also-container").html(data);
+    		}
+    	});
     	
         $('#btn-upvote').click(function() {
 			vote('add');

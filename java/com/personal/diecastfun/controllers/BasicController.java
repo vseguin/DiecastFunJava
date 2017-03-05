@@ -1,15 +1,14 @@
 package com.personal.diecastfun.controllers;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.personal.diecastfun.controllers.service.ConfigFacade;
 
 public abstract class BasicController
 {
-    @Inject
-    private ConfigFacade configFacade;
+    @Autowired
+    protected ConfigFacade configFacade;
 
     protected ModelAndView getModelAndView(String viewName)
     {
