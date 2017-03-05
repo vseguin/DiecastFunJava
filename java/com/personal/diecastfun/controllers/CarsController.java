@@ -119,7 +119,6 @@ public class CarsController extends BasicController
 
         mv.addObject("id", carId);
         mv.addObject("car", carFacade.findCarById(carId));
-        mv.addObject("seealso", carFacade.findSeeAlso(carId));
         mv.addObject("votes", votesFacade.getVotesById(carId));
         mv.addObject("views", viewsFacade.getViews(carId));
 
