@@ -49,6 +49,10 @@
 
     .badge {
       text-transform: uppercase;
+      overflow: hidden;
+      max-width: 40%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 

@@ -1,9 +1,11 @@
 package com.personal.diecastfun.controllers.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.google.common.collect.Lists;
 import com.personal.diecastfun.domain.Car;
 import com.personal.diecastfun.domain.repositories.CarRepository;
 
@@ -23,33 +25,24 @@ public class SeeAlsoStrategy extends Strategy
     @Override
     public List<Car> findCars()
     {
-        Iterable<Car> cars = carRepository.findAll();
-        List<Car> results = new ArrayList<>();
+        List<Car> cars = carRepository.findByIdNotIn(Lists.newArrayList(id));
 
-        double currentSimilarity = 1;
-        double limitValue = 0;
+        List<SimilarityResult> similarities = cars.parallelStream()
+                                                  .map(c -> new SimilarityResult(c,
+                                                                                 dice(bigram(c.getId()), bigram(id))))
+                                                  .collect(Collectors.toList());
 
-        while (results.size() < SEE_ALSO_SIZE && currentSimilarity > limitValue) {
-            currentSimilarity -= 0.1;
-            Iterator<Car> iterator = cars.iterator();
-            while (iterator.hasNext()) {
-                Car car = iterator.next();
-                if (car.getId().equals(id)) {
-                    iterator.remove();
-                } else if (results.size() < SEE_ALSO_SIZE) {
-                    double dice = dice(bigram(car.getId()), bigram(id));
-                    if (dice > currentSimilarity || dice < (currentSimilarity * -1)) {
-                        results.add(car);
-                        iterator.remove();
-                    }
-                }
+        return similarities.stream().sorted(new Comparator<SimilarityResult>()
+        {
+            @Override
+            public int compare(SimilarityResult left, SimilarityResult right)
+            {
+                return right.getSimilarity().compareTo(left.getSimilarity());
             }
-        }
-
-        return results;
+        }).limit(SEE_ALSO_SIZE).map(r -> r.getCar()).collect(Collectors.toList());
     }
 
-    public List<char[]> bigram(String input)
+    private List<char[]> bigram(String input)
     {
         ArrayList<char[]> bigram = new ArrayList<char[]>();
         for (int i = 0; i < input.length() - 1; i++) {
@@ -77,5 +70,37 @@ public class SeeAlsoStrategy extends Strategy
             }
         }
         return (double) matches / (bigram1.size() + bigram2.size());
+    }
+
+    public class SimilarityResult
+    {
+        private Car car;
+        private Double similarity;
+
+        public SimilarityResult(Car car, Double similarity)
+        {
+            setCar(car);
+            setSimilarity(similarity);
+        }
+
+        public Car getCar()
+        {
+            return car;
+        }
+
+        public void setCar(Car car)
+        {
+            this.car = car;
+        }
+
+        public Double getSimilarity()
+        {
+            return similarity;
+        }
+
+        public void setSimilarity(Double similarity)
+        {
+            this.similarity = similarity;
+        }
     }
 }

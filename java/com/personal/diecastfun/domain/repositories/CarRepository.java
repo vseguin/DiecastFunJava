@@ -34,6 +34,8 @@ public interface CarRepository extends PagingAndSortingRepository<Car, String>
 
     List<Car> findByRestored(Boolean restored);
 
+    List<Car> findByIdNotIn(List<String> ids);
+
     List<Car> findByTags(Tags tags);
 
     Page<Car> findByTagsIn(Tags tags, Pageable pageable);
