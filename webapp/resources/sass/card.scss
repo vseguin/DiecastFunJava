@@ -67,6 +67,7 @@
   &.small {
     @include respond-to(large-computer) {
       height: 360px;
+      padding: 20px;
     }
   }
 
