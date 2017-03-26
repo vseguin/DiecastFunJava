@@ -15,6 +15,7 @@ public abstract class BasicController
         ModelAndView mv = new ModelAndView("main");
 
         mv.addObject("picturesUrl", configFacade.getPicturesUrl());
+        mv.addObject("resourcesUrl", configFacade.getResourcesUrl());
         mv.addObject("view", viewName);
 
         return mv;
